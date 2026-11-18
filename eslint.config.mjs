@@ -147,6 +147,10 @@ const eslintConfig = [
               message: "Domain layer must remain pure TypeScript without DB drivers.",
             },
             {
+              name: "@electric-sql/pglite",
+              message: "Domain layer must remain pure TypeScript without DB drivers.",
+            },
+            {
               name: "stripe",
               message: "Domain layer must remain pure TypeScript without provider SDKs.",
             },

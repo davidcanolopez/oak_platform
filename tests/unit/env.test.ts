@@ -22,6 +22,7 @@ const baseDeployedEnv = {
 
 const syntheticLiveSecretKey = ["sk", "live", "oak_guard_check"].join("_");
 const syntheticLivePublishableKey = ["pk", "live", "oak_guard_check"].join("_");
+const syntheticLiveRestrictedKey = ["rk", "live", "oak_guard_check"].join("_");
 
 describe("parseEnv fail-closed validation", () => {
   it("accepts valid local configuration with safe defaults", () => {
@@ -130,6 +131,45 @@ describe("parseEnv fail-closed validation", () => {
         APP_ENV: "production",
         OAK_ENABLE_LIVE_PAYMENTS: "false",
         STRIPE_SECRET_KEY: syntheticLiveSecretKey,
+      }),
+    ).toThrow(/FATAL/);
+
+    expect(() =>
+      parseEnv({
+        ...baseLocalEnv,
+        STRIPE_SECRET_KEY: `  ${syntheticLiveSecretKey} `,
+      }),
+    ).toThrow(/FATAL/);
+
+    expect(() =>
+      parseEnv({
+        ...baseDeployedEnv,
+        APP_ENV: "staging",
+        NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ` ${syntheticLivePublishableKey}`,
+      }),
+    ).toThrow(/FATAL/);
+
+    expect(() =>
+      parseEnv({
+        ...baseLocalEnv,
+        STRIPE_SECRET_KEY: syntheticLiveRestrictedKey,
+      }),
+    ).toThrow(/FATAL/);
+
+    expect(() =>
+      parseEnv({
+        ...baseDeployedEnv,
+        APP_ENV: "staging",
+        STRIPE_SECRET_KEY: ` ${syntheticLiveRestrictedKey}`,
+      }),
+    ).toThrow(/FATAL/);
+
+    expect(() =>
+      parseEnv({
+        ...baseDeployedEnv,
+        APP_ENV: "production",
+        OAK_ENABLE_LIVE_PAYMENTS: "false",
+        STRIPE_SECRET_KEY: syntheticLiveRestrictedKey,
       }),
     ).toThrow(/FATAL/);
   });

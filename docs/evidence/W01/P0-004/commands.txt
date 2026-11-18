@@ -12,7 +12,7 @@
 - `corepack pnpm run lint` -> exit 0 (`0 errors, 0 warnings`, artefacto `reports/static/eslint.json`)
 - `corepack pnpm run typecheck` -> exit 0 (`tsc --noEmit`, artefacto `reports/static/tsc.log`)
 - `corepack pnpm run test:unit` -> exit 0 (`3 files passed, 12 tests passed`, artefacto `reports/unit/junit.xml`)
-- `corepack pnpm run test:coverage` -> exit 0 (`100% Stmts, 100% Branch, 100% Funcs, 100% Lines`, artefacto `reports/coverage/coverage-summary.json`)
+- `corepack pnpm run test:coverage` -> exit 0 (`100% Stmts 38/38, 100% Branch 23/23, 100% Funcs 9/9, 100% Lines 37/37`, artefacto `reports/coverage/coverage-summary.json`)
 - `corepack pnpm run build` -> exit 0 (`Next.js 16.4.6 Turbopack`, rutas `/` y `/api/health`, artefacto `reports/build/next-build.log`)
 - `corepack pnpm run security:sca` -> exit 0 (`[SCA] PASS (high=0, critical=0, moderate=4, low=0)`, artefacto `reports/security/sca-audit.json`)
 - `corepack pnpm run security:secrets` -> exit 0 (`[SECRET_SCAN] PASS (files=115, findings=0, gitleaks=NOT_INSTALLED_IN_LOCAL_PATH)`, artefacto `reports/security/secret-scan.json`)
@@ -42,5 +42,5 @@
 
 ## 4. Casos negativos y verificaciones estructurales
 - Prueba negativa `secret-scan` sobre fichero temporal externo en `%TEMP%` con patrón Stripe live sintético y correo fuera de RFC 2606 (`node scripts/security/secret-scan.mjs --extra-file <temp> --report reports/security/secret-scan-negative.json`) -> exit 1 (`secretlint=1`, `oak=2`, fichero temporal eliminado antes del commit).
-- Prueba negativa ESLint arquitectura (`eslint --stdin --stdin-filename src/app/probe.tsx` importando `pg`) -> exit 1 (`no-restricted-imports`, 0 warnings).
+- Prueba negativa ESLint arquitectura (`eslint --stdin --stdin-filename src/app/probe.tsx` importando `pg` y `eslint --stdin --stdin-filename src/modules/catalog/domain/probe.ts` importando `@electric-sql/pglite`) -> exit 1 (`no-restricted-imports`, 0 warnings).
 - Script Python de verificación sobre `package.json`, `src/` y `sites/**`: `pinned_deps=50+pnpm=51`, `floating=0`, `sites_match=19/19`, `brand_clean=True` -> exit 0.

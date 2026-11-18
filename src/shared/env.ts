@@ -75,6 +75,13 @@ export const oakEnvSchema = z.discriminatedUnion("APP_ENV", [
 export type OakEnv = z.infer<typeof oakEnvSchema>;
 export type RawEnvInput = Record<string, string | undefined>;
 
+const LIVE_STRIPE_KEY_PREFIXES = ["sk_live_", "pk_live_", "rk_live_"] as const;
+
+function isLiveStripeKey(value: string): boolean {
+  const normalized = value.trim();
+  return LIVE_STRIPE_KEY_PREFIXES.some((prefix) => normalized.startsWith(prefix));
+}
+
 function assertNoAccidentalLivePayments(rawEnv: RawEnvInput): void {
   const appEnv = rawEnv.APP_ENV;
   const livePaymentsFlag = rawEnv.OAK_ENABLE_LIVE_PAYMENTS;
@@ -90,10 +97,10 @@ function assertNoAccidentalLivePayments(rawEnv: RawEnvInput): void {
 
   if (
     !isAuthorizedLiveProduction &&
-    (stripeSecret.startsWith("sk_live_") || stripePublishable.startsWith("pk_live_"))
+    (isLiveStripeKey(stripeSecret) || isLiveStripeKey(stripePublishable))
   ) {
     throw new Error(
-      "FATAL: Live Stripe keys (sk_live_/pk_live_) are forbidden unless APP_ENV=production and OAK_ENABLE_LIVE_PAYMENTS=true.",
+      "FATAL: Live Stripe keys (sk_live_/pk_live_/rk_live_) are forbidden unless APP_ENV=production and OAK_ENABLE_LIVE_PAYMENTS=true.",
     );
   }
 }
