@@ -1,0 +1,44 @@
+# Comandos exactos reproducibles — P0-011
+
+Ejecutados desde la raíz del worktree en la rama `feat/p0-011-brand-ux-baseline` sobre `base_sha: bd3cf59b9f228dffa9c8be66eb4e624723e995b9`.
+
+## 1. Validación integral de G0_BRAND_UX_BASELINE.md (14 blockers D1 abiertos, 6 assets, 4 pares prohibidos, 5 viewports, WCAG 2.2 AA, NVDA + lector móvil, es-ES, mock prohibidos y 0 PII/secretos)
+
+Comando exacto:
+```powershell
+python -c "import re; from pathlib import Path; b=Path('docs/brand/G0_BRAND_UX_BASELINE.md').read_text(encoding='utf-8'); d1=[f'D1-{i:02d}' for i in range(1,15)]; assert all(any(f'\x60{x}\x60' in ln and 'ABIERTO' in ln and 'PENDING USER VALIDATION' in ln for ln in b.splitlines()) for x in d1); assert 'PENDING USER VALIDATION' in b and not re.search(r'D1-\d{2}.*(APROBADO|CERRADO|PASS)', b); assets=['oak-logo.png','oak-mark.svg','topography.svg','oak-runner.png','oak-cyclist.png','oak-community.png','1672x941']; assert all(a in b for a in assets); pairs=['Orange/Sand','Sky/Sand','Cream/Orange','Lime/Sand-Cream']; assert all(p in b for p in pairs); vps=['320x568','390x844','768x1024','1200x800','1440x900']; assert all(v in b for v in vps); reqs=['WCAG 2.2 AA','3 px','48x48 px','200 %','320 px','prefers-reduced-motion','NVDA','TalkBack','VoiceOver','es-ES','P0-004','David Cano','Trail del Robledal','Pedales de Guadarrama','10K Madrid Rio','Sierra Norte Trail','oak.run','Explorer','Pathfinder']; assert all(r in b for r in reqs); files=['docs/brand/G0_BRAND_UX_BASELINE.md','docs/evidence/W01/P0-011/summary.md','docs/evidence/W01/P0-011/approvals.md','docs/agentic/packets/P0-011.md']; em=re.compile(r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}'); sec=re.compile(r'(sk_live_|pk_live_|AIza[0-9A-Za-z_-]{20,}|ghp_[0-9A-Za-z]{20,}|BEGIN PRIVATE KEY)'); assert not any(em.findall(Path(f).read_text(encoding='utf-8')) or sec.findall(Path(f).read_text(encoding='utf-8')) for f in files); print(f'PASS d1_blockers={len(d1)} assets=6 prohibited_pairs={len(pairs)} viewports={len(vps)} screen_readers=NVDA+mobile pii=0 secrets=0')"
+```
+
+Salida real (`exit_code: 0`):
+```text
+PASS d1_blockers=14 assets=6 prohibited_pairs=4 viewports=5 screen_readers=NVDA+mobile pii=0 secrets=0
+```
+
+## 2. Prueba negativa — Omisión sintética de D1-14 en copia en memoria
+
+Comando exacto:
+```powershell
+python -c "from pathlib import Path; b=Path('docs/brand/G0_BRAND_UX_BASELINE.md').read_text(encoding='utf-8').replace('D1-14','REMOVED'); d1=[f'D1-{i:02d}' for i in range(1,15)]; missing=[x for x in d1 if x not in b]; raise SystemExit(f'NEGATIVE_CHECK_FAILED:{missing[0]}_MISSING') if missing else None"
+```
+
+Salida real (`exit_code: 1`):
+```text
+NEGATIVE_CHECK_FAILED:D1-14_MISSING
+```
+
+## 3. Verificación de alcance e inmutabilidad frente a base SHA (`bd3cf59b9f228dffa9c8be66eb4e624723e995b9`)
+
+Comandos reproducibles tras el commit en la rama `feat/p0-011-brand-ux-baseline`:
+```powershell
+git diff --name-only bd3cf59b9f228dffa9c8be66eb4e624723e995b9..HEAD
+git status --short
+```
+
+Archivos esperados exclusivamente dentro de `allowed_paths`:
+```text
+docs/agentic/packets/P0-011.md
+docs/brand/G0_BRAND_UX_BASELINE.md
+docs/evidence/W01/P0-011/approvals.md
+docs/evidence/W01/P0-011/commands.txt
+docs/evidence/W01/P0-011/summary.md
+```
