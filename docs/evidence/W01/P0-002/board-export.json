@@ -1,0 +1,2303 @@
+{
+  "generated_at_utc": "2026-11-18T21:22:00Z",
+  "task_id": "P0-002",
+  "baseline_sha": "87f92a1fd786fe2494bba4c7c8ec89c220b14ee7",
+  "total_tasks": 114,
+  "master_plan_tasks": 113,
+  "phase0_added_tasks": [
+    "P0-011"
+  ],
+  "critical_path_count": 54,
+  "critical_path": [
+    "P0-001",
+    "P0-003",
+    "P0-004",
+    "P0-005",
+    "P0-010",
+    "P1-001",
+    "P1-002",
+    "P1-003",
+    "P1-008",
+    "P1-009",
+    "P1-010",
+    "P1-013",
+    "P2-001",
+    "P2-002",
+    "P2-004",
+    "P2-005",
+    "P2-006",
+    "P2-010",
+    "P2-012",
+    "P3-001",
+    "P3-003",
+    "P4-002",
+    "P4-003",
+    "P4-005",
+    "P4-006",
+    "P5-007",
+    "P5-008",
+    "P5-010",
+    "P5-012",
+    "P5-013",
+    "P5-014",
+    "P5-015",
+    "P6-006",
+    "P6-007",
+    "P6-008",
+    "P6-009",
+    "P6-010",
+    "P6-011",
+    "P6-012",
+    "P6-013",
+    "P7-001",
+    "P7-002",
+    "P7-012",
+    "P7-013",
+    "P8-001",
+    "P8-002",
+    "P8-004",
+    "P8-005",
+    "P8-006",
+    "P8-007",
+    "P8-008",
+    "P8-009",
+    "P8-010",
+    "P8-011"
+  ],
+  "dag_validation": {
+    "cycles": 0,
+    "missing_dependencies": 0,
+    "self_reviews": 0,
+    "future_phase_ready_or_active": 0
+  },
+  "tasks": [
+    {
+      "task_id": "P0-001",
+      "phase": "Fase 0. Bootstrap y control de ejecución",
+      "phase_code": "P0",
+      "plan_owner_ref": "SUP",
+      "owner_agent": "orquestador-oak",
+      "reviewer_agent": "documentacion-handoff",
+      "guardian_agent": "release-guardian",
+      "dependencies": [],
+      "title": "Registrar inventario de artefactos y confirmar por escrito que no existe aplicación",
+      "dod_summary": "Baseline con paths, estado Git y límites; docs/evidence/W01/P0-001/summary.md",
+      "exit_gate": "G0",
+      "status": "ACEPTADA",
+      "candidate_sha": "87f92a1fd786fe2494bba4c7c8ec89c220b14ee7",
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P0-002",
+      "phase": "Fase 0. Bootstrap y control de ejecución",
+      "phase_code": "P0",
+      "plan_owner_ref": "SUP",
+      "owner_agent": "orquestador-oak",
+      "reviewer_agent": "analista-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P0-001"
+      ],
+      "title": "Crear tablero de tareas con estados, owners, dependencias y ruta crítica",
+      "dod_summary": "Todas las tareas de este plan cargadas y trazables; captura/export del tablero",
+      "exit_gate": "G0",
+      "status": "READY",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P0-003",
+      "phase": "Fase 0. Bootstrap y control de ejecución",
+      "phase_code": "P0",
+      "plan_owner_ref": "ARCH",
+      "owner_agent": "arquitecto-seguridad",
+      "reviewer_agent": "devops-release, backend-datos",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P0-001"
+      ],
+      "title": "Redactar ADR de stack y estrategia de monolito modular",
+      "dod_summary": "Versiones candidatas, compatibilidad, alternativas y decisión; ADR revisado",
+      "exit_gate": "G0",
+      "status": "READY",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P0-004",
+      "phase": "Fase 0. Bootstrap y control de ejecución",
+      "phase_code": "P0",
+      "plan_owner_ref": "SRE",
+      "owner_agent": "devops-release",
+      "reviewer_agent": "backend-datos, frontend",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P0-003"
+      ],
+      "title": "Inicializar la aplicación, lockfile y comandos canónicos sin alterar decks",
+      "dod_summary": "Checkout limpio instala, ejecuta format/lint/typecheck/test/build; logs",
+      "exit_gate": "G0",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P0-005",
+      "phase": "Fase 0. Bootstrap y control de ejecución",
+      "phase_code": "P0",
+      "plan_owner_ref": "SRE",
+      "owner_agent": "devops-release",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P0-004"
+      ],
+      "title": "Crear CI baseline con artefactos de resultado",
+      "dod_summary": "Pipeline obligatorio en PR y fallo intencional demostrado",
+      "exit_gate": "G0",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P0-006",
+      "phase": "Fase 0. Bootstrap y control de ejecución",
+      "phase_code": "P0",
+      "plan_owner_ref": "SEC",
+      "owner_agent": "arquitecto-seguridad",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P0-001"
+      ],
+      "title": "Clasificar datos y crear threat model inicial",
+      "dod_summary": "Activos, actores, fronteras, amenazas, mitigaciones y riesgos ownerizados",
+      "exit_gate": "G0",
+      "status": "READY",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P0-007",
+      "phase": "Fase 0. Bootstrap y control de ejecución",
+      "phase_code": "P0",
+      "plan_owner_ref": "QA",
+      "owner_agent": "qa-e2e",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P0-001"
+      ],
+      "title": "Publicar estrategia de pruebas, severidades y matriz de navegadores",
+      "dod_summary": "Matriz P0/P1, pirámide, fixtures y política anti-flake revisadas",
+      "exit_gate": "G0",
+      "status": "READY",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P0-008",
+      "phase": "Fase 0. Bootstrap y control de ejecución",
+      "phase_code": "P0",
+      "plan_owner_ref": "SUP",
+      "owner_agent": "orquestador-oak",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P0-002",
+        "P0-006",
+        "P0-007"
+      ],
+      "title": "Publicar DoR, DoD, plantilla de evidencia y protocolo de excepciones",
+      "dod_summary": "Plantillas completas y prueba de un handoff ficticio",
+      "exit_gate": "G0",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P0-009",
+      "phase": "Fase 0. Bootstrap y control de ejecución",
+      "phase_code": "P0",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad, qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P0-003",
+        "P0-004",
+        "P0-006"
+      ],
+      "title": "Definir dataset sintético y cuentas demo sin PII real",
+      "dod_summary": "Dataset versionado: 2 organizaciones, 12 eventos, modalidades y estados límite",
+      "exit_gate": "G0",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P0-011",
+      "phase": "Fase 0. Bootstrap y control de ejecución",
+      "phase_code": "P0",
+      "plan_owner_ref": "BRUX (añadida en phase0_plan.md)",
+      "owner_agent": "ux-brand",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P0-001"
+      ],
+      "title": "Formalizar baseline de referencias de marca y criterios UX accesibles para G0 (Req. #14)",
+      "dod_summary": "docs/brand/G0_BRAND_UX_BASELINE.md trazado a BRAND_UX_CONTRACT.md y 14 blockers D1 abiertos; review auditor-no-funcional",
+      "exit_gate": "G0",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "phase0_plan.md + QUALITY_GATES.md §6 G0 req #14"
+    },
+    {
+      "task_id": "P0-010",
+      "phase": "Fase 0. Bootstrap y control de ejecución",
+      "phase_code": "P0",
+      "plan_owner_ref": "RG",
+      "owner_agent": "release-guardian",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P0-001",
+        "P0-002",
+        "P0-003",
+        "P0-004",
+        "P0-005",
+        "P0-006",
+        "P0-007",
+        "P0-008",
+        "P0-009",
+        "P0-011"
+      ],
+      "title": "Auditar y decidir G0",
+      "dod_summary": "Informe reproducible PASS/FAIL; ninguna desviación sin owner",
+      "exit_gate": "G0",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P1-001",
+      "phase": "Fase 1. Contrato de producto, marca y arquitectura",
+      "phase_code": "P1",
+      "plan_owner_ref": "PFA",
+      "owner_agent": "analista-funcional",
+      "reviewer_agent": "orquestador-oak",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P0-010"
+      ],
+      "title": "Redactar alcance V1 y exclusiones con los supuestos del apartado 4",
+      "dod_summary": "Scope con métricas de éxito y preguntas cerradas; review SUP",
+      "exit_gate": "D0",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P1-002",
+      "phase": "Fase 1. Contrato de producto, marca y arquitectura",
+      "phase_code": "P1",
+      "plan_owner_ref": "PFA",
+      "owner_agent": "analista-funcional",
+      "reviewer_agent": "orquestador-oak",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P1-001"
+      ],
+      "title": "Definir persona deportista y persona organizador",
+      "dod_summary": "JTBD, dolores, contexto y criterios de adopción basados en hipótesis explícitas",
+      "exit_gate": "D0",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P1-003",
+      "phase": "Fase 1. Contrato de producto, marca y arquitectura",
+      "phase_code": "P1",
+      "plan_owner_ref": "PFA",
+      "owner_agent": "analista-funcional",
+      "reviewer_agent": "orquestador-oak",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P1-002"
+      ],
+      "title": "Convertir journeys en criterios funcionales trazables",
+      "dod_summary": "IDs AC-Jxx enlazados a pantallas, datos, permisos y tests",
+      "exit_gate": "D0",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P1-004",
+      "phase": "Fase 1. Contrato de producto, marca y arquitectura",
+      "phase_code": "P1",
+      "plan_owner_ref": "BRUX",
+      "owner_agent": "ux-brand",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P1-001"
+      ],
+      "title": "Unificar arquitectura de información y nomenclatura",
+      "dod_summary": "Sitemap, rutas, navegación desktop/mobile y términos únicos aprobables",
+      "exit_gate": "D1",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P1-005",
+      "phase": "Fase 1. Contrato de producto, marca y arquitectura",
+      "phase_code": "P1",
+      "plan_owner_ref": "BRUX",
+      "owner_agent": "ux-brand",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P0-010"
+      ],
+      "title": "Crear tokens canónicos y matriz de contraste",
+      "dod_summary": "Tokens semánticos, prohibiciones cromáticas y reporte AA; no hardcodes nuevos",
+      "exit_gate": "D1",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P1-006",
+      "phase": "Fase 1. Contrato de producto, marca y arquitectura",
+      "phase_code": "P1",
+      "plan_owner_ref": "BRUX",
+      "owner_agent": "ux-brand",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P1-004",
+        "P1-005"
+      ],
+      "title": "Definir inventario de componentes y todos sus estados",
+      "dod_summary": "Story map con default/hover/focus/disabled/loading/empty/error/success",
+      "exit_gate": "D1",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P1-007",
+      "phase": "Fase 1. Contrato de producto, marca y arquitectura",
+      "phase_code": "P1",
+      "plan_owner_ref": "BRUX",
+      "owner_agent": "ux-brand",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P1-003",
+        "P1-006"
+      ],
+      "title": "Crear prototipo navegable responsive de los journeys P0",
+      "dod_summary": "Desktop 1440, tablet 768 y móvil 390; teclado y flujo de pago coherentes",
+      "exit_gate": "D1",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P1-008",
+      "phase": "Fase 1. Contrato de producto, marca y arquitectura",
+      "phase_code": "P1",
+      "plan_owner_ref": "ARCH",
+      "owner_agent": "arquitecto-seguridad",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P1-003"
+      ],
+      "title": "Crear modelo de dominio y catálogo de invariantes",
+      "dod_summary": "Entidades, relaciones, estados, transiciones y decisiones abiertas resueltas",
+      "exit_gate": "D0",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P1-009",
+      "phase": "Fase 1. Contrato de producto, marca y arquitectura",
+      "phase_code": "P1",
+      "plan_owner_ref": "ARCH",
+      "owner_agent": "arquitecto-seguridad",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P1-008"
+      ],
+      "title": "Definir contratos de casos de uso, API y eventos",
+      "dod_summary": "Schemas versionados con errores, permisos, idempotency keys y ejemplos",
+      "exit_gate": "D0",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P1-010",
+      "phase": "Fase 1. Contrato de producto, marca y arquitectura",
+      "phase_code": "P1",
+      "plan_owner_ref": "QA",
+      "owner_agent": "qa-e2e",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P1-003",
+        "P1-009"
+      ],
+      "title": "Crear matriz requisitos → pruebas",
+      "dod_summary": "Cada AC P0/P1 enlaza unit/integration/E2E/UAT y fixture",
+      "exit_gate": "D0,D1",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P1-011",
+      "phase": "Fase 1. Contrato de producto, marca y arquitectura",
+      "phase_code": "P1",
+      "plan_owner_ref": "SEC",
+      "owner_agent": "arquitecto-seguridad",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P1-008",
+        "P1-009"
+      ],
+      "title": "Revisar privacidad, abuso y autorización del diseño",
+      "dod_summary": "Threat model actualizado y controles incluidos en AC",
+      "exit_gate": "D0",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P1-012",
+      "phase": "Fase 1. Contrato de producto, marca y arquitectura",
+      "phase_code": "P1",
+      "plan_owner_ref": "USR",
+      "owner_agent": "usuario-validador",
+      "reviewer_agent": "release-guardian",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P1-001",
+        "P1-007",
+        "P1-008"
+      ],
+      "title": "Validar D0 y D1: alcance, navegación, prototipo y desviaciones de marca",
+      "dod_summary": "Dos decisiones Aceptado/Rechazado registradas por separado",
+      "exit_gate": "D0,D1",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P1-013",
+      "phase": "Fase 1. Contrato de producto, marca y arquitectura",
+      "phase_code": "P1",
+      "plan_owner_ref": "RG",
+      "owner_agent": "release-guardian",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P1-001",
+        "P1-002",
+        "P1-003",
+        "P1-004",
+        "P1-005",
+        "P1-006",
+        "P1-007",
+        "P1-008",
+        "P1-009",
+        "P1-010",
+        "P1-011",
+        "P1-012"
+      ],
+      "title": "Congelar Product + Brand + Architecture Contract",
+      "dod_summary": "Tag/commit identificable y matriz sin huecos P0/P1",
+      "exit_gate": "D0,D1",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P2-001",
+      "phase": "Fase 2. Fundaciones técnicas e identidad",
+      "phase_code": "P2",
+      "plan_owner_ref": "SRE",
+      "owner_agent": "devops-release",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P1-013"
+      ],
+      "title": "Configurar entornos development, test y staging",
+      "dod_summary": "Variables validadas, secrets fuera de Git y matriz de configuración",
+      "exit_gate": "G1",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P2-002",
+      "phase": "Fase 2. Fundaciones técnicas e identidad",
+      "phase_code": "P2",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P1-008",
+        "P2-001"
+      ],
+      "title": "Crear migración inicial del esquema",
+      "dod_summary": "Up/down o procedimiento de rollback probado desde DB limpia",
+      "exit_gate": "G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P2-003",
+      "phase": "Fase 2. Fundaciones técnicas e identidad",
+      "phase_code": "P2",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P2-002"
+      ],
+      "title": "Implementar seed determinista",
+      "dod_summary": "Dos ejecuciones producen estado equivalente y sin duplicados",
+      "exit_gate": "G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P2-004",
+      "phase": "Fase 2. Fundaciones técnicas e identidad",
+      "phase_code": "P2",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P2-002"
+      ],
+      "title": "Implementar autenticación y ciclo de sesión",
+      "dod_summary": "Alta, verificación, login, logout y recuperación probados",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P2-005",
+      "phase": "Fase 2. Fundaciones técnicas e identidad",
+      "phase_code": "P2",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P2-004"
+      ],
+      "title": "Implementar Organization y Membership con autorización deny-by-default",
+      "dod_summary": "Tests cross-tenant negativos y audit log",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P2-006",
+      "phase": "Fase 2. Fundaciones técnicas e identidad",
+      "phase_code": "P2",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P2-005"
+      ],
+      "title": "Implementar RLS y pruebas de aislamiento",
+      "dod_summary": "Ninguna cuenta accede a filas ajenas usando clientes permitidos",
+      "exit_gate": "G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P2-007",
+      "phase": "Fase 2. Fundaciones técnicas e identidad",
+      "phase_code": "P2",
+      "plan_owner_ref": "FE",
+      "owner_agent": "frontend",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P1-005",
+        "P1-006"
+      ],
+      "title": "Implementar tokens, tipografías y primitivas UI",
+      "dod_summary": "Storybook sin hardcodes no autorizados; capturas de estados",
+      "exit_gate": "G1,G2",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P2-008",
+      "phase": "Fase 2. Fundaciones técnicas e identidad",
+      "phase_code": "P2",
+      "plan_owner_ref": "FE",
+      "owner_agent": "frontend",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P2-004",
+        "P2-007"
+      ],
+      "title": "Implementar pantallas de auth responsive",
+      "dod_summary": "Teclado, errores, loading y recuperación en 390/768/1440",
+      "exit_gate": "G2,G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P2-009",
+      "phase": "Fase 2. Fundaciones técnicas e identidad",
+      "phase_code": "P2",
+      "plan_owner_ref": "SRE",
+      "owner_agent": "devops-release",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P2-001"
+      ],
+      "title": "Instalar logs estructurados, correlation ID y Sentry",
+      "dod_summary": "Error sintético aparece en staging sin PII",
+      "exit_gate": "G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P2-010",
+      "phase": "Fase 2. Fundaciones técnicas e identidad",
+      "phase_code": "P2",
+      "plan_owner_ref": "QA",
+      "owner_agent": "qa-e2e",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P2-003",
+        "P2-004",
+        "P2-005",
+        "P2-006",
+        "P2-007",
+        "P2-008",
+        "P2-009"
+      ],
+      "title": "Automatizar suite foundation",
+      "dod_summary": "Coberturas G2, integración y E2E auth tres veces sin flakes",
+      "exit_gate": "G2,G3,G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P2-011",
+      "phase": "Fase 2. Fundaciones técnicas e identidad",
+      "phase_code": "P2",
+      "plan_owner_ref": "PFA/BRUX",
+      "owner_agent": "analista-funcional",
+      "reviewer_agent": "orquestador-oak",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P2-008"
+      ],
+      "title": "Revisar internamente acceso y base visual",
+      "dod_summary": "Walkthrough funcional y revisión de marca sin blockers; informe al RG",
+      "exit_gate": "G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P2-012",
+      "phase": "Fase 2. Fundaciones técnicas e identidad",
+      "phase_code": "P2",
+      "plan_owner_ref": "RG",
+      "owner_agent": "release-guardian",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P2-001",
+        "P2-002",
+        "P2-003",
+        "P2-004",
+        "P2-005",
+        "P2-006",
+        "P2-007",
+        "P2-008",
+        "P2-009",
+        "P2-010",
+        "P2-011"
+      ],
+      "title": "Auditar incremento foundation",
+      "dod_summary": "Informe PASS de G1-G4 aplicables",
+      "exit_gate": "G1-G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P3-001",
+      "phase": "Fase 3. Descubrimiento y ficha pública",
+      "phase_code": "P3",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P2-012"
+      ],
+      "title": "Implementar consulta de eventos publicados",
+      "dod_summary": "Draft/cancelled nunca aparecen; paginación y orden deterministas",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P3-002",
+      "phase": "Fase 3. Descubrimiento y ficha pública",
+      "phase_code": "P3",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P3-001"
+      ],
+      "title": "Implementar filtros por disciplina, ubicación, fecha, distancia y nivel",
+      "dod_summary": "Combinaciones y límites probados contra seed",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P3-003",
+      "phase": "Fase 3. Descubrimiento y ficha pública",
+      "phase_code": "P3",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P3-001"
+      ],
+      "title": "Implementar detalle público de evento",
+      "dod_summary": "Devuelve modalidad, cupo visible, precio, reglamento y contacto sin PII",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P3-004",
+      "phase": "Fase 3. Descubrimiento y ficha pública",
+      "phase_code": "P3",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P2-004",
+        "P3-001"
+      ],
+      "title": "Implementar favoritos idempotentes",
+      "dod_summary": "Añadir/quitar repetido no duplica; autorización probada",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P3-005",
+      "phase": "Fase 3. Descubrimiento y ficha pública",
+      "phase_code": "P3",
+      "plan_owner_ref": "FE",
+      "owner_agent": "frontend",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P3-001",
+        "P2-007"
+      ],
+      "title": "Implementar home con búsqueda y selección editorial",
+      "dod_summary": "Responsive, skeleton, error y empty state; sin recomendaciones IA",
+      "exit_gate": "G1,G2",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P3-006",
+      "phase": "Fase 3. Descubrimiento y ficha pública",
+      "phase_code": "P3",
+      "plan_owner_ref": "FE",
+      "owner_agent": "frontend",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P3-002",
+        "P3-005"
+      ],
+      "title": "Implementar listado, filtros y URL compartible",
+      "dod_summary": "Back/forward conserva estado; teclado y lector de pantalla",
+      "exit_gate": "G2,G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P3-007",
+      "phase": "Fase 3. Descubrimiento y ficha pública",
+      "phase_code": "P3",
+      "plan_owner_ref": "FE",
+      "owner_agent": "frontend",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P3-003",
+        "P3-006"
+      ],
+      "title": "Implementar ficha de evento y CTA",
+      "dod_summary": "Precio, fecha, ubicación, distancia, nivel y cupo visibles antes del CTA",
+      "exit_gate": "G2,G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P3-008",
+      "phase": "Fase 3. Descubrimiento y ficha pública",
+      "phase_code": "P3",
+      "plan_owner_ref": "FE",
+      "owner_agent": "frontend",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P3-004",
+        "P3-006"
+      ],
+      "title": "Implementar favoritos y estado no autenticado",
+      "dod_summary": "Login return-to conserva intención y no pierde filtros",
+      "exit_gate": "G2,G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P3-009",
+      "phase": "Fase 3. Descubrimiento y ficha pública",
+      "phase_code": "P3",
+      "plan_owner_ref": "QA",
+      "owner_agent": "qa-e2e",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P3-001",
+        "P3-002",
+        "P3-003",
+        "P3-004",
+        "P3-005",
+        "P3-006",
+        "P3-007",
+        "P3-008"
+      ],
+      "title": "Automatizar discovery P0/P1",
+      "dod_summary": "Unit/integration/E2E responsive; tres runs sin flakes",
+      "exit_gate": "G2-G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P3-010",
+      "phase": "Fase 3. Descubrimiento y ficha pública",
+      "phase_code": "P3",
+      "plan_owner_ref": "BRUX",
+      "owner_agent": "ux-brand",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P3-005",
+        "P3-006",
+        "P3-007",
+        "P3-008"
+      ],
+      "title": "Realizar regresión visual y revisión de contenido",
+      "dod_summary": "Capturas 390/768/1440 y checklist de voz OAK",
+      "exit_gate": "G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P3-011",
+      "phase": "Fase 3. Descubrimiento y ficha pública",
+      "phase_code": "P3",
+      "plan_owner_ref": "PFA",
+      "owner_agent": "analista-funcional",
+      "reviewer_agent": "orquestador-oak",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P3-009",
+        "P3-010"
+      ],
+      "title": "Aceptar internamente buscar, filtrar y elegir prueba",
+      "dod_summary": "Script funcional completo y defectos clasificados para RG",
+      "exit_gate": "G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P3-012",
+      "phase": "Fase 3. Descubrimiento y ficha pública",
+      "phase_code": "P3",
+      "plan_owner_ref": "RG",
+      "owner_agent": "release-guardian",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P3-001",
+        "P3-002",
+        "P3-003",
+        "P3-004",
+        "P3-005",
+        "P3-006",
+        "P3-007",
+        "P3-008",
+        "P3-009",
+        "P3-010",
+        "P3-011"
+      ],
+      "title": "Auditar incremento discovery",
+      "dod_summary": "PASS acumulativo G1-G4",
+      "exit_gate": "G1-G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P4-001",
+      "phase": "Fase 4. Perfil, inscripción y pago de prueba",
+      "phase_code": "P4",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P2-004",
+        "P2-002"
+      ],
+      "title": "Implementar AthleteProfile y consentimientos versionados",
+      "dod_summary": "CRUD autorizado, validación y audit trail",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P4-002",
+      "phase": "Fase 4. Perfil, inscripción y pago de prueba",
+      "phase_code": "P4",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P3-003",
+        "P4-001"
+      ],
+      "title": "Implementar borrador de inscripción recuperable",
+      "dod_summary": "Reentrada restaura datos; expiración definida y probada",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P4-003",
+      "phase": "Fase 4. Perfil, inscripción y pago de prueba",
+      "phase_code": "P4",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P4-002"
+      ],
+      "title": "Implementar cálculo server-side de precio",
+      "dod_summary": "Cliente no puede alterar total; tiers y gestión probados al 100 % ramas",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P4-004",
+      "phase": "Fase 4. Perfil, inscripción y pago de prueba",
+      "phase_code": "P4",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P4-002"
+      ],
+      "title": "Implementar reserva atómica de cupo",
+      "dod_summary": "Prueba concurrente demuestra cero sobreventa",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P4-005",
+      "phase": "Fase 4. Perfil, inscripción y pago de prueba",
+      "phase_code": "P4",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P4-003",
+        "P4-004"
+      ],
+      "title": "Crear sesión Stripe test con idempotency key",
+      "dod_summary": "Reintento devuelve resultado seguro y metadata mínima",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P4-006",
+      "phase": "Fase 4. Perfil, inscripción y pago de prueba",
+      "phase_code": "P4",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P4-005"
+      ],
+      "title": "Procesar webhook firmado e idempotente",
+      "dod_summary": "Duplicados/out-of-order no duplican registro, pago ni correo",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P4-007",
+      "phase": "Fase 4. Perfil, inscripción y pago de prueba",
+      "phase_code": "P4",
+      "plan_owner_ref": "FE",
+      "owner_agent": "frontend",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P4-001",
+        "P2-007"
+      ],
+      "title": "Implementar edición de perfil y validación accesible",
+      "dod_summary": "Labels, errores asociados, guardado y reuso en inscripción",
+      "exit_gate": "G2,G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P4-008",
+      "phase": "Fase 4. Perfil, inscripción y pago de prueba",
+      "phase_code": "P4",
+      "plan_owner_ref": "FE",
+      "owner_agent": "frontend",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P4-002",
+        "P4-003",
+        "P4-004",
+        "P4-005"
+      ],
+      "title": "Implementar wizard modalidad → datos → revisión/consentimiento → pago",
+      "dod_summary": "Total siempre visible, salida recuperable y mobile keyboard correcto",
+      "exit_gate": "G2,G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P4-009",
+      "phase": "Fase 4. Perfil, inscripción y pago de prueba",
+      "phase_code": "P4",
+      "plan_owner_ref": "FE",
+      "owner_agent": "frontend",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P4-006"
+      ],
+      "title": "Implementar confirmación, fallo y reintento",
+      "dod_summary": "Refresco/reentrada no altera el estado; copy no engañoso",
+      "exit_gate": "G2,G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P4-010",
+      "phase": "Fase 4. Perfil, inscripción y pago de prueba",
+      "phase_code": "P4",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P4-006"
+      ],
+      "title": "Enviar correo de confirmación una sola vez",
+      "dod_summary": "Sandbox contiene evento, modalidad, total y enlace; sin PII excesiva",
+      "exit_gate": "G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P4-011",
+      "phase": "Fase 4. Perfil, inscripción y pago de prueba",
+      "phase_code": "P4",
+      "plan_owner_ref": "QA",
+      "owner_agent": "qa-e2e",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P4-001",
+        "P4-002",
+        "P4-003",
+        "P4-004",
+        "P4-005",
+        "P4-006",
+        "P4-007",
+        "P4-008",
+        "P4-009",
+        "P4-010"
+      ],
+      "title": "Automatizar matriz pago/cupo/idempotencia",
+      "dod_summary": "Happy path, fallo, cancelación, duplicado, concurrencia y expiración",
+      "exit_gate": "G2-G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P4-012",
+      "phase": "Fase 4. Perfil, inscripción y pago de prueba",
+      "phase_code": "P4",
+      "plan_owner_ref": "SEC",
+      "owner_agent": "arquitecto-seguridad",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P4-005",
+        "P4-006"
+      ],
+      "title": "Revisar firma, replay, secretos y datos de pago",
+      "dod_summary": "0 High/Critical y reporte de casos negativos",
+      "exit_gate": "G5 parcial",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P4-013",
+      "phase": "Fase 4. Perfil, inscripción y pago de prueba",
+      "phase_code": "P4",
+      "plan_owner_ref": "PFA/QA",
+      "owner_agent": "analista-funcional",
+      "reviewer_agent": "orquestador-oak",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P4-011"
+      ],
+      "title": "Aceptar internamente la inscripción completa en Stripe test",
+      "dod_summary": "Walkthrough desde ficha hasta dashboard/correo con evidencias",
+      "exit_gate": "G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P4-014",
+      "phase": "Fase 4. Perfil, inscripción y pago de prueba",
+      "phase_code": "P4",
+      "plan_owner_ref": "RG",
+      "owner_agent": "release-guardian",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P4-001",
+        "P4-002",
+        "P4-003",
+        "P4-004",
+        "P4-005",
+        "P4-006",
+        "P4-007",
+        "P4-008",
+        "P4-009",
+        "P4-010",
+        "P4-011",
+        "P4-012",
+        "P4-013"
+      ],
+      "title": "Auditar incremento registration",
+      "dod_summary": "PASS acumulativo G1-G4 y seguridad transaccional",
+      "exit_gate": "G1-G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P5-001",
+      "phase": "Fase 5. Workspace del organizador y beta",
+      "phase_code": "P5",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P2-005"
+      ],
+      "title": "Implementar aceptación de invitación de organizador",
+      "dod_summary": "Token de un uso, expiración y rol correcto",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P5-002",
+      "phase": "Fase 5. Workspace del organizador y beta",
+      "phase_code": "P5",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P5-001",
+        "P1-008"
+      ],
+      "title": "Implementar CRUD de evento draft",
+      "dod_summary": "Autorización cross-tenant negativa y auditoría",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P5-003",
+      "phase": "Fase 5. Workspace del organizador y beta",
+      "phase_code": "P5",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P5-002"
+      ],
+      "title": "Implementar modalidades, cupos y price tiers",
+      "dod_summary": "Invariantes y edición con registros existentes probadas",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P5-004",
+      "phase": "Fase 5. Workspace del organizador y beta",
+      "phase_code": "P5",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P5-003"
+      ],
+      "title": "Implementar publish/unpublish/close",
+      "dod_summary": "Validación completa; transiciones inválidas rechazadas",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P5-005",
+      "phase": "Fase 5. Workspace del organizador y beta",
+      "phase_code": "P5",
+      "plan_owner_ref": "FE",
+      "owner_agent": "frontend",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P5-002",
+        "P2-007"
+      ],
+      "title": "Implementar editor de evento por secciones",
+      "dod_summary": "Autosave controlado, errores, preview y responsive desktop/tablet",
+      "exit_gate": "G2,G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P5-006",
+      "phase": "Fase 5. Workspace del organizador y beta",
+      "phase_code": "P5",
+      "plan_owner_ref": "FE",
+      "owner_agent": "frontend",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P5-004",
+        "P5-005"
+      ],
+      "title": "Implementar checklist y preview de publicación",
+      "dod_summary": "No permite publicar incompleto; enlaces públicos correctos",
+      "exit_gate": "G2,G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P5-007",
+      "phase": "Fase 5. Workspace del organizador y beta",
+      "phase_code": "P5",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P4-006",
+        "P5-001"
+      ],
+      "title": "Implementar consulta de participantes por evento",
+      "dod_summary": "Filtros, paginación, estados y aislamiento probados",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P5-008",
+      "phase": "Fase 5. Workspace del organizador y beta",
+      "phase_code": "P5",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P5-007"
+      ],
+      "title": "Implementar export CSV seguro",
+      "dod_summary": "Cabeceras, encoding, protección formula injection y audit log",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P5-009",
+      "phase": "Fase 5. Workspace del organizador y beta",
+      "phase_code": "P5",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P5-007"
+      ],
+      "title": "Implementar KPIs de inscritos, ocupación e ingresos test",
+      "dod_summary": "Reconciliación exacta contra registros/pagos",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P5-010",
+      "phase": "Fase 5. Workspace del organizador y beta",
+      "phase_code": "P5",
+      "plan_owner_ref": "FE",
+      "owner_agent": "frontend",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P5-007",
+        "P5-008",
+        "P5-009"
+      ],
+      "title": "Implementar panel, tabla de participantes y KPIs",
+      "dod_summary": "Empty/loading/error, filtros y export accesible",
+      "exit_gate": "G2,G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P5-011",
+      "phase": "Fase 5. Workspace del organizador y beta",
+      "phase_code": "P5",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P5-007",
+        "P4-010"
+      ],
+      "title": "Implementar envío de briefing en sandbox",
+      "dod_summary": "Selección autorizada, preview, confirmación y un registro por envío",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P5-012",
+      "phase": "Fase 5. Workspace del organizador y beta",
+      "phase_code": "P5",
+      "plan_owner_ref": "QA",
+      "owner_agent": "qa-e2e",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P5-001",
+        "P5-002",
+        "P5-003",
+        "P5-004",
+        "P5-005",
+        "P5-006",
+        "P5-007",
+        "P5-008",
+        "P5-009",
+        "P5-010",
+        "P5-011"
+      ],
+      "title": "Automatizar organizer P0/P1",
+      "dod_summary": "E2E crea, publica, recibe registro, exporta y consulta KPI",
+      "exit_gate": "G2-G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P5-013",
+      "phase": "Fase 5. Workspace del organizador y beta",
+      "phase_code": "P5",
+      "plan_owner_ref": "SRE",
+      "owner_agent": "devops-release",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P5-012"
+      ],
+      "title": "Desplegar beta en staging con seed y cuentas demo",
+      "dod_summary": "URL, smoke, observabilidad y reset reproducible",
+      "exit_gate": "G6 parcial",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P5-014",
+      "phase": "Fase 5. Workspace del organizador y beta",
+      "phase_code": "P5",
+      "plan_owner_ref": "PFA/QA",
+      "owner_agent": "analista-funcional",
+      "reviewer_agent": "orquestador-oak",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P5-013"
+      ],
+      "title": "Aceptar internamente beta atleta + organizador",
+      "dod_summary": "Dos scripts funcionales completados y defectos clasificados",
+      "exit_gate": "G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P5-015",
+      "phase": "Fase 5. Workspace del organizador y beta",
+      "phase_code": "P5",
+      "plan_owner_ref": "RG",
+      "owner_agent": "release-guardian",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P5-001",
+        "P5-002",
+        "P5-003",
+        "P5-004",
+        "P5-005",
+        "P5-006",
+        "P5-007",
+        "P5-008",
+        "P5-009",
+        "P5-010",
+        "P5-011",
+        "P5-012",
+        "P5-013",
+        "P5-014"
+      ],
+      "title": "Auditar beta funcional",
+      "dod_summary": "PASS acumulativo G1-G4",
+      "exit_gate": "G1-G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P6-001",
+      "phase": "Fase 6. Trayectoria, validación formal y release candidate",
+      "phase_code": "P6",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P4-006"
+      ],
+      "title": "Implementar consulta de próximas inscripciones",
+      "dod_summary": "Orden, estados y permisos probados",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P6-002",
+      "phase": "Fase 6. Trayectoria, validación formal y release candidate",
+      "phase_code": "P6",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P4-006",
+        "P5-004"
+      ],
+      "title": "Implementar historial y marcado de evento completado",
+      "dod_summary": "Solo organizador autorizado cambia estado; historial consistente",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P6-003",
+      "phase": "Fase 6. Trayectoria, validación formal y release candidate",
+      "phase_code": "P6",
+      "plan_owner_ref": "BE",
+      "owner_agent": "backend-datos",
+      "reviewer_agent": "arquitecto-seguridad",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P6-002"
+      ],
+      "title": "Implementar métricas de trayectoria derivadas",
+      "dod_summary": "Retos, km y localidades reconciliados; sin edición cliente",
+      "exit_gate": "G2,G3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P6-004",
+      "phase": "Fase 6. Trayectoria, validación formal y release candidate",
+      "phase_code": "P6",
+      "plan_owner_ref": "FE",
+      "owner_agent": "frontend",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P6-001",
+        "P2-007"
+      ],
+      "title": "Implementar dashboard de próximo reto",
+      "dod_summary": "CTA, cuenta atrás, loading/empty/error y responsive",
+      "exit_gate": "G2,G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P6-005",
+      "phase": "Fase 6. Trayectoria, validación formal y release candidate",
+      "phase_code": "P6",
+      "plan_owner_ref": "FE",
+      "owner_agent": "frontend",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P6-002",
+        "P6-003"
+      ],
+      "title": "Implementar trayectoria e historial",
+      "dod_summary": "Métricas explicables, sin presión competitiva y accesibles",
+      "exit_gate": "G2,G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P6-006",
+      "phase": "Fase 6. Trayectoria, validación formal y release candidate",
+      "phase_code": "P6",
+      "plan_owner_ref": "PFA",
+      "owner_agent": "analista-funcional",
+      "reviewer_agent": "orquestador-oak",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P5-015"
+      ],
+      "title": "Preparar protocolo de validación formal",
+      "dod_summary": "Guion, consentimiento, métricas, tareas y criterios de éxito",
+      "exit_gate": "G1",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P6-007",
+      "phase": "Fase 6. Trayectoria, validación formal y release candidate",
+      "phase_code": "P6",
+      "plan_owner_ref": "PFA",
+      "owner_agent": "analista-funcional",
+      "reviewer_agent": "orquestador-oak",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P6-004",
+        "P6-005",
+        "P6-006"
+      ],
+      "title": "Ejecutar pruebas con al menos 5 deportistas y 2 organizadores",
+      "dod_summary": "Notas anonimizadas, tasas de éxito y hallazgos priorizados",
+      "exit_gate": "Evidencia pre-D2",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P6-008",
+      "phase": "Fase 6. Trayectoria, validación formal y release candidate",
+      "phase_code": "P6",
+      "plan_owner_ref": "QA",
+      "owner_agent": "qa-e2e",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P6-007"
+      ],
+      "title": "Convertir hallazgos confirmados en defectos P0-P3",
+      "dod_summary": "Reproducción, expected/actual, owner y test de regresión requerido",
+      "exit_gate": "G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P6-009",
+      "phase": "Fase 6. Trayectoria, validación formal y release candidate",
+      "phase_code": "P6",
+      "plan_owner_ref": "FE/BE",
+      "owner_agent": "frontend",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P6-008"
+      ],
+      "title": "Corregir defectos P0 y P1 de validación",
+      "dod_summary": "Cada fix incluye test que falla antes y pasa después",
+      "exit_gate": "G1-G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P6-010",
+      "phase": "Fase 6. Trayectoria, validación formal y release candidate",
+      "phase_code": "P6",
+      "plan_owner_ref": "QA",
+      "owner_agent": "qa-e2e",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P6-001",
+        "P6-002",
+        "P6-003",
+        "P6-004",
+        "P6-005",
+        "P6-006",
+        "P6-007",
+        "P6-008",
+        "P6-009"
+      ],
+      "title": "Ejecutar regresión funcional completa",
+      "dod_summary": "100 % P0/P1 y tres runs sin flakes",
+      "exit_gate": "G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P6-011",
+      "phase": "Fase 6. Trayectoria, validación formal y release candidate",
+      "phase_code": "P6",
+      "plan_owner_ref": "SUP",
+      "owner_agent": "orquestador-oak",
+      "reviewer_agent": "analista-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P6-010"
+      ],
+      "title": "Congelar contratos de release candidate",
+      "dod_summary": "RC identificado; cambios posteriores solo mediante triage",
+      "exit_gate": "G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P6-012",
+      "phase": "Fase 6. Trayectoria, validación formal y release candidate",
+      "phase_code": "P6",
+      "plan_owner_ref": "PFA",
+      "owner_agent": "analista-funcional",
+      "reviewer_agent": "orquestador-oak",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P6-010",
+        "P6-011"
+      ],
+      "title": "Firmar aceptación funcional interna del release candidate",
+      "dod_summary": "Lista cerrada de blockers y recomendación para hardening",
+      "exit_gate": "Evidencia pre-D2",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P6-013",
+      "phase": "Fase 6. Trayectoria, validación formal y release candidate",
+      "phase_code": "P6",
+      "plan_owner_ref": "RG",
+      "owner_agent": "release-guardian",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P6-001",
+        "P6-002",
+        "P6-003",
+        "P6-004",
+        "P6-005",
+        "P6-006",
+        "P6-007",
+        "P6-008",
+        "P6-009",
+        "P6-010",
+        "P6-011",
+        "P6-012"
+      ],
+      "title": "Auditar RC funcional",
+      "dod_summary": "Cero P0/P1 funcional abierto",
+      "exit_gate": "G4",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P7-001",
+      "phase": "Fase 7. Hardening, compliance y preparación operativa",
+      "phase_code": "P7",
+      "plan_owner_ref": "QA/BRUX",
+      "owner_agent": "qa-e2e",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P6-013"
+      ],
+      "title": "Ejecutar auditoría WCAG 2.2 AA automática y manual",
+      "dod_summary": "Teclado, foco, landmarks, formularios, zoom, SR y contraste documentados",
+      "exit_gate": "G5",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P7-002",
+      "phase": "Fase 7. Hardening, compliance y preparación operativa",
+      "phase_code": "P7",
+      "plan_owner_ref": "FE",
+      "owner_agent": "frontend",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P7-001"
+      ],
+      "title": "Corregir incumplimientos de accesibilidad",
+      "dod_summary": "Tests de regresión y cero Critical/Serious",
+      "exit_gate": "G5",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P7-003",
+      "phase": "Fase 7. Hardening, compliance y preparación operativa",
+      "phase_code": "P7",
+      "plan_owner_ref": "QA/SRE",
+      "owner_agent": "qa-e2e",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P6-013"
+      ],
+      "title": "Medir CWV y presupuestos de assets en staging",
+      "dod_summary": "LCP/INP/CLS p75 y bundle report archivados",
+      "exit_gate": "G5",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P7-004",
+      "phase": "Fase 7. Hardening, compliance y preparación operativa",
+      "phase_code": "P7",
+      "plan_owner_ref": "FE/BE",
+      "owner_agent": "frontend",
+      "reviewer_agent": "qa-e2e",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P7-003"
+      ],
+      "title": "Corregir regresiones de rendimiento",
+      "dod_summary": "Budgets del apartado 11 cumplidos sin degradar accesibilidad",
+      "exit_gate": "G5",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P7-005",
+      "phase": "Fase 7. Hardening, compliance y preparación operativa",
+      "phase_code": "P7",
+      "plan_owner_ref": "SEC",
+      "owner_agent": "arquitecto-seguridad",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P6-013"
+      ],
+      "title": "Ejecutar SAST, SCA, secret scan y revisión manual",
+      "dod_summary": "0 Critical/High; findings Medium con owner y caducidad",
+      "exit_gate": "G5",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P7-006",
+      "phase": "Fase 7. Hardening, compliance y preparación operativa",
+      "phase_code": "P7",
+      "plan_owner_ref": "SEC",
+      "owner_agent": "arquitecto-seguridad",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P5-013"
+      ],
+      "title": "Ejecutar DAST autenticado y no autenticado en staging",
+      "dod_summary": "Reporte, reproducción y 0 Critical/High",
+      "exit_gate": "G5",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P7-007",
+      "phase": "Fase 7. Hardening, compliance y preparación operativa",
+      "phase_code": "P7",
+      "plan_owner_ref": "PFA/SEC",
+      "owner_agent": "analista-funcional",
+      "reviewer_agent": "orquestador-oak",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P6-013"
+      ],
+      "title": "Finalizar privacidad, consentimientos, retención y borrado",
+      "dod_summary": "Texto versionado, flujos probados y límites legales declarados",
+      "exit_gate": "G5",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P7-008",
+      "phase": "Fase 7. Hardening, compliance y preparación operativa",
+      "phase_code": "P7",
+      "plan_owner_ref": "SRE",
+      "owner_agent": "devops-release",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P6-013"
+      ],
+      "title": "Configurar dashboards y alertas",
+      "dod_summary": "Error rate, latencia, webhooks, auth y jobs visibles; alerta sintética recibida",
+      "exit_gate": "G6",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P7-009",
+      "phase": "Fase 7. Hardening, compliance y preparación operativa",
+      "phase_code": "P7",
+      "plan_owner_ref": "SRE",
+      "owner_agent": "devops-release",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P2-002"
+      ],
+      "title": "Ejecutar backup y restore en entorno aislado",
+      "dod_summary": "RPO/RTO medidos y datos reconciliados",
+      "exit_gate": "G6",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P7-010",
+      "phase": "Fase 7. Hardening, compliance y preparación operativa",
+      "phase_code": "P7",
+      "plan_owner_ref": "SRE",
+      "owner_agent": "devops-release",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P5-013"
+      ],
+      "title": "Ejecutar rollback de aplicación y migración compatible",
+      "dod_summary": "Simulacro documentado sin pérdida de registros confirmados",
+      "exit_gate": "G6",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P7-011",
+      "phase": "Fase 7. Hardening, compliance y preparación operativa",
+      "phase_code": "P7",
+      "plan_owner_ref": "DOC",
+      "owner_agent": "documentacion-handoff",
+      "reviewer_agent": "orquestador-oak",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P6-013"
+      ],
+      "title": "Completar README, runbooks y catálogo de incidencias",
+      "dod_summary": "Un agente nuevo levanta local y opera staging solo con docs",
+      "exit_gate": "G6",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P7-012",
+      "phase": "Fase 7. Hardening, compliance y preparación operativa",
+      "phase_code": "P7",
+      "plan_owner_ref": "QA",
+      "owner_agent": "qa-e2e",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P7-002",
+        "P7-004",
+        "P7-005",
+        "P7-006",
+        "P7-007",
+        "P7-008",
+        "P7-009",
+        "P7-010"
+      ],
+      "title": "Ejecutar smoke posterior a hardening",
+      "dod_summary": "Journeys P0 continúan verdes y evidencias actualizadas",
+      "exit_gate": "G5,G6",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P7-013",
+      "phase": "Fase 7. Hardening, compliance y preparación operativa",
+      "phase_code": "P7",
+      "plan_owner_ref": "RG",
+      "owner_agent": "release-guardian",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P7-001",
+        "P7-002",
+        "P7-003",
+        "P7-004",
+        "P7-005",
+        "P7-006",
+        "P7-007",
+        "P7-008",
+        "P7-009",
+        "P7-010",
+        "P7-011",
+        "P7-012"
+      ],
+      "title": "Auditar non-functional y release readiness",
+      "dod_summary": "PASS G5/G6 o veto con blockers concretos",
+      "exit_gate": "G5,G6",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P8-001",
+      "phase": "Fase 8. UAT, release y handoff final",
+      "phase_code": "P8",
+      "plan_owner_ref": "QA",
+      "owner_agent": "qa-e2e",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P7-013"
+      ],
+      "title": "Ejecutar suite de release tres veces desde estado limpio",
+      "dod_summary": "Tres runs consecutivos, 100 % P0/P1, 0 flakes",
+      "exit_gate": "G4,G7",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P8-002",
+      "phase": "Fase 8. UAT, release y handoff final",
+      "phase_code": "P8",
+      "plan_owner_ref": "QA/PFA",
+      "owner_agent": "qa-e2e",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P8-001"
+      ],
+      "title": "Cerrar matriz de trazabilidad",
+      "dod_summary": "Cada requisito enlaza código, test, evidencia y resultado UAT",
+      "exit_gate": "G7",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P8-003",
+      "phase": "Fase 8. UAT, release y handoff final",
+      "phase_code": "P8",
+      "plan_owner_ref": "DOC",
+      "owner_agent": "documentacion-handoff",
+      "reviewer_agent": "orquestador-oak",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P7-011"
+      ],
+      "title": "Preparar guía demo y cuentas de prueba",
+      "dod_summary": "Guion atleta/organizador, reset y limitaciones reales",
+      "exit_gate": "G7",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P8-004",
+      "phase": "Fase 8. UAT, release y handoff final",
+      "phase_code": "P8",
+      "plan_owner_ref": "USR",
+      "owner_agent": "usuario-validador",
+      "reviewer_agent": "release-guardian",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P8-002",
+        "P8-003"
+      ],
+      "title": "Ejecutar D2 UAT final en staging",
+      "dod_summary": "Checklist firmado: aceptar, rechazar o excepción explícita",
+      "exit_gate": "D2,G6",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P8-005",
+      "phase": "Fase 8. UAT, release y handoff final",
+      "phase_code": "P8",
+      "plan_owner_ref": "RG",
+      "owner_agent": "release-guardian",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P8-004"
+      ],
+      "title": "Verificar cero P0/P1 y excepciones vigentes",
+      "dod_summary": "Informe con hashes y recomendación pre-release GO/NO-GO; no cierra G7",
+      "exit_gate": "D3 entry",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P8-006",
+      "phase": "Fase 8. UAT, release y handoff final",
+      "phase_code": "P8",
+      "plan_owner_ref": "USR",
+      "owner_agent": "usuario-validador",
+      "reviewer_agent": "release-guardian",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P8-005"
+      ],
+      "title": "Autorizar D3 release del artefacto certificado",
+      "dod_summary": "Decisión go/no-go registrada; pagos reales siguen deshabilitados salvo permiso separado",
+      "exit_gate": "D3",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P8-007",
+      "phase": "Fase 8. UAT, release y handoff final",
+      "phase_code": "P8",
+      "plan_owner_ref": "SRE",
+      "owner_agent": "devops-release",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P8-006"
+      ],
+      "title": "Etiquetar release v1.0.0 y desplegar entorno acordado",
+      "dod_summary": "Tag inmutable, changelog, deployment ID y smoke",
+      "exit_gate": "G6,G7",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P8-008",
+      "phase": "Fase 8. UAT, release y handoff final",
+      "phase_code": "P8",
+      "plan_owner_ref": "QA",
+      "owner_agent": "qa-e2e",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P8-007"
+      ],
+      "title": "Ejecutar post-deploy smoke y monitoreo inicial",
+      "dod_summary": "P0 verdes, errores/latencia normales y rollback listo",
+      "exit_gate": "G6,G7",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P8-009",
+      "phase": "Fase 8. UAT, release y handoff final",
+      "phase_code": "P8",
+      "plan_owner_ref": "DOC",
+      "owner_agent": "documentacion-handoff",
+      "reviewer_agent": "orquestador-oak",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P8-008"
+      ],
+      "title": "Entregar paquete de handoff",
+      "dod_summary": "Arquitectura, credenciales por canal seguro, runbooks, backups, riesgos y backlog",
+      "exit_gate": "G7",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P8-010",
+      "phase": "Fase 8. UAT, release y handoff final",
+      "phase_code": "P8",
+      "plan_owner_ref": "SUP",
+      "owner_agent": "orquestador-oak",
+      "reviewer_agent": "analista-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P8-009"
+      ],
+      "title": "Archivar tablero y publicar estado final real",
+      "dod_summary": "Hecho/pendiente/excluido separado; deuda con owner",
+      "exit_gate": "G7",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    },
+    {
+      "task_id": "P8-011",
+      "phase": "Fase 8. UAT, release y handoff final",
+      "phase_code": "P8",
+      "plan_owner_ref": "RG",
+      "owner_agent": "release-guardian",
+      "reviewer_agent": "auditor-no-funcional",
+      "guardian_agent": "release-guardian",
+      "dependencies": [
+        "P8-010"
+      ],
+      "title": "Cerrar ejecución",
+      "dod_summary": "Acta final PASS y lista de evidencias reproducibles",
+      "exit_gate": "G7",
+      "status": "PROPUESTA",
+      "candidate_sha": null,
+      "source_origin": "MASTER_EXECUTION_PLAN.md §12"
+    }
+  ]
+}

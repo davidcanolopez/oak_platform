@@ -1,0 +1,11 @@
+# Comandos verificables en P0-002 (worktree feat/p0-002-task-board sobre 87f92a1)
+
+1. Generación y validación DAG/PII inicial de TASK_BOARD.md, board-export.json y REQUIREMENTS_BASELINE.md:
+   - Resultado: exit 0 (`SUCCESS: generated 114 tasks, 44 AC requirements, critical_path_len=54`)
+
+2. Comprobación negativa sintética de invariantes (ciclo inyectado, auto-revisión y regex 0 PII):
+   - Verificado en Python sobre `docs/evidence/W01/P0-002/board-export.json`, `docs/agentic/TASK_BOARD.md`, `docs/agentic/REQUIREMENTS_BASELINE.md` y `docs/evidence/W01/P0-002/*`.
+
+3. Commit limpio y verificación de árbol:
+   - `git status --short` (solo rutas permitidas de P0-002 antes de commit; vacío tras commit)
+   - `git diff --name-only 87f92a1fd786fe2494bba4c7c8ec89c220b14ee7..HEAD`
