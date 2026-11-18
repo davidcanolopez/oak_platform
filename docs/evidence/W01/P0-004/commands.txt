@@ -1,0 +1,46 @@
+# Comandos reproducibles ejecutados en P0-004 (sin PII ni secretos)
+
+## 1. Aislamiento de rama, limpieza y restauración de integridad sites/** tras .gitattributes
+- `git checkout -b feat/p0-004-app-bootstrap 5ef220194d5e2295cdb8c2ab595e3cccf1975438` -> exit 0
+- Retirado archivo untracked ajeno `docs/agentic/packets/P0-008.md` del workspace de rama -> exit 0
+- Creación de `.gitattributes` (`* text=auto eol=lf` + `sites/** -text`) y re-checkout limpio de `sites/` -> `19/19 MATCH` SHA-256 respecto a `docs/evidence/W01/P0-001/sha256-sites.txt` (mismatches=0, `git status` limpio en `sites/`)
+
+## 2. Generación de lockfile y los 9 comandos activos de G0 (todos exit 0, 0 warnings)
+- `corepack pnpm install` -> exit 0 (resueltos 1299 paquetes, lockfile generado con `pnpm@10.34.9` y override exacto `@cyclonedx/cdxgen>body-parser: 2.4.0`)
+- `corepack pnpm install --frozen-lockfile` -> exit 0 (`Lockfile is up to date, resolution step is skipped`)
+- `corepack pnpm run format:check` -> exit 0 (`All matched files use Prettier code style!`, artefacto `reports/static/prettier.log`)
+- `corepack pnpm run lint` -> exit 0 (`0 errors, 0 warnings`, artefacto `reports/static/eslint.json`)
+- `corepack pnpm run typecheck` -> exit 0 (`tsc --noEmit`, artefacto `reports/static/tsc.log`)
+- `corepack pnpm run test:unit` -> exit 0 (`3 files passed, 12 tests passed`, artefacto `reports/unit/junit.xml`)
+- `corepack pnpm run test:coverage` -> exit 0 (`100% Stmts 38/38, 100% Branch 23/23, 100% Funcs 9/9, 100% Lines 37/37`, artefacto `reports/coverage/coverage-summary.json`)
+- `corepack pnpm run build` -> exit 0 (`Next.js 16.4.6 Turbopack`, rutas `/` y `/api/health`, artefacto `reports/build/next-build.log`)
+- `corepack pnpm run security:sca` -> exit 0 (`[SCA] PASS (high=0, critical=0, moderate=4, low=0)`, artefacto `reports/security/sca-audit.json`)
+- `corepack pnpm run security:secrets` -> exit 0 (`[SECRET_SCAN] PASS (files=115, findings=0, gitleaks=NOT_INSTALLED_IN_LOCAL_PATH)`, artefacto `reports/security/secret-scan.json`)
+
+## 3. Verificación de los 21 comandos fail-closed futuros (todos exit 2, FAIL_CLOSED_NOT_IMPLEMENTED)
+- `corepack pnpm run test:integration` -> exit 2 (`reports/integration/fail-closed.json`)
+- `corepack pnpm run test:contract` -> exit 2 (`reports/contract/fail-closed.json`)
+- `corepack pnpm run db:migrate:fresh` -> exit 2 (`reports/db/migrate-fresh.json`)
+- `corepack pnpm run db:migrate:previous` -> exit 2 (`reports/db/migrate-previous.json`)
+- `corepack pnpm run db:seed:check` -> exit 2 (`reports/db/seed-check.json`)
+- `corepack pnpm run test:e2e:critical` -> exit 2 (`reports/e2e/critical-results.json`)
+- `corepack pnpm run test:e2e:full` -> exit 2 (`reports/e2e/full-results.json`)
+- `corepack pnpm run test:e2e:flake` -> exit 2 (`reports/e2e/flake-check.json`)
+- `corepack pnpm run test:a11y` -> exit 2 (`reports/a11y/axe-results.json`)
+- `corepack pnpm run test:a11y:manual-check` -> exit 2 (`reports/a11y/manual-signoff.json`)
+- `corepack pnpm run security:sast` -> exit 2 (`reports/security/sast-fail-closed.json`)
+- `corepack pnpm run security:dast` -> exit 2 (`reports/security/dast.json`)
+- `corepack pnpm run security:sbom` -> exit 2 (`reports/security/sbom.cdx.json`)
+- `corepack pnpm run test:perf` -> exit 2 (`reports/perf/perf-gate.json`)
+- `corepack pnpm run test:load` -> exit 2 (`reports/perf/load-test.json`)
+- `corepack pnpm run deploy:preview` -> exit 2 (`reports/ops/deploy-preview.json`)
+- `corepack pnpm run deploy:staging` -> exit 2 (`reports/ops/deploy-staging.json`)
+- `corepack pnpm run test:smoke` -> exit 2 (`reports/ops/smoke.json`)
+- `corepack pnpm run ops:observability-check` -> exit 2 (`reports/ops/observability.json`)
+- `corepack pnpm run ops:backup-restore-drill` -> exit 2 (`reports/ops/backup-restore.json`)
+- `corepack pnpm run ops:rollback-drill` -> exit 2 (`reports/ops/rollback.json`)
+
+## 4. Casos negativos y verificaciones estructurales
+- Prueba negativa `secret-scan` sobre fichero temporal externo en `%TEMP%` con patrón Stripe live sintético y correo fuera de RFC 2606 (`node scripts/security/secret-scan.mjs --extra-file <temp> --report reports/security/secret-scan-negative.json`) -> exit 1 (`secretlint=1`, `oak=2`, fichero temporal eliminado antes del commit).
+- Prueba negativa ESLint arquitectura (`eslint --stdin --stdin-filename src/app/probe.tsx` importando `pg` y `eslint --stdin --stdin-filename src/modules/catalog/domain/probe.ts` importando `@electric-sql/pglite`) -> exit 1 (`no-restricted-imports`, 0 warnings).
+- Script Python de verificación sobre `package.json`, `src/` y `sites/**`: `pinned_deps=50+pnpm=51`, `floating=0`, `sites_match=19/19`, `brand_clean=True` -> exit 0.
