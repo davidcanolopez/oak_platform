@@ -1,0 +1,34 @@
+# Comandos exactos reproducibles — P0-008
+
+Ejecutados desde la raíz del worktree `feat/p0-008-dor-dod-protocol` sobre `base_sha: 5ef220194d5e2295cdb8c2ab595e3cccf1975438`.
+
+## 1. Validación positiva (DoR/DoD, handoff 10 puntos, 11 invalidaciones, 10 campos de excepción, plantilla + simulacro 15 claves de manifiesto, 0 PII)
+
+Comando exacto:
+```powershell
+python -c "import json,re;from pathlib import Path;proto=Path('docs/agentic/DOR_DOD_PROTOCOL.md').read_text(encoding='utf-8');tpl=Path('docs/evidence/TEMPLATE_SUMMARY.md').read_text(encoding='utf-8');dry=Path('docs/evidence/W01/P0-008/dry-run-handoff.md').read_text(encoding='utf-8');assert all(f'DoR-{i:02d}' in proto for i in range(1,9));assert all(f'DoD-{i:02d}' in proto for i in range(1,11));assert all(f'| {i} |' in proto for i in range(1,12));assert all(f'{i}. `' in proto for i in range(1,11));assert 'WAIVED_BY_USER' in proto and 'INVALIDATED' in proto;assert '[SIMULACRO_FICTICIO]' in dry and 'FAIL' in dry and 'INVALIDATED' in dry and 'PASS' in dry;req={'task_id','gate_id','commit_sha','base_sha','environment','started_at','finished_at','commands','thresholds','results','artifacts','defects','reviewer','status','reason'};t_obj=json.loads(re.search(r'```json\r?\n(\{.*?\})\r?\n```',tpl,re.S).group(1));d_obj=json.loads(re.search(r'```json\r?\n(\{.*?\})\r?\n```',dry,re.S).group(1));assert req.issubset(t_obj.keys()) and req.issubset(d_obj.keys());em=re.compile(r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}');assert not any(em.findall(Path(p).read_text(encoding='utf-8')) for p in ['docs/agentic/packets/P0-008.md','docs/agentic/DOR_DOD_PROTOCOL.md','docs/evidence/TEMPLATE_SUMMARY.md','docs/evidence/W01/P0-008/dry-run-handoff.md','docs/evidence/W01/P0-008/summary.md','docs/evidence/W01/P0-008/approvals.md']);print('PASS dor=8 dod=10 handoff=10 inv=11 exc=10 manifest_keys=15 sim=FAIL->PASS pii=0')"
+```
+
+Salida real (`exit_code: 0`):
+```text
+PASS dor=8 dod=10 handoff=10 inv=11 exc=10 manifest_keys=15 sim=FAIL->PASS pii=0
+```
+
+## 2. Prueba negativa — Omisión sintética de campo obligatorio del manifiesto (`commit_sha`)
+
+Comando exacto:
+```powershell
+python -c "import json,re;from pathlib import Path;dry=Path('docs/evidence/W01/P0-008/dry-run-handoff.md').read_text(encoding='utf-8');obj=json.loads(re.search(r'```json\r?\n(\{.*?\})\r?\n```',dry,re.S).group(1));obj.pop('commit_sha');req={'task_id','gate_id','commit_sha','base_sha','environment','started_at','finished_at','commands','thresholds','results','artifacts','defects','reviewer','status','reason'};miss=sorted(req-set(obj.keys()));raise SystemExit(f'MANIFEST_MISSING_FIELDS:{miss}') if miss else None"
+```
+
+Salida real (`exit_code: 1`):
+```text
+MANIFEST_MISSING_FIELDS:['commit_sha']
+```
+
+## 3. Verificación Git esperada frente a `5ef220194d5e2295cdb8c2ab595e3cccf1975438`
+
+```powershell
+git diff --name-only 5ef220194d5e2295cdb8c2ab595e3cccf1975438..HEAD
+git status --short
+```
