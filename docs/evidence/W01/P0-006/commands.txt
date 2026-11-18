@@ -1,0 +1,162 @@
+# Comandos ejecutados en P0-006 (sin PII ni secretos)
+
+## 1. Limpieza de rama aislada basada en master (87f92a1fd786fe2494bba4c7c8ec89c220b14ee7)
+
+```powershell
+git checkout -b feat/p0-006-security-threat-model 87f92a1fd786fe2494bba4c7c8ec89c220b14ee7
+Remove-Item docs/agentic/packets/P0-002.md, docs/agentic/packets/P0-003.md, docs/agentic/packets/P0-007.md
+git status --short
+git rev-parse HEAD
+```
+
+Salida observada:
+- `Switched to a new branch 'feat/p0-006-security-threat-model'`
+- `?? docs/agentic/packets/P0-006.md`
+- `87f92a1fd786fe2494bba4c7c8ec89c220b14ee7`
+- Exit code: `0`
+
+## 2. Verificación reproducible en Python (16/16 entidades §7.3, fronteras y amenazas obligatorias, Mermaid válido y 0 PII/emails/secretos)
+
+```powershell
+@'
+import re, sys
+from pathlib import Path
+
+entities = [
+    "User", "AthleteProfile", "ConsentRecord", "Organization", "OrganizationMembership",
+    "Event", "EventModality", "PriceTier", "EventMedia", "Favourite",
+    "Registration", "RegistrationParticipant", "Payment", "PaymentWebhookEvent",
+    "CommunicationLog", "AuditLog"
+]
+
+dcr = Path("docs/security/DATA_CLASSIFICATION_RETENTION.md").read_text(encoding="utf-8")
+dfm = Path("docs/security/DATA_FLOW_MAP.md").read_text(encoding="utf-8")
+tm = Path("docs/security/THREAT_MODEL.md").read_text(encoding="utf-8")
+
+# 1. Verify 16/16 entities classified (detail section + retention table)
+missing_entities = []
+for ent in entities:
+    has_detail = re.search(rf"^####\s+\d+\.\s+`{re.escape(ent)}`", dcr, re.M)
+    has_retention = re.search(rf"^\|\s*`?[^|\n]*{re.escape(ent)}[^|\n]*`?\s*\|", dcr, re.M)
+    if not (has_detail and has_retention):
+        missing_entities.append(ent)
+
+# 2. Verify Mermaid diagram syntax and trust boundaries in DATA_FLOW_MAP.md
+mermaid_blocks = re.findall(r"```mermaid\n(.*?)```", dfm, re.S)
+mermaid_errors = []
+if not mermaid_blocks:
+    mermaid_errors.append("No mermaid block found")
+else:
+    mb = mermaid_blocks[0]
+    lines = [ln.strip() for ln in mb.splitlines() if ln.strip()]
+    if not lines or not lines[0].startswith(("flowchart LR", "flowchart TD")):
+        mermaid_errors.append("Invalid flowchart header")
+    sub_count = sum(1 for ln in lines if ln.startswith("subgraph "))
+    end_count = sum(1 for ln in lines if ln == "end")
+    if sub_count < 1 or sub_count != end_count:
+        mermaid_errors.append(f"Unbalanced subgraphs: {sub_count} vs {end_count}")
+    if re.search(r"<(br|b|i|div|span|p)\b", mb, re.I):
+        mermaid_errors.append("HTML tags prohibited in Mermaid labels")
+    for idx, ln in enumerate(lines, 1):
+        if ln.count('"') % 2 != 0:
+            mermaid_errors.append(f"Unbalanced quotes at mermaid line {idx}")
+    if "-->" not in mb:
+        mermaid_errors.append("No directed edges found")
+
+required_boundaries = ["Anónimo", "Atleta", "Organizador", "Admin", "Stripe", "Resend", "Sentry", "Storage", "Supabase"]
+missing_boundaries = [b for b in required_boundaries if b.lower() not in dfm.lower()]
+
+# 3. Verify mandatory threats & negative tests in THREAT_MODEL.md
+tm_ids = sorted(set(re.findall(r"\bTM-\d{2}\b", tm)))
+nt_ids = sorted(set(re.findall(r"\bNT-\d{2}\b", tm)))
+required_threat_patterns = {
+    "IDOR_cross_tenant": r"IDOR\s+cross-tenant",
+    "Oversell_last_slot": r"Sobreventa.*última plaza|última plaza.*Sobreventa",
+    "Webhook_replay_ooo": r"replay.*out-of-order|out-of-order.*webhook|webhook.*replay",
+    "Client_price_tamper": r"Manipulación de precio en cliente",
+    "CSV_formula_injection": r"CSV Formula Injection|Formula Injection",
+    "Auth_enumeration": r"Enumeración de cuentas",
+    "Secret_leakage": r"Fuga de secretos",
+    "XSS": r"\bXSS\b",
+    "CSRF": r"\bCSRF\b",
+    "Rate_limit": r"Rate\s+limit",
+    "PII_logs_Sentry_AuditLog": r"Fuga de PII.*logs.*Sentry.*AuditLog",
+}
+missing_threats = [k for k, pat in required_threat_patterns.items() if not re.search(pat, tm, re.I | re.S)]
+
+# 4. Scan for real emails, secrets, DNI/NIE, or leftover placeholders across all deliverables
+scan_files = [
+    Path("docs/security/DATA_CLASSIFICATION_RETENTION.md"),
+    Path("docs/security/DATA_FLOW_MAP.md"),
+    Path("docs/security/THREAT_MODEL.md"),
+    Path("docs/evidence/W01/P0-006/summary.md"),
+    Path("docs/evidence/W01/P0-006/approvals.md"),
+    Path("docs/evidence/W01/P0-006/commands.txt"),
+    Path("docs/agentic/packets/P0-006.md"),
+]
+secret_patterns = [
+    r"sk_live_[A-Za-z0-9]{8,}",
+    r"pk_live_[A-Za-z0-9]{8,}",
+    r"sk_test_[A-Za-z0-9]{8,}",
+    r"whsec_[A-Za-z0-9]{8,}",
+    r"re_[A-Za-z0-9_]{16,}",
+    r"eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}",
+    r"-----BEGIN [A-Z ]*PRIVATE KEY-----",
+    r"AKIA[0-9A-Z]{16}",
+    r"ghp_[A-Za-z0-9]{20,}",
+    r"postgres(?:ql)?://[^\s:]+:[^\s@]+@",
+    r"\b\d{8}[A-HJ-NP-TV-Z]\b",
+    r"\b[XYZ]\d{7}[A-HJ-NP-TV-Z]\b",
+]
+findings = []
+for fp in scan_files:
+    txt = fp.read_text(encoding="utf-8")
+    for em in re.findall(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", txt):
+        if not em.endswith((".invalid", ".example", ".test")):
+            findings.append(f"{fp}: non-RFC2606 email {em}")
+    for sp in secret_patterns:
+        for m in re.findall(sp, txt):
+            findings.append(f"{fp}: secret/PII pattern {m}")
+    if ("PLACE" + "HOLDER") in txt:
+        findings.append(f"{fp}: leftover placeholder")
+
+print(f"ENTITIES_CLASSIFIED: {len(entities) - len(missing_entities)}/{len(entities)} (missing={missing_entities})")
+print(f"MERMAID_VALID: {len(mermaid_errors) == 0} (blocks={len(mermaid_blocks)}, errors={mermaid_errors})")
+print(f"BOUNDARIES_COVERED: {len(required_boundaries) - len(missing_boundaries)}/{len(required_boundaries)} (missing={missing_boundaries})")
+print(f"THREATS_AND_NEG_TESTS: TM={len(tm_ids)} NT={len(nt_ids)} missing_topics={missing_threats}")
+print(f"PII_SECRET_SCAN_FINDINGS: {len(findings)} ({findings})")
+
+ok = not missing_entities and not mermaid_errors and not missing_boundaries and not missing_threats and not findings and len(tm_ids) >= 17 and len(nt_ids) >= 17
+sys.exit(0 if ok else 1)
+'@ | python -
+```
+
+Salida real observada:
+
+```text
+ENTITIES_CLASSIFIED: 16/16 (missing=[])
+MERMAID_VALID: True (blocks=1, errors=[])
+BOUNDARIES_COVERED: 9/9 (missing=[])
+THREATS_AND_NEG_TESTS: TM=17 NT=17 missing_topics=[]
+PII_SECRET_SCAN_FINDINGS: 0 ([])
+```
+
+- Exit code: `0`
+
+## 3. Verificación de alcance y commit limpio en `feat/p0-006-security-threat-model`
+
+```powershell
+git status --short
+git add docs/agentic/packets/P0-006.md docs/security/DATA_CLASSIFICATION_RETENTION.md docs/security/DATA_FLOW_MAP.md docs/security/THREAT_MODEL.md docs/evidence/W01/P0-006/summary.md docs/evidence/W01/P0-006/commands.txt docs/evidence/W01/P0-006/approvals.md
+git commit -m "docs(P0-006): define data classification, retention policy, flow map and threat model"
+git rev-parse HEAD
+git diff --name-only 87f92a1fd786fe2494bba4c7c8ec89c220b14ee7..HEAD
+git status --short
+```
+
+Comprobaciones esperadas (`exit 0`):
+- Solo los `7` archivos de `allowed_paths` (`P0-006.md`, `3` documentos bajo `docs/security/` y `3` evidencias bajo `docs/evidence/W01/P0-006/`).
+- `0` cambios en `sites/**`, `docs/adr/**`, `docs/qa/**`, `data/**`, `src/**` ni `docs/agentic/GATE_STATUS.md`.
+- Working tree limpio (`git status --short` vacío tras commit).
+
+
