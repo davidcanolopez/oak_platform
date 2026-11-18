@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Integración de los enfoques metodológicos del TFM</title>
+  <desc id="desc">Disciplined Entrepreneurship funciona como estructura central conectada con investigación de clientes, experimentación y representación del modelo de negocio.</desc>
+  <defs>
+    <marker id="arrow-teal" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto">
+      <path d="M 0 0 L 11 5.5 L 0 11 z" fill="#7faeaa"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto">
+      <path d="M 0 0 L 11 5.5 L 0 11 z" fill="#8fa6c1"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto">
+      <path d="M 0 0 L 11 5.5 L 0 11 z" fill="#9e90ba"/>
+    </marker>
+  </defs>
+
+  <path d="M 540 235 C 610 260, 645 298, 675 320" fill="none" stroke="#7faeaa" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow-teal)"/>
+  <path d="M 1060 235 C 990 260, 955 298, 925 320" fill="none" stroke="#8fa6c1" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow-blue)"/>
+  <path d="M 800 680 L 800 615" fill="none" stroke="#9e90ba" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow-purple)"/>
+
+  <rect x="60" y="70" width="480" height="200" rx="26" fill="#edf5f4" stroke="#a9c9c6" stroke-width="2"/>
+  <text x="105" y="125" fill="#5f918d" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="1.1">COMPRENDER</text>
+  <text x="105" y="174" fill="#2d404d" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="700">Investigación de clientes</text>
+  <line x1="105" y1="202" x2="245" y2="202" stroke="#b9d1cf" stroke-width="3"/>
+  <text x="105" y="225" fill="#61727d" font-family="Arial, Helvetica, sans-serif" font-size="21">
+    <tspan x="105">Necesidades, motivaciones</tspan>
+    <tspan x="105" dy="27">y contexto de uso</tspan>
+  </text>
+
+  <rect x="1060" y="70" width="480" height="200" rx="26" fill="#eef2f7" stroke="#b8c7d8" stroke-width="2"/>
+  <text x="1105" y="125" fill="#7189a6" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="1.1">VALIDAR</text>
+  <text x="1105" y="174" fill="#2d404d" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="700">Experimentación</text>
+  <line x1="1105" y1="202" x2="1245" y2="202" stroke="#c3cfdd" stroke-width="3"/>
+  <text x="1105" y="225" fill="#61727d" font-family="Arial, Helvetica, sans-serif" font-size="21">
+    <tspan x="1105">Hipótesis, pruebas</tspan>
+    <tspan x="1105" dy="27">y aprendizaje iterativo</tspan>
+  </text>
+
+  <circle cx="800" cy="445" r="170" fill="#f5f7f8" stroke="#93aaa9" stroke-width="4"/>
+  <circle cx="800" cy="445" r="142" fill="none" stroke="#c1d3d1" stroke-width="2"/>
+  <text x="800" y="365" text-anchor="middle" fill="#668f8c" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" letter-spacing="1.2">ESTRUCTURA CENTRAL</text>
+  <text x="800" y="427" text-anchor="middle" fill="#2d404d" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="700">
+    <tspan x="800">Disciplined</tspan>
+    <tspan x="800" dy="40">Entrepreneurship</tspan>
+  </text>
+  <line x1="725" y1="505" x2="875" y2="505" stroke="#a9bfbd" stroke-width="3"/>
+  <text x="800" y="546" text-anchor="middle" fill="#61727d" font-family="Arial, Helvetica, sans-serif" font-size="19">
+    <tspan x="800">Proceso metodológico</tspan>
+    <tspan x="800" dy="27">integrador</tspan>
+  </text>
+
+  <rect x="470" y="680" width="660" height="180" rx="26" fill="#f2eff7" stroke="#c4bbd5" stroke-width="2"/>
+  <text x="515" y="728" fill="#7f70a0" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="1.1">ARTICULAR</text>
+  <text x="515" y="777" fill="#2d404d" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">Representación del modelo de negocio</text>
+  <line x1="515" y1="806" x2="655" y2="806" stroke="#c9c1d7" stroke-width="3"/>
+  <text x="515" y="841" fill="#61727d" font-family="Arial, Helvetica, sans-serif" font-size="20">Creación, entrega y captura de valor</text>
+</svg>

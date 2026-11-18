@@ -1,0 +1,18 @@
+# Comandos ejecutados en P0-001 (sin PII ni secretos)
+
+1. Captura de hashes SHA-256 pre-saneamiento, verificación de esqueleto vacío sites/oak-brand-deck/.git (0 objects, 0 refs, 0 remotes), retirada de sites/oak-brand-deck/.git, verificación SHA-256 post-saneamiento y generación de docs/evidence/W01/P0-001/inventory.json y sha256-sites.txt.
+   - Resultado: exit 0 (`Pre/post hashes matched: 19 files. Initial pre-P0-001 count: 56.`)
+
+2. Comprobación de staging e ignorados antes del commit baseline:
+   - `git status --short`
+   - `git add -A`
+   - `git ls-files --stage | Select-String '^160000'` (esperado: 0 coincidencias)
+   - `git ls-files '*~$*'` (esperado: 0 coincidencias)
+
+3. Commit baseline inicial y verificación de worktree aislado:
+   - `git commit -m "chore(P0-001): establish baseline inventory, gitignore and initial commit"`
+   - `git rev-parse HEAD`
+   - `git status --short` (esperado: salida vacía)
+   - `git worktree add ../_oak_p0001_wt_check -b p0-001-wt-verify HEAD`
+   - `git worktree remove ../_oak_p0001_wt_check`
+   - `git branch -D p0-001-wt-verify`

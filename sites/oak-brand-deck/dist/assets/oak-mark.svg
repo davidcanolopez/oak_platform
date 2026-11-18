@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title">
+  <title id="title">OAK topographic symbol</title>
+  <path d="M120 18c55 0 100 38 100 95 0 59-43 109-100 109S20 177 20 120 64 18 120 18Z" fill="none" stroke="#12372A" stroke-width="18"/>
+  <path d="M121 61c32 0 58 23 58 57 0 35-24 61-59 61s-59-25-59-59 26-59 60-59Z" fill="none" stroke="#12372A" stroke-width="15"/>
+  <path d="M183 31c16 9 28 22 35 37" fill="none" stroke="#FF6B35" stroke-width="14" stroke-linecap="round"/>
+</svg>

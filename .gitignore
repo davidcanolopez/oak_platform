@@ -1,0 +1,35 @@
+# Dependencias y build de aplicación (anclado para no ignorar sites/**/dist)
+/node_modules/
+/.pnpm-store/
+/.next/
+/out/
+/dist/
+/build/
+*.tsbuildinfo
+next-env.d.ts
+
+# Tests y cobertura
+/coverage/
+/playwright-report/
+/test-results/
+/blob-report/
+
+# Variables de entorno y secretos locales (nunca commitear)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Temporales de Office, OS e IDE
+~$*
+*.tmp
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+npm-debug.log*
+pnpm-debug.log*
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json

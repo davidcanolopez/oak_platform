@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="620" viewBox="0 0 1600 620" role="img" aria-labelledby="title desc">
+  <title id="title">Posicionamiento del proyecto dentro del ecosistema sport-tech</title>
+  <desc id="desc">La plataforma propuesta integra las aportaciones de las plataformas de actividad y rendimiento y de las plataformas de inscripción y gestión de eventos.</desc>
+  <defs>
+    <marker id="arrow-left" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#a8b7c0"/>
+    </marker>
+  </defs>
+
+  <path d="M 445 310 L 575 310" fill="none" stroke="#a8b7c0" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow-left)"/>
+  <path d="M 1155 310 L 1025 310" fill="none" stroke="#a8b7c0" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow-left)"/>
+
+  <circle cx="250" cy="310" r="190" fill="#edf5f4" stroke="#8eb8b4" stroke-width="3"/>
+  <circle cx="800" cy="310" r="210" fill="#f3f0f7" stroke="#a99bc0" stroke-width="4"/>
+  <circle cx="1350" cy="310" r="190" fill="#eef2f7" stroke="#9eb2ca" stroke-width="3"/>
+
+  <text x="250" y="235" text-anchor="middle" fill="#2d404d" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700">
+    <tspan x="250">Plataformas de</tspan>
+    <tspan x="250" dy="36">actividad y</tspan>
+    <tspan x="250" dy="36">rendimiento</tspan>
+  </text>
+  <line x1="185" y1="356" x2="315" y2="356" stroke="#b9d1cf" stroke-width="3"/>
+  <text x="250" y="402" text-anchor="middle" fill="#61727d" font-family="Arial, Helvetica, sans-serif" font-size="22">Strava · Garmin · Polar</text>
+
+  <text x="800" y="225" text-anchor="middle" fill="#7d6f98" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="1.4">PLATAFORMA PROPUESTA</text>
+  <text x="800" y="285" text-anchor="middle" fill="#2d404d" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="700">
+    <tspan x="800">Experiencia deportiva</tspan>
+    <tspan x="800" dy="41">centralizada</tspan>
+  </text>
+  <line x1="715" y1="365" x2="885" y2="365" stroke="#c2b8d1" stroke-width="3"/>
+  <text x="800" y="411" text-anchor="middle" fill="#61727d" font-family="Arial, Helvetica, sans-serif" font-size="21">
+    <tspan x="800">Experiencia del deportista</tspan>
+    <tspan x="800" dy="30">y gestión de eventos</tspan>
+  </text>
+
+  <text x="1350" y="218" text-anchor="middle" fill="#2d404d" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700">
+    <tspan x="1350">Plataformas de</tspan>
+    <tspan x="1350" dy="35">inscripción y gestión</tspan>
+    <tspan x="1350" dy="35">de eventos</tspan>
+  </text>
+  <line x1="1285" y1="347" x2="1415" y2="347" stroke="#c3cfdd" stroke-width="3"/>
+  <text x="1350" y="391" text-anchor="middle" fill="#61727d" font-family="Arial, Helvetica, sans-serif" font-size="21">
+    <tspan x="1350">RunSignup · Plataformas</tspan>
+    <tspan x="1350" dy="29">locales de inscripción</tspan>
+  </text>
+</svg>

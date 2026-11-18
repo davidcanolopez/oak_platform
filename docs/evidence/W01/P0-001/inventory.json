@@ -1,0 +1,315 @@
+﻿{
+    "task_id":  "P0-001",
+    "audited_at_utc":  "2026-11-18T21:10:56Z",
+    "application_exists":  false,
+    "application_confirmation":  "Confirmed: no Next.js/React application, package.json, lockfile, src/, tests, SQL schema, migrations, seeds, CI/CD, CODEOWNERS or ADR exists prior to P0-001.",
+    "git_state_prior_to_commit":  {
+                                      "git_identity_configured":  {
+                                                                      "user_name_set":  true,
+                                                                      "user_email_set":  true
+                                                                  },
+                                      "nested_git_removed":  "sites/oak-brand-deck/.git (verified 0 objects, 0 refs, 0 remotes)",
+                                      "root_commits":  0,
+                                      "root_remotes":  [
+
+                                                       ],
+                                      "root_branch":  "master"
+                                  },
+    "directories":  {
+                        "web_deck_declared_slides":  19,
+                        "web_deck_section_tags":  23,
+                        "brand_deck_slides":  18,
+                        "site_artifacts_file_count":  0
+                    },
+    "tools":  {
+                  "supabase":  {
+                                   "installed":  false,
+                                   "version":  null
+                               },
+                  "npx":  {
+                              "installed":  true,
+                              "version":  "11.13.0"
+                          },
+                  "gitleaks":  {
+                                   "installed":  false,
+                                   "version":  null
+                               },
+                  "node":  {
+                               "installed":  true,
+                               "version":  "v24.16.0"
+                           },
+                  "stripe":  {
+                                 "installed":  false,
+                                 "version":  null
+                             },
+                  "pnpm":  {
+                               "installed":  false,
+                               "version":  null
+                           },
+                  "python":  {
+                                 "installed":  true,
+                                 "version":  "Python 3.13.3"
+                             },
+                  "git":  {
+                              "installed":  true,
+                              "version":  "git version 2.49.0.windows.1"
+                          },
+                  "docker":  {
+                                 "installed":  false,
+                                 "version":  null
+                             },
+                  "corepack":  {
+                                   "installed":  true,
+                                   "version":  "0.35.0"
+                               },
+                  "gh":  {
+                             "installed":  false,
+                             "version":  null
+                         },
+                  "npm":  {
+                              "installed":  true,
+                              "version":  "11.13.0"
+                          }
+              },
+    "initial_pre_p0_001_file_count":  56,
+    "initial_pre_p0_001_files":  [
+                                     {
+                                         "path":  ".agents/agents/analista-funcional.md",
+                                         "size":  850
+                                     },
+                                     {
+                                         "path":  ".agents/agents/arquitecto-seguridad.md",
+                                         "size":  828
+                                     },
+                                     {
+                                         "path":  ".agents/agents/auditor-no-funcional.md",
+                                         "size":  788
+                                     },
+                                     {
+                                         "path":  ".agents/agents/backend-datos.md",
+                                         "size":  820
+                                     },
+                                     {
+                                         "path":  ".agents/agents/devops-release.md",
+                                         "size":  831
+                                     },
+                                     {
+                                         "path":  ".agents/agents/documentacion-handoff.md",
+                                         "size":  1166
+                                     },
+                                     {
+                                         "path":  ".agents/agents/frontend.md",
+                                         "size":  807
+                                     },
+                                     {
+                                         "path":  ".agents/agents/orquestador-oak.md",
+                                         "size":  1039
+                                     },
+                                     {
+                                         "path":  ".agents/agents/qa-e2e.md",
+                                         "size":  852
+                                     },
+                                     {
+                                         "path":  ".agents/agents/release-guardian.md",
+                                         "size":  1130
+                                     },
+                                     {
+                                         "path":  ".agents/agents/ux-brand.md",
+                                         "size":  792
+                                     },
+                                     {
+                                         "path":  ".agents/rules/oak-brand-ui.md",
+                                         "size":  711
+                                     },
+                                     {
+                                         "path":  ".agents/rules/oak-quality-gates.md",
+                                         "size":  638
+                                     },
+                                     {
+                                         "path":  ".agents/rules/oak-security-data.md",
+                                         "size":  795
+                                     },
+                                     {
+                                         "path":  "AGENTS.md",
+                                         "size":  4914
+                                     },
+                                     {
+                                         "path":  "docs/agentic/DECISION_LOG.md",
+                                         "size":  1692
+                                     },
+                                     {
+                                         "path":  "docs/agentic/GATE_STATUS.md",
+                                         "size":  1142
+                                     },
+                                     {
+                                         "path":  "docs/agentic/MASTER_EXECUTION_PLAN.md",
+                                         "size":  48263
+                                     },
+                                     {
+                                         "path":  "docs/agentic/PROMPT_ANTIGRAVITY.md",
+                                         "size":  2147
+                                     },
+                                     {
+                                         "path":  "docs/agentic/PROMPT_CODEX.md",
+                                         "size":  1924
+                                     },
+                                     {
+                                         "path":  "docs/agentic/QUALITY_GATES.md",
+                                         "size":  17300
+                                     },
+                                     {
+                                         "path":  "docs/agentic/README.md",
+                                         "size":  3233
+                                     },
+                                     {
+                                         "path":  "docs/agentic/TASK_PACKET_TEMPLATE.md",
+                                         "size":  14061
+                                     },
+                                     {
+                                         "path":  "docs/brand/BRAND_UX_CONTRACT.md",
+                                         "size":  40275
+                                     },
+                                     {
+                                         "path":  "figuras/integracion-enfoques-metodologicos-tfm.png",
+                                         "size":  125672
+                                     },
+                                     {
+                                         "path":  "figuras/integracion-enfoques-metodologicos-tfm.svg",
+                                         "size":  6347
+                                     },
+                                     {
+                                         "path":  "figuras/integracion-enfoques-metodologicos-tfm-limpio.png",
+                                         "size":  102518
+                                     },
+                                     {
+                                         "path":  "figuras/integracion-enfoques-metodologicos-tfm-limpio.svg",
+                                         "size":  4316
+                                     },
+                                     {
+                                         "path":  "figuras/posicionamiento-ecosistema-sport-tech-limpio.png",
+                                         "size":  105075
+                                     },
+                                     {
+                                         "path":  "figuras/posicionamiento-ecosistema-sport-tech-limpio.svg",
+                                         "size":  3013
+                                     },
+                                     {
+                                         "path":  "figuras/principales-incertidumbres-validacion.png",
+                                         "size":  117800
+                                     },
+                                     {
+                                         "path":  "figuras/principales-incertidumbres-validacion.svg",
+                                         "size":  6617
+                                     },
+                                     {
+                                         "path":  "figuras/principales-incertidumbres-validacion-limpio.png",
+                                         "size":  100381
+                                     },
+                                     {
+                                         "path":  "figuras/principales-incertidumbres-validacion-limpio.svg",
+                                         "size":  4070
+                                     },
+                                     {
+                                         "path":  "Memoria_TFM_David_Cano_v.1.docx",
+                                         "size":  726094
+                                     },
+                                     {
+                                         "path":  "outputs/01a1cca1-459e-7272-9d2c-fe149168c997/~$Seguimiento_TFM_8_semanas.xlsx",
+                                         "size":  165
+                                     },
+                                     {
+                                         "path":  "outputs/01a1cca1-459e-7272-9d2c-fe149168c997/Seguimiento_TFM_8_semanas.xlsx",
+                                         "size":  10421
+                                     },
+                                     {
+                                         "path":  "sites/oak-brand-deck/.openai/hosting.json",
+                                         "size":  106
+                                     },
+                                     {
+                                         "path":  "sites/oak-brand-deck/dist/assets/oak-community.png",
+                                         "size":  2650696
+                                     },
+                                     {
+                                         "path":  "sites/oak-brand-deck/dist/assets/oak-cyclist.png",
+                                         "size":  3077806
+                                     },
+                                     {
+                                         "path":  "sites/oak-brand-deck/dist/assets/oak-logo.png",
+                                         "size":  953997
+                                     },
+                                     {
+                                         "path":  "sites/oak-brand-deck/dist/assets/oak-mark.svg",
+                                         "size":  530
+                                     },
+                                     {
+                                         "path":  "sites/oak-brand-deck/dist/assets/oak-runner.png",
+                                         "size":  2521210
+                                     },
+                                     {
+                                         "path":  "sites/oak-brand-deck/dist/assets/topography.svg",
+                                         "size":  1025
+                                     },
+                                     {
+                                         "path":  "sites/oak-brand-deck/dist/index.html",
+                                         "size":  18866
+                                     },
+                                     {
+                                         "path":  "sites/oak-brand-deck/dist/script.js",
+                                         "size":  2754
+                                     },
+                                     {
+                                         "path":  "sites/oak-brand-deck/dist/styles.css",
+                                         "size":  28538
+                                     },
+                                     {
+                                         "path":  "sites/oak-web-design-deck/dist/assets/oak-community.png",
+                                         "size":  2650696
+                                     },
+                                     {
+                                         "path":  "sites/oak-web-design-deck/dist/assets/oak-cyclist.png",
+                                         "size":  3077806
+                                     },
+                                     {
+                                         "path":  "sites/oak-web-design-deck/dist/assets/oak-logo.png",
+                                         "size":  953997
+                                     },
+                                     {
+                                         "path":  "sites/oak-web-design-deck/dist/assets/oak-mark.svg",
+                                         "size":  530
+                                     },
+                                     {
+                                         "path":  "sites/oak-web-design-deck/dist/assets/oak-runner.png",
+                                         "size":  2521210
+                                     },
+                                     {
+                                         "path":  "sites/oak-web-design-deck/dist/assets/topography.svg",
+                                         "size":  1025
+                                     },
+                                     {
+                                         "path":  "sites/oak-web-design-deck/dist/index.html",
+                                         "size":  29206
+                                     },
+                                     {
+                                         "path":  "sites/oak-web-design-deck/dist/script.js",
+                                         "size":  2644
+                                     },
+                                     {
+                                         "path":  "sites/oak-web-design-deck/dist/styles.css",
+                                         "size":  46470
+                                     }
+                                 ],
+    "p0_001_artifacts_present_at_capture":  [
+                                                {
+                                                    "path":  ".gitignore",
+                                                    "size":  515
+                                                },
+                                                {
+                                                    "path":  "docs/agentic/packets/P0-001.md",
+                                                    "size":  19958
+                                                },
+                                                {
+                                                    "path":  "docs/evidence/W01/P0-001/sha256-sites.txt",
+                                                    "size":  2556
+                                                }
+                                            ]
+}

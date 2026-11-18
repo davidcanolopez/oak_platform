@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="950" viewBox="0 0 1600 950" role="img" aria-labelledby="title desc">
+  <title id="title">Integración de los enfoques metodológicos del TFM</title>
+  <desc id="desc">Disciplined Entrepreneurship actúa como estructura central y se conecta con tres aportaciones complementarias: investigación de clientes, experimentación y representación del modelo de negocio.</desc>
+
+  <defs>
+    <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#17324d" flood-opacity="0.10"/>
+    </filter>
+    <marker id="arrow-teal" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#2a7f83"/>
+    </marker>
+    <marker id="arrow-gold" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#c78b34"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#7564a8"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="950" fill="#f7f9fb"/>
+  <rect x="0" y="0" width="18" height="950" fill="#17324d"/>
+
+  <text x="80" y="86" fill="#17324d" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700">
+    Integración de los enfoques metodológicos del TFM
+  </text>
+  <text x="80" y="131" fill="#607080" font-family="Arial, Helvetica, sans-serif" font-size="21">
+    Una estructura central enriquecida por tres fuentes complementarias de evidencia y representación
+  </text>
+  <line x1="80" y1="166" x2="1520" y2="166" stroke="#cfd9e0" stroke-width="2"/>
+
+  <!-- Conexiones hacia la estructura central -->
+  <path d="M 504 366 C 590 380, 620 423, 660 457" fill="none" stroke="#2a7f83" stroke-width="5" stroke-linecap="round" marker-end="url(#arrow-teal)"/>
+  <path d="M 1096 366 C 1010 380, 980 423, 940 457" fill="none" stroke="#c78b34" stroke-width="5" stroke-linecap="round" marker-end="url(#arrow-gold)"/>
+  <path d="M 800 734 C 800 680, 800 650, 800 620" fill="none" stroke="#7564a8" stroke-width="5" stroke-linecap="round" marker-end="url(#arrow-purple)"/>
+
+  <!-- Nodo superior izquierdo -->
+  <g filter="url(#soft-shadow)">
+    <rect x="105" y="238" width="430" height="190" rx="24" fill="#ffffff"/>
+    <rect x="105" y="238" width="10" height="190" rx="5" fill="#2a7f83"/>
+  </g>
+  <circle cx="165" cy="298" r="28" fill="#e1f0f0"/>
+  <text x="165" y="307" text-anchor="middle" fill="#236b6f" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">01</text>
+  <text x="210" y="287" fill="#2a7f83" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="1.2">COMPRENDER</text>
+  <text x="210" y="326" fill="#17324d" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="700">Investigación de clientes</text>
+  <text x="145" y="374" fill="#526675" font-family="Arial, Helvetica, sans-serif" font-size="22">
+    <tspan x="145" dy="0">Evidencia sobre necesidades,</tspan>
+    <tspan x="145" dy="30">motivaciones y contexto de uso</tspan>
+  </text>
+
+  <!-- Nodo superior derecho -->
+  <g filter="url(#soft-shadow)">
+    <rect x="1065" y="238" width="430" height="190" rx="24" fill="#ffffff"/>
+    <rect x="1485" y="238" width="10" height="190" rx="5" fill="#c78b34"/>
+  </g>
+  <circle cx="1125" cy="298" r="28" fill="#f6ead8"/>
+  <text x="1125" y="307" text-anchor="middle" fill="#966722" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">02</text>
+  <text x="1170" y="287" fill="#a36f26" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="1.2">VALIDAR</text>
+  <text x="1170" y="326" fill="#17324d" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="700">Experimentación</text>
+  <text x="1105" y="374" fill="#526675" font-family="Arial, Helvetica, sans-serif" font-size="22">
+    <tspan x="1105" dy="0">Pruebas de hipótesis y</tspan>
+    <tspan x="1105" dy="30">aprendizaje iterativo</tspan>
+  </text>
+
+  <!-- Núcleo -->
+  <circle cx="800" cy="500" r="178" fill="#dfe9ef"/>
+  <circle cx="800" cy="500" r="154" fill="#17324d" filter="url(#soft-shadow)"/>
+  <circle cx="800" cy="500" r="129" fill="none" stroke="#4f9da0" stroke-width="2" stroke-dasharray="5 9" opacity="0.75"/>
+  <text x="800" y="447" text-anchor="middle" fill="#9bd1d1" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="1.4">ESTRUCTURA CENTRAL</text>
+  <text x="800" y="493" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="700">
+    <tspan x="800" dy="0">Disciplined</tspan>
+    <tspan x="800" dy="38">Entrepreneurship</tspan>
+  </text>
+  <line x1="730" y1="558" x2="870" y2="558" stroke="#4f9da0" stroke-width="3"/>
+  <text x="800" y="594" text-anchor="middle" fill="#dbe8ed" font-family="Arial, Helvetica, sans-serif" font-size="19">
+    Proceso metodológico integrador
+  </text>
+
+  <!-- Nodo inferior -->
+  <g filter="url(#soft-shadow)">
+    <rect x="510" y="735" width="580" height="150" rx="24" fill="#ffffff"/>
+    <rect x="510" y="875" width="580" height="10" rx="5" fill="#7564a8"/>
+  </g>
+  <circle cx="575" cy="795" r="28" fill="#ebe7f4"/>
+  <text x="575" y="804" text-anchor="middle" fill="#5c4d88" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">03</text>
+  <text x="620" y="781" fill="#655494" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="1.2">ARTICULAR</text>
+  <text x="620" y="820" fill="#17324d" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="700">Representación del modelo de negocio</text>
+  <text x="620" y="856" fill="#526675" font-family="Arial, Helvetica, sans-serif" font-size="22">
+    Síntesis de creación, entrega y captura de valor
+  </text>
+
+  <text x="80" y="924" fill="#607080" font-family="Arial, Helvetica, sans-serif" font-size="18">Fuente: elaboración propia.</text>
+  <text x="1520" y="924" text-anchor="end" fill="#607080" font-family="Arial, Helvetica, sans-serif" font-size="18">Marco metodológico del TFM</text>
+</svg>

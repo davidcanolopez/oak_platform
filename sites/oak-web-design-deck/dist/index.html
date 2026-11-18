@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="OAK product experience deck for desktop and mobile web.">
+  <meta name="theme-color" content="#12372A">
+  <title>OAK Web Experience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/oak-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css?v=2">
+</head>
+<body>
+  <header class="deck-bar" data-theme="dark">
+    <a class="brand-mini" href="#cover">OAK</a>
+    <span id="chapter">Web experience</span>
+    <span class="counter"><b id="current">01</b><i></i><b id="total">19</b></span>
+  </header>
+
+  <aside class="progress-rail" aria-label="Navegación del deck">
+    <span class="progress-line"><i id="progress"></i></span>
+    <nav id="dots"></nav>
+  </aside>
+
+  <div class="deck-controls">
+    <button id="prev" aria-label="Pantalla anterior">←</button>
+    <button id="next" aria-label="Pantalla siguiente">→</button>
+  </div>
+
+  <main id="deck" class="deck">
+    <section class="slide cover" id="cover" data-label="Portada" data-theme="dark">
+      <div class="cover-copy reveal">
+        <img src="assets/oak-logo.png" alt="OAK" class="cover-logo">
+        <p class="overline">Digital product experience · 2026</p>
+        <h1>La web que convierte<br>cada reto en una <em>trayectoria.</em></h1>
+        <p class="lead">Diseño responsive para descubrir eventos, inscribirse y construir una historia deportiva que siempre invita a seguir.</p>
+        <div class="device-tags"><span>PORTÁTIL</span><span>WEB MÓVIL</span><span>RESPONSIVE</span></div>
+      </div>
+      <figure class="cover-visual reveal image-reveal">
+        <img src="assets/oak-runner.png" alt="Corredora de trail en un bosque">
+        <div class="cover-shade"></div>
+        <div class="floating-ui card-event">
+          <span>PRÓXIMO RETO</span><strong>Trail del Robledal</strong><small>18 MAY · 21 KM · +980 M</small>
+        </div>
+        <div class="floating-ui card-progress"><strong>07</strong><span>retos completados</span></div>
+      </figure>
+    </section>
+
+    <section class="slide forest topo" id="north-star" data-label="Visión de producto" data-theme="light">
+      <div class="slide-inner north-layout">
+        <div class="meta"><span>01</span><p>Visión de producto</p></div>
+        <p class="overline reveal">North star</p>
+        <h2 class="display reveal">De una inscripción aislada<br>a una <em>vida deportiva conectada.</em></h2>
+        <div class="north-grid reveal">
+          <article><b>01</b><h3>Descubre</h3><p>Pruebas relevantes según deporte, nivel, distancia y territorio.</p></article>
+          <article><b>02</b><h3>Participa</h3><p>Información clara, inscripción fluida y documentación centralizada.</p></article>
+          <article><b>03</b><h3>Progresa</h3><p>Historial, próximos objetivos y una identidad que crece con cada reto.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide sand" id="architecture" data-label="Arquitectura" data-theme="dark">
+      <div class="slide-inner architecture-layout">
+        <div class="meta"><span>02</span><p>Arquitectura de información</p></div>
+        <div class="section-heading reveal">
+          <p class="overline">Una plataforma · dos experiencias</p>
+          <h2>La arquitectura pone al deportista en el centro.</h2>
+        </div>
+        <div class="ecosystem reveal">
+          <div class="eco-side athlete-side">
+            <span>DEPORTISTA</span>
+            <ul><li>Inicio personal</li><li>Explorar eventos</li><li>Mis inscripciones</li><li>Trayectoria</li></ul>
+          </div>
+          <div class="eco-core">
+            <img src="assets/oak-mark.svg" alt="Símbolo OAK">
+            <strong>OAK</strong><small>Shared data layer</small>
+          </div>
+          <div class="eco-side organizer-side">
+            <span>ORGANIZADOR</span>
+            <ul><li>Panel de control</li><li>Publicar evento</li><li>Participantes</li><li>Analítica</li></ul>
+          </div>
+          <svg class="eco-route" viewBox="0 0 1000 260" aria-hidden="true"><path d="M110 128C260 20 334 234 500 130S742 18 892 128"/><circle cx="110" cy="128" r="9"/><circle cx="500" cy="130" r="9"/><circle cx="892" cy="128" r="9"/></svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide deep" id="journey" data-label="Journey" data-theme="light">
+      <div class="slide-inner journey-layout">
+        <div class="meta"><span>03</span><p>Recorrido principal</p></div>
+        <div class="journey-title reveal"><p class="overline">Core journey</p><h2>Buscar. Elegir.<br><em>Superarse.</em></h2></div>
+        <div class="journey-track reveal">
+          <article><span>01</span><b>Inspiración</b><p>Un reto relevante aparece en el momento adecuado.</p></article>
+          <article><span>02</span><b>Exploración</b><p>Filtros visuales reducen el esfuerzo de búsqueda.</p></article>
+          <article><span>03</span><b>Decisión</b><p>La ficha responde dudas y anticipa la experiencia.</p></article>
+          <article><span>04</span><b>Inscripción</b><p>Un proceso breve, transparente y recuperable.</p></article>
+          <article><span>05</span><b>Continuidad</b><p>El evento pasa a formar parte de la trayectoria.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide sand" id="principles" data-label="Principios UX" data-theme="dark">
+      <div class="slide-inner principles-layout">
+        <div class="meta"><span>04</span><p>Principios de experiencia</p></div>
+        <h2 class="reveal">Diseñado para avanzar,<br>no para administrar.</h2>
+        <div class="principle-grid reveal">
+          <article><span>01</span><h3>Motivación visible</h3><p>Cada pantalla conecta la acción presente con el siguiente reto.</p></article>
+          <article class="accent-card"><span>02</span><h3>Decisión sin fricción</h3><p>Distancia, desnivel, fecha, ubicación y precio siempre a primera vista.</p></article>
+          <article><span>03</span><h3>Progreso con significado</h3><p>Los datos cuentan una historia personal, no una tabla de estadísticas.</p></article>
+          <article><span>04</span><h3>Responsive de verdad</h3><p>La jerarquía se adapta; la experiencia no se limita a encogerse.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide forest" id="desktop-home" data-label="Desktop · Inicio" data-theme="light">
+      <div class="slide-inner showcase-layout">
+        <div class="meta"><span>05</span><p>Portátil · Inicio</p></div>
+        <div class="showcase-copy reveal">
+          <p class="overline">Desktop 1440</p><h2>La próxima meta,<br>desde el primer scroll.</h2>
+          <p>Una portada editorial combina inspiración, recomendación personalizada y acceso directo al buscador.</p>
+          <ul><li>Hero emocional</li><li>Búsqueda orientada a intención</li><li>Próximos retos y territorio</li></ul>
+        </div>
+        <div class="laptop reveal">
+          <div class="laptop-top"><i></i><i></i><i></i><span>oak.run</span></div>
+          <div class="laptop-screen home-screen">
+            <nav class="web-nav"><img src="assets/oak-logo.png" alt=""><div><span>Explorar</span><span>Mi trayectoria</span><span>Organizadores</span></div><button>Entrar</button></nav>
+            <div class="web-hero"><img src="assets/oak-runner.png" alt=""><div class="web-hero-shade"></div><div class="web-hero-copy"><span>ENCUENTRA TU SIGUIENTE RETO</span><h3>Hay una cima<br>esperándote.</h3><p>Eventos que encajan con tu ritmo, tu territorio y tu ambición.</p><div class="search-bar"><b>Deporte</b><span>Trail running</span><b>Dónde</b><span>Madrid</span><button>Buscar →</button></div></div></div>
+            <div class="web-strip"><span>PARA TI</span><strong>Sierra Norte · 18 MAY</strong><strong>Pedales del Duero · 02 JUN</strong><strong>10K Madrid Río · 16 JUN</strong></div>
+          </div>
+          <div class="laptop-base"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide sand" id="desktop-explore" data-label="Desktop · Explorar" data-theme="dark">
+      <div class="slide-inner full-showcase">
+        <div class="meta"><span>06</span><p>Portátil · Explorar</p></div>
+        <div class="full-heading reveal"><div><p class="overline">Discovery</p><h2>Explorar sin perderse.</h2></div><p>Filtros persistentes, mapa contextual y tarjetas que permiten comparar lo esencial.</p></div>
+        <div class="browser-frame reveal">
+          <div class="browser-bar"><i></i><i></i><i></i><span>oak.run/explorar</span></div>
+          <div class="explore-screen">
+            <nav class="mini-nav"><b>OAK</b><span>Explorar</span><span>Trayectoria</span><i></i><button>DC</button></nav>
+            <div class="explore-head"><div><small>42 RETOS EN MADRID</small><h3>¿Hasta dónde quieres llegar?</h3></div><button>Vista mapa ◫</button></div>
+            <div class="filter-row"><button>Trail running⌄</button><button>Este trimestre⌄</button><button>10–30 km⌄</button><button>Desnivel⌄</button><button class="active-filter">Nivel intermedio ×</button></div>
+            <div class="event-grid">
+              <article><div class="event-img"><img src="assets/oak-runner.png" alt=""><span>18 MAY</span><b>TRAIL</b></div><h4>Trail del Robledal</h4><p>Rascafría · 21 km · +980 m</p><footer><span>Desde 38 €</span><b>Ver reto →</b></footer></article>
+              <article><div class="event-img"><img src="assets/oak-cyclist.png" alt=""><span>02 JUN</span><b>CICLISMO</b></div><h4>Pedales de Guadarrama</h4><p>Cercedilla · 86 km · +1.740 m</p><footer><span>Desde 52 €</span><b>Ver reto →</b></footer></article>
+              <article><div class="event-img"><img src="assets/oak-community.png" alt=""><span>16 JUN</span><b>RUNNING</b></div><h4>10K Madrid Río</h4><p>Madrid · 10 km · urbano</p><footer><span>Desde 24 €</span><b>Ver reto →</b></footer></article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide deep" id="desktop-event" data-label="Desktop · Evento" data-theme="light">
+      <div class="slide-inner event-detail-layout">
+        <div class="meta"><span>07</span><p>Portátil · Ficha de evento</p></div>
+        <div class="event-detail-copy reveal"><p class="overline">Decision page</p><h2>Toda la confianza<br>antes del dorsal.</h2><p>La ficha transforma información dispersa en una decisión sencilla: qué es, si encaja y qué ocurrirá después.</p></div>
+        <div class="browser-frame event-browser reveal">
+          <div class="browser-bar"><i></i><i></i><i></i><span>oak.run/reto/trail-del-robledal</span></div>
+          <div class="event-screen">
+            <img class="event-cover" src="assets/oak-runner.png" alt="">
+            <div class="event-cover-shade"></div>
+            <nav class="mini-nav overlay-nav"><b>OAK</b><span>Explorar</span><span>Trayectoria</span><i></i><button>DC</button></nav>
+            <div class="event-title"><small>TRAIL · MADRID</small><h3>Trail del<br>Robledal</h3><p>18 MAY 2026 · RASCAFRÍA</p></div>
+            <div class="event-stats"><article><span>DISTANCIA</span><b>21 km</b></article><article><span>DESNIVEL</span><b>+980 m</b></article><article><span>NIVEL</span><b>Intermedio</b></article><article><span>TIEMPO LÍMITE</span><b>5 h</b></article></div>
+            <aside class="signup-card"><small>INSCRIPCIÓN</small><strong>38 €</strong><p>Incluye dorsal, cronometraje y bolsa del corredor.</p><button>Quiero este reto →</button><span>312 deportistas inscritos</span></aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide lime" id="desktop-signup" data-label="Desktop · Inscripción" data-theme="dark">
+      <div class="slide-inner signup-layout">
+        <div class="meta"><span>08</span><p>Portátil · Inscripción</p></div>
+        <div class="signup-copy reveal"><p class="overline">Conversion flow</p><h2>Una inscripción<br>en tres pasos.</h2><p>Guardado automático, coste total visible y datos reutilizados del perfil.</p><div class="step-list"><span><b>01</b>Modalidad</span><span><b>02</b>Datos</span><span><b>03</b>Confirmación</span></div></div>
+        <div class="signup-window reveal">
+          <header><b>OAK</b><span>Trail del Robledal</span><button>Guardar y salir</button></header>
+          <div class="signup-progress"><i class="done"></i><i class="active"></i><i></i></div>
+          <main><small>PASO 02 DE 03</small><h3>Revisa tus datos</h3><div class="form-grid"><label>Nombre<input value="David Cano"></label><label>Fecha de nacimiento<input value="12 / 09 / 1996"></label><label>Documento<input value="•••••••42Z"></label><label>Talla de camiseta<select><option>M</option></select></label></div><label class="check"><input type="checkbox" checked> Confirmo que los datos son correctos y acepto el reglamento.</label><button class="continue">Continuar →</button></main>
+          <aside><small>RESUMEN</small><h4>Trail del Robledal</h4><p>21 km · 18 MAY 2026</p><div><span>Inscripción</span><b>35 €</b></div><div><span>Gestión</span><b>3 €</b></div><footer><span>Total</span><strong>38 €</strong></footer></aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide sand" id="desktop-athlete" data-label="Desktop · Trayectoria" data-theme="dark">
+      <div class="slide-inner full-showcase">
+        <div class="meta"><span>09</span><p>Portátil · Trayectoria</p></div>
+        <div class="full-heading reveal"><div><p class="overline">Athlete home</p><h2>El perfil como historia viva.</h2></div><p>Próximos retos, evolución y logros en una interfaz que premia la constancia sin convertirla en presión.</p></div>
+        <div class="browser-frame dashboard-frame reveal">
+          <div class="browser-bar"><i></i><i></i><i></i><span>oak.run/mi-trayectoria</span></div>
+          <div class="dashboard-screen">
+            <aside class="dash-nav"><b>OAK</b><span class="selected">⌂ Inicio</span><span>⌕ Explorar</span><span>◉ Mis retos</span><span>◎ Trayectoria</span><i></i><small>DAVID CANO</small></aside>
+            <main class="dash-main"><header><div><small>BUENOS DÍAS, DAVID</small><h3>Tu siguiente paso empieza aquí.</h3></div><button>Explorar retos</button></header><div class="dash-grid"><article class="next-challenge"><img src="assets/oak-runner.png" alt=""><div><small>PRÓXIMO RETO · 24 DÍAS</small><h4>Trail del Robledal</h4><p>21 km · +980 m</p><button>Ver preparación →</button></div></article><article class="ring-card"><small>TRAYECTORIA</small><div class="progress-ring"><span>7</span></div><p>retos completados</p></article><article class="metric-card"><small>ESTE AÑO</small><strong>184</strong><span>kilómetros en eventos</span></article><article class="timeline-card"><small>ÚLTIMOS HITOS</small><div><b></b><span>Media Maratón de Madrid<small>21,1 km · 01:49:22</small></span></div><div><b></b><span>Cross de la Dehesa<small>12 km · 00:58:17</small></span></div></article></div></main>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide forest" id="desktop-organizer" data-label="Desktop · Organizador" data-theme="light">
+      <div class="slide-inner organizer-layout">
+        <div class="meta"><span>10</span><p>Portátil · Organizador</p></div>
+        <div class="organizer-copy reveal"><p class="overline">B2B workspace</p><h2>Menos gestión.<br>Más comunidad.</h2><p>El panel traduce la complejidad operativa en decisiones: captación, ritmo de inscripciones y tareas críticas.</p></div>
+        <div class="organizer-window reveal">
+          <aside><b>OAK / PRO</b><span class="on">Resumen</span><span>Eventos</span><span>Participantes</span><span>Comunicaciones</span><span>Analítica</span><i></i><small>ROBLEDAL CLUB</small></aside>
+          <main><header><div><small>TRAIL DEL ROBLEDAL</small><h3>Panel del evento</h3></div><button>Vista pública ↗</button></header><div class="kpi-row"><article><span>INSCRITOS</span><b>312</b><small>+18 esta semana</small></article><article><span>OCUPACIÓN</span><b>78%</b><small>88 plazas libres</small></article><article><span>INGRESOS</span><b>11.856 €</b><small>Antes de costes</small></article></div><div class="chart-card"><div><span>RITMO DE INSCRIPCIONES</span><b>Objetivo 400</b></div><svg viewBox="0 0 700 190"><path class="grid" d="M0 35H700M0 92H700M0 150H700"/><path class="area" d="M0 167C80 154 110 150 160 137S250 120 310 112 400 86 455 78 560 55 700 32V190H0Z"/><path class="curve" d="M0 167C80 154 110 150 160 137S250 120 310 112 400 86 455 78 560 55 700 32"/></svg></div><div class="tasks"><span>PRÓXIMAS ACCIONES</span><p><b>!</b>Revisar 4 documentos pendientes</p><p><b>→</b>Enviar briefing de carrera</p></div></main>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide deep topo" id="mobile-strategy" data-label="Mobile · Estrategia" data-theme="light">
+      <div class="slide-inner mobile-strategy-layout">
+        <div class="meta"><span>11</span><p>Web móvil</p></div>
+        <div class="mobile-strategy-copy reveal"><p class="overline">Mobile first moments</p><h2>En movimiento,<br>solo importa lo esencial.</h2><p>La versión móvil prioriza las tareas que ocurren fuera del escritorio: descubrir, guardar, consultar y enseñar el dorsal.</p></div>
+        <div class="mobile-priorities reveal"><article><span>01</span><h3>Reach</h3><p>Controles al alcance del pulgar.</p></article><article><span>02</span><h3>Glance</h3><p>La información crítica se entiende de un vistazo.</p></article><article><span>03</span><h3>Resume</h3><p>Cada proceso puede interrumpirse y continuar.</p></article></div>
+        <div class="phone-silhouette reveal"><div class="topo-phone"></div><img src="assets/oak-mark.svg" alt=""></div>
+      </div>
+    </section>
+
+    <section class="slide sand" id="mobile-home" data-label="Mobile · Inicio" data-theme="dark">
+      <div class="slide-inner phone-showcase-layout">
+        <div class="meta"><span>12</span><p>Móvil · Inicio y explorar</p></div>
+        <div class="phone-showcase-copy reveal"><p class="overline">390 × 844</p><h2>Inspiración que<br>cabe en una mano.</h2><p>Cards verticales, filtros como bottom sheet y navegación persistente.</p></div>
+        <div class="phones reveal">
+          <div class="phone"><div class="phone-notch"></div><div class="mobile-home-screen"><header><b>OAK</b><span>⌁</span></header><div class="m-hero"><img src="assets/oak-runner.png" alt=""><div></div><section><small>ENCUENTRA TU SIGUIENTE RETO</small><h3>¿Qué quieres superar ahora?</h3><button>Explorar eventos →</button></section></div><div class="m-section-head"><b>Elegidos para ti</b><span>Ver todos</span></div><article class="m-event"><img src="assets/oak-cyclist.png" alt=""><div><small>02 JUN · CICLISMO</small><b>Pedales de Guadarrama</b><span>86 km · +1.740 m</span></div></article><nav><b>⌂<small>Inicio</small></b><span>⌕<small>Explorar</small></span><span>◎<small>Retos</small></span><span>◉<small>Perfil</small></span></nav></div></div>
+          <div class="phone raised"><div class="phone-notch"></div><div class="mobile-explore-screen"><header><button>←</button><b>Explorar</b><button>⌁</button></header><div class="m-search">⌕ <span>Madrid · Trail running</span></div><div class="m-chips"><span>Fecha</span><span>Distancia</span><span>Nivel</span></div><small class="m-results">42 RETOS</small><article class="m-card"><img src="assets/oak-runner.png" alt=""><span class="date">18<br>MAY</span><button>♡</button><div><small>TRAIL · RASCAFRÍA</small><h4>Trail del Robledal</h4><p>21 km · +980 m · 38 €</p></div></article><article class="m-card compact"><img src="assets/oak-community.png" alt=""><span class="date">16<br>JUN</span><button>♡</button><div><small>RUNNING · MADRID</small><h4>10K Madrid Río</h4><p>10 km · urbano · 24 €</p></div></article><nav><span>⌂<small>Inicio</small></span><b>⌕<small>Explorar</small></b><span>◎<small>Retos</small></span><span>◉<small>Perfil</small></span></nav></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide forest" id="mobile-event" data-label="Mobile · Evento" data-theme="light">
+      <div class="slide-inner phone-showcase-layout reverse-layout">
+        <div class="phones reveal">
+          <div class="phone"><div class="phone-notch"></div><div class="mobile-detail-screen"><div class="m-detail-img"><img src="assets/oak-runner.png" alt=""><div></div><header><button>←</button><button>♡</button></header><section><small>TRAIL · MADRID</small><h3>Trail del<br>Robledal</h3><p>18 MAY · RASCAFRÍA</p></section></div><div class="m-stat-row"><span><small>DISTANCIA</small><b>21 km</b></span><span><small>DESNIVEL</small><b>+980 m</b></span><span><small>NIVEL</small><b>Medio</b></span></div><div class="m-detail-body"><h4>Un reto entre robles</h4><p>Senderos técnicos, paisaje de montaña y una llegada que recordarás.</p><div class="route-mini"><i></i><b>Ver recorrido y perfil</b><span>→</span></div></div><footer><span><small>DESDE</small><b>38 €</b></span><button>Inscribirme →</button></footer></div></div>
+          <div class="phone raised"><div class="phone-notch"></div><div class="mobile-signup-screen"><header><button>×</button><b>Inscripción</b><span>2/3</span></header><div class="m-progress"><i></i><i class="on"></i><i></i></div><main><small>DATOS DEL PARTICIPANTE</small><h3>Solo queda revisar.</h3><label>Nombre<span>David Cano</span></label><label>Documento<span>•••••••42Z</span></label><label>Talla<span>M⌄</span></label><div class="m-total"><span>Total</span><b>38 €</b></div><button>Continuar al pago →</button><p>Guardaremos el progreso si sales ahora.</p></main></div></div>
+        </div>
+        <div class="phone-showcase-copy reveal"><p class="overline">Event to conversion</p><h2>Decidir e inscribirse<br>sin cambiar de contexto.</h2><p>CTA persistente, resumen de precio y formularios pensados para teclado móvil.</p></div>
+      </div>
+    </section>
+
+    <section class="slide lime" id="mobile-journey" data-label="Mobile · Trayectoria" data-theme="dark">
+      <div class="slide-inner phone-showcase-layout">
+        <div class="meta"><span>14</span><p>Móvil · Trayectoria</p></div>
+        <div class="phone-showcase-copy reveal"><p class="overline">Personal growth</p><h2>El progreso se siente,<br>no solo se mide.</h2><p>La topografía de marca se convierte en un sistema de logros que crece con el deportista.</p></div>
+        <div class="phones reveal">
+          <div class="phone dark-phone"><div class="phone-notch"></div><div class="profile-screen"><header><b>OAK</b><button>⚙</button></header><section class="profile-head"><small>TU TRAYECTORIA</small><h3>David Cano</h3><p>Madrid · Trail & Running</p><div class="profile-rings"><img src="assets/oak-mark.svg" alt=""><b>7</b><span>retos</span></div></section><div class="profile-metrics"><span><b>184</b><small>KM</small></span><span><b>3.420</b><small>M+</small></span><span><b>4</b><small>CIUDADES</small></span></div><div class="profile-next"><small>SIGUIENTE NIVEL</small><b>Explorer → Pathfinder</b><i><em></em></i><span>2 retos para avanzar</span></div><nav><span>⌂<small>Inicio</small></span><span>⌕<small>Explorar</small></span><span>◎<small>Retos</small></span><b>◉<small>Perfil</small></b></nav></div></div>
+          <div class="phone raised"><div class="phone-notch"></div><div class="passport-screen"><header><button>←</button><b>Pasaporte OAK</b><button>↗</button></header><small>2026 · 4 RETOS</small><div class="stamp-grid"><article><img src="assets/oak-mark.svg" alt=""><b>01</b><span>MEDIA MADRID</span></article><article class="orange-stamp"><img src="assets/oak-mark.svg" alt=""><b>02</b><span>CROSS DEHESA</span></article><article class="future"><b>?</b><span>TRAIL ROBLEDAL</span></article><article class="future"><b>+</b><span>SIGUIENTE RETO</span></article></div><div class="passport-quote">“No coleccionas medallas.<br>Coleccionas versiones de ti.”</div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide sand" id="responsive" data-label="Sistema responsive" data-theme="dark">
+      <div class="slide-inner responsive-layout">
+        <div class="meta"><span>15</span><p>Sistema responsive</p></div>
+        <div class="responsive-copy reveal"><p class="overline">One system · three modes</p><h2>La interfaz cambia de forma,<br>no de intención.</h2></div>
+        <div class="breakpoint-visual reveal">
+          <article class="bp desktop-bp"><header><span>1440+</span><b>12 columnas</b></header><div class="bp-canvas"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>Narrativa amplia, comparación y paneles operativos.</p></article>
+          <article class="bp tablet-bp"><header><span>768–1199</span><b>8 columnas</b></header><div class="bp-canvas"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>Jerarquía apilada y acciones contextuales.</p></article>
+          <article class="bp mobile-bp"><header><span>320–767</span><b>4 columnas</b></header><div class="bp-canvas"><i></i><i></i><i></i><i></i></div><p>Una tarea principal y navegación de pulgar.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide deep" id="components" data-label="Componentes" data-theme="light">
+      <div class="slide-inner components-layout">
+        <div class="meta"><span>16</span><p>Sistema de componentes</p></div>
+        <div class="components-heading reveal"><p class="overline">UI foundations</p><h2>Consistencia que acelera.</h2></div>
+        <div class="component-board reveal">
+          <article class="buttons-sample"><small>BUTTONS</small><button>Explorar retos →</button><button class="secondary">Guardar reto</button><button class="icon-button">♡</button></article>
+          <article class="chips-sample"><small>FILTER CHIPS</small><div><span>Trail running⌄</span><span>10–30 km⌄</span><span class="selected-chip">Intermedio ×</span></div></article>
+          <article class="cards-sample"><small>EVENT CARD</small><div class="mini-event-card"><img src="assets/oak-cyclist.png" alt=""><section><span>02 JUN · CICLISMO</span><b>Pedales de Guadarrama</b><p>86 km · +1.740 m</p></section></div></article>
+          <article class="inputs-sample"><small>INPUTS</small><label>Ubicación<span>Madrid</span></label><label class="focus-input">Distancia<span>10–30 km</span></label></article>
+          <article class="type-sample"><small>TYPE SCALE</small><strong>Display / 72</strong><b>Heading / 32</b><span>Body / 16</span><em>Label / 11</em></article>
+          <article class="tokens-sample"><small>COLOR TOKENS</small><div><i></i><i></i><i></i><i></i><i></i></div><p>Warm Sand sustituye cualquier blanco.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide sand" id="accessibility" data-label="Accesibilidad" data-theme="dark">
+      <div class="slide-inner accessibility-layout">
+        <div class="meta"><span>17</span><p>Interacción y accesibilidad</p></div>
+        <div class="accessibility-copy reveal"><p class="overline">Designed for everyone</p><h2>El reto debe estar<br>en la prueba, no en la interfaz.</h2></div>
+        <div class="accessibility-grid reveal">
+          <article><span class="a11y-icon">Aa</span><h3>Contraste real</h3><p>Verde profundo y beige cálido superan el mínimo para texto funcional.</p><b>WCAG AA</b></article>
+          <article><span class="a11y-icon">⌨</span><h3>Teclado completo</h3><p>Orden de foco lógico, estados visibles y navegación sin ratón.</p><b>FOCUS 3 PX</b></article>
+          <article><span class="a11y-icon">48</span><h3>Objetivos táctiles</h3><p>Acciones primarias con un área mínima cómoda en móvil.</p><b>48 × 48 PX</b></article>
+          <article><span class="a11y-icon">→</span><h3>Movimiento útil</h3><p>Animación para orientar; reducción automática si el usuario lo solicita.</p><b>REDUCED MOTION</b></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide end" id="end" data-label="Cierre" data-theme="light">
+      <img src="assets/oak-community.png" alt="Comunidad de deportistas" class="end-bg">
+      <div class="end-shade"></div>
+      <div class="end-content reveal">
+        <img src="assets/oak-logo.png" alt="OAK">
+        <p class="overline">Desktop + mobile web</p>
+        <h2>Una plataforma.<br>Infinitos siguientes pasos.</h2>
+        <p>Overcome. Achieve. Keep going.</p>
+      </div>
+      <a href="#cover" class="restart">Volver al inicio ↑</a>
+    </section>
+  </main>
+
+  <script src="script.js?v=2"></script>
+</body>
+</html>
