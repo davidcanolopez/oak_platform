@@ -1,0 +1,64 @@
+# Comandos reproducibles ejecutados en P0-003 (sin PII ni secretos)
+
+1. Aislamiento de rama sobre base SHA certificado de P0-001 (`87f92a1fd786fe2494bba4c7c8ec89c220b14ee7`) y limpieza de archivos untracked ajenos al paquete:
+   - `git checkout -b feat/p0-003-architecture-adrs 87f92a1fd786fe2494bba4c7c8ec89c220b14ee7` (exit 0)
+   - `Remove-Item "docs/agentic/packets/P0-002.md","docs/agentic/packets/P0-006.md","docs/agentic/packets/P0-007.md"` (exit 0; mantuvo únicamente `allowed_paths`)
+
+2. Verificación de versiones locales y compatibilidad real de paquetes en el registro npm (solo lectura):
+   - `node -v; corepack --version; npm -v; python --version; git config core.autocrlf`
+     -> `v24.16.0`, `0.35.0`, `11.13.0`, `Python 3.13.3`, `core.autocrlf=true` (exit 0)
+   - Consulta paralela Node `fetch` contra `https://registry.npmjs.org/<pkg>/latest` y metadatos `engines` / `peerDependencies` / `deprecated` / `bin` para los 53 paquetes/herramientas fijados en ADR-001 (confirmando `pnpm@10.34.9` vs `12.21.0`, `eslint@9.39.5` vs `10.15.0`, `typescript@5.9.3` vs `7.0.2`, `@types/node@24.19.2`, `secretlint@14.0.1` incluyendo preset sin paquete deprecado, y `@electric-sql/pglite@0.5.16` sin `pglite-socket`) (exit 0)
+   - Inspección read-only de `C:\Program Files\nodejs\node_modules\corepack\dist\lib\corepack.cjs` confirmando soporte de `pnpm` `6.x..10.x` vía `./bin/pnpm.cjs` (`pnpm@10.34.9` compatible; `pnpm@12.21.0` usa bin sin extensión incompatible) (exit 0)
+
+3. Verificación automatizada en Python sobre todos los entregables (reproducible en Git Bash con `python -c '...'` y en PowerShell mediante here-string `@' ... '@ | python -`; lectura explícita UTF-8):
+   - Comprueba: `30/30` tokens canónicos de `docs/agentic/QUALITY_GATES.md` §5 presentes en `ADR-002` (`9` activos en `G0` + `21` fail-closed), `53/53` versiones exactas `X.Y.Z` sin rangos flotantes en `ADR-001`, estados obligatorios de `MASTER_EXECUTION_PLAN.md §7.4` y DAG acíclico + compensación + outbox en `SYSTEM_ARCHITECTURE.md`, presupuestos cuantitativos `G0`/`G5` en `ADR-004`, y `0` PII / `0` emails no RFC-2606 / `0` secretos / `0` placeholders en todos los entregables y evidencias:
+
+   ```bash
+   # Git Bash / POSIX (en PowerShell usar: @' <cuerpo> '@ | python -)
+   python -c '
+   import re
+   from pathlib import Path
+   qg = Path("docs/agentic/QUALITY_GATES.md").read_text(encoding="utf-8")
+   tokens = list(dict.fromkeys(re.findall(r"<[A-Z0-9_]+>", qg)))
+   assert len(tokens) == 30, len(tokens)
+   adr2 = Path("docs/adr/ADR-002-canonical-commands-and-environments.md").read_text(encoding="utf-8")
+   assert all(t in adr2 for t in tokens)
+   g0_sec = adr2.split("### 2.2")[1].split("### 2.3")[0]
+   fc_sec = adr2.split("### 2.4")[1].split("## 3.")[0]
+   g0 = [t for t in tokens if f"| `{t}` |" in g0_sec]
+   fc = [t for t in tokens if f"| `{t}` |" in fc_sec]
+   assert len(g0) == 9 and len(fc) == 21 and len(set(g0) | set(fc)) == 30
+   adr1 = Path("docs/adr/ADR-001-stack-and-modular-monolith.md").read_text(encoding="utf-8")
+   rows = [l for l in adr1.split("### 2.2")[1].split("### 2.3")[0].splitlines() if l.startswith("|") and not l.startswith(("| Categoría", "|---"))]
+   for r in rows:
+       ver = [c.strip() for c in r.strip("|").split("|")][2].strip("`").strip()
+       assert re.fullmatch(r"\d+\.\d+\.\d+", ver), ver
+   deliverables = [
+       "docs/adr/ADR-001-stack-and-modular-monolith.md",
+       "docs/adr/ADR-002-canonical-commands-and-environments.md",
+       "docs/adr/ADR-003-auth-tenancy-and-integrations.md",
+       "docs/adr/ADR-004-migrations-recovery-and-budgets.md",
+       "docs/architecture/SYSTEM_ARCHITECTURE.md",
+       "docs/evidence/W01/P0-003/summary.md",
+       "docs/evidence/W01/P0-003/commands.txt",
+       "docs/evidence/W01/P0-003/approvals.md",
+       "docs/agentic/packets/P0-003.md",
+   ]
+   email_re = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+   secret_re = re.compile(r"(sk_live_[A-Za-z0-9]{8,}|pk_live_[A-Za-z0-9]{8,}|sk_test_[A-Za-z0-9]{8,}|whsec_[A-Za-z0-9]{8,}|ghp_[A-Za-z0-9]{10,}|eyJ[A-Za-z0-9_-]{10,}\.eyJ|-----BEGIN [A-Z ]*PRIVATE KEY-----[A-Za-z0-9+/=\s]{10,})")
+   for f in deliverables:
+       txt = Path(f).read_text(encoding="utf-8")
+       emails = [e for e in email_re.findall(txt) if not e.endswith((".invalid", ".example", ".test"))]
+       assert not emails, (f, emails)
+       assert not secret_re.findall(txt), f
+   print(f"OK: tokens={len(tokens)} (g0={len(g0)}, fc={len(fc)}), pinned={len(rows)}, pii=0, secrets=0")
+   '
+   ```
+
+4. Staging selectivo exclusivo dentro de `allowed_paths`, commit y comprobaciones de limpieza/integridad post-commit:
+   - `git add docs/agentic/packets/P0-003.md docs/adr/ADR-001-stack-and-modular-monolith.md docs/adr/ADR-002-canonical-commands-and-environments.md docs/adr/ADR-003-auth-tenancy-and-integrations.md docs/adr/ADR-004-migrations-recovery-and-budgets.md docs/architecture/SYSTEM_ARCHITECTURE.md docs/evidence/W01/P0-003/summary.md docs/evidence/W01/P0-003/commands.txt docs/evidence/W01/P0-003/approvals.md`
+   - `git commit -m "docs(P0-003): define pinned stack ADRs, 30 canonical commands, tenancy and budgets"`
+   - `git rev-parse HEAD`
+   - `git status --short` (esperado: salida vacía)
+   - `git diff --name-only 87f92a1fd786fe2494bba4c7c8ec89c220b14ee7..HEAD` (esperado: exactamente los 9 archivos de `allowed_paths`, cero cambios en `sites/**`, `package.json`, `docs/security/**`, `docs/qa/**` o `GATE_STATUS.md`)
+
