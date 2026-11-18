@@ -1,0 +1,32 @@
+# Política por defecto: texto normalizado a LF en índice y working tree
+* text=auto eol=lf
+
+# Código fuente, configuración, SQL, Markdown y scripts siempre con LF
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.mjs text eol=lf
+*.cjs text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.md text eol=lf
+*.sql text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.sh text eol=lf
+*.svg text eol=lf
+
+# Binarios explícitos (sin conversión de fin de línea)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.woff2 binary
+*.ico binary
+*.docx binary
+*.xlsx binary
+*.pdf binary
+
+# Inmutabilidad de artefactos visuales congelados en P0-001 (no renormalizar)
+sites/** -text

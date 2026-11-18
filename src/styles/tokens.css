@@ -1,0 +1,10 @@
+/*
+ * Placeholder tecnico minimo para Fase 0 (P0-004).
+ * No congela tokens definitivos de Gate D1 (P1-005) ni define paletas de estado.
+ * Par aprobado en BRAND_UX_CONTRACT.md §4.4: #17211B sobre #E3D4BB (11.34:1).
+ */
+:root {
+  --oak-surface-placeholder: #e3d4bb;
+  --oak-text-placeholder: #17211b;
+  --oak-focus-placeholder: #12372a;
+}

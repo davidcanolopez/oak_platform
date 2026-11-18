@@ -1,0 +1,39 @@
+# CODEOWNERS de OAK (equipos funcionales sin PII ni correos personales)
+* @oak-platform/orquestador-oak @oak-platform/release-guardian
+
+# Gobierno, calidad y decisiones
+/AGENTS.md @oak-platform/orquestador-oak @oak-platform/release-guardian
+/docs/agentic/GATE_STATUS.md @oak-platform/release-guardian
+/docs/agentic/DECISION_LOG.md @oak-platform/orquestador-oak @oak-platform/release-guardian
+
+# Plataforma, CI/CD, dependencias y scripts de seguridad
+/.github/ @oak-platform/devops-release @oak-platform/release-guardian
+/.gitattributes @oak-platform/devops-release
+/.nvmrc @oak-platform/devops-release
+/.npmrc @oak-platform/devops-release
+/package.json @oak-platform/devops-release @oak-platform/arquitecto-seguridad
+/pnpm-lock.yaml @oak-platform/devops-release @oak-platform/arquitecto-seguridad
+/next.config.ts @oak-platform/devops-release @oak-platform/frontend
+/scripts/ci/ @oak-platform/devops-release @oak-platform/release-guardian
+/scripts/security/ @oak-platform/arquitecto-seguridad @oak-platform/devops-release
+/scripts/ops/ @oak-platform/devops-release
+
+# Arquitectura, seguridad, datos y migraciones
+/docs/adr/ @oak-platform/arquitecto-seguridad
+/docs/architecture/ @oak-platform/arquitecto-seguridad
+/docs/security/ @oak-platform/arquitecto-seguridad
+/scripts/db/ @oak-platform/backend-datos @oak-platform/devops-release
+/supabase/ @oak-platform/backend-datos @oak-platform/arquitecto-seguridad
+/src/shared/ @oak-platform/arquitecto-seguridad @oak-platform/backend-datos
+/src/modules/ @oak-platform/backend-datos @oak-platform/arquitecto-seguridad
+
+# Presentación, marca, UX accesible y QA
+/docs/brand/ @oak-platform/ux-brand
+/src/styles/ @oak-platform/ux-brand @oak-platform/frontend
+/src/components/ @oak-platform/frontend @oak-platform/ux-brand
+/src/app/ @oak-platform/frontend
+/docs/qa/ @oak-platform/qa-e2e
+/tests/unit/ @oak-platform/qa-e2e
+/tests/integration/ @oak-platform/backend-datos @oak-platform/qa-e2e
+/tests/contract/ @oak-platform/backend-datos @oak-platform/qa-e2e
+/tests/e2e/ @oak-platform/qa-e2e

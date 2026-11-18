@@ -1,0 +1,22 @@
+# Artefactos congelados, generados y documentacion normativa previa fuera de P0-004
+sites/**
+reports/
+.next/
+out/
+build/
+coverage/
+playwright-report/
+test-results/
+pnpm-lock.yaml
+next-env.d.ts
+AGENTS.md
+.agents/**
+docs/adr/**
+docs/architecture/**
+docs/agentic/**
+docs/brand/**
+docs/evidence/**
+docs/qa/**
+docs/security/**
+figuras/**
+outputs/**

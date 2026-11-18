@@ -10,6 +10,7 @@ next-env.d.ts
 
 # Tests y cobertura
 /coverage/
+/reports/
 /playwright-report/
 /test-results/
 /blob-report/
