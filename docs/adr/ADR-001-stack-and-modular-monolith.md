@@ -24,7 +24,7 @@ Para desbloquear `P0-004` (inicialización reproducible de la aplicación) y `P0
    - **Motivo técnico verificado:** La inspección directa del binario de `corepack 0.35.0` muestra que soporta nativamente la serie `10.x` apuntando a `./bin/pnpm.cjs` (verificado en `pnpm@10.34.9`), mientras que `pnpm@12.21.0` cambió su binario a una ruta sin extensión (`bin.pnpm = "pnpm"`) incompatible con la resolución de `corepack 0.35.0`. Por ello se fija `10.34.9` y **no** `12.21.0`.
    - **Comando reproducible sin `pnpm` global:** En entornos donde `pnpm` no esté preinstalado en `PATH` (`inventory.json`: `pnpm.installed = false`), todos los scripts y documentación usan **`corepack pnpm ...`** (o `pnpm` tras ejecutar `corepack enable` en setup del entorno).
 3. **Política de bloqueo estricto en `P0-004`:**
-   - `.npmrc` incluirá `save-exact=true`, `engine-strict=true` y `strict-peer-dependencies=true`.
+   - `.npmrc` incluirá `save-exact=true`, `engine-strict=true`, `strict-peer-dependencies=true` y `auto-install-peers=true` (necesario para resolver peers estándar como `playwright-core` requerido por `@axe-core/playwright@4.14.0` sin relajar versiones estrictas).
    - Todas las entradas de `dependencies` y `devDependencies` en `package.json` usarán versiones exactas `X.Y.Z` (prohibidos rangos flotantes con caret, tilde, asterisco, comparadores abiertos o etiqueta móvil).
    - El archivo `pnpm-lock.yaml` es obligatorio y las instalaciones en CI y Release Guardian usan exclusivamente `--frozen-lockfile`.
 
@@ -48,7 +48,7 @@ Todas las versiones siguientes han sido comprobadas contra el registro npm respe
 | Iconografía | `lucide-react` | `1.75.0` | Iconos SVG vectoriales consistentes | Sustituye glifos Unicode prohibidos (`BRAND_UX_CONTRACT.md §11.1`); peer React 19 |
 | Datos y Auth | `@supabase/supabase-js` | `2.119.1` | Cliente Auth, Storage y acceso DB encapsulado en infraestructura | `engines.node >=22.0.0` |
 | Datos y Auth | `@supabase/ssr` | `0.12.7` | Sesión SSR por cookies `HttpOnly` en App Router | Peer `@supabase/supabase-js` serie 2.114+ |
-| Datos SQL | `pg` | `8.23.1` | Pool PostgreSQL servidor para migraciones SQL, tests G3 y transacciones `FOR UPDATE` | `engines.node >=16.0.0` |
+| Datos SQL | `pg` | `8.23.1` | Pool PostgreSQL servidor confinado en `src/shared/infrastructure/db/` para RLS transaccional, migraciones SQL y `FOR UPDATE` | `engines.node >=16.0.0` |
 | Pagos (Test) | `stripe` | `23.1.0` | SDK servidor Stripe Checkout modo test y verificación de webhooks | `engines.node >=20` |
 | Pagos (Test) | `@stripe/stripe-js` | `10.3.0` | Redirección segura a Checkout hospedado sin tocar PAN/CVV | Tokenización compliant |
 | Email (Sandbox) | `resend` | `6.39.0` | Correos transaccionales en sandbox (`communications`) | `engines.node >=20` |
@@ -75,13 +75,11 @@ Todas las versiones siguientes han sido comprobadas contra el registro npm respe
 | Formato | `prettier` | `3.10.1` | Formateo determinista (`<FORMAT_CHECK>`) | `engines.node >=14` |
 | Formato CSS | `prettier-plugin-tailwindcss` | `0.8.1` | Ordenación determinista de clases Tailwind | `engines.node >=20.19` |
 | Scripts TS | `tsx` | `4.23.15` | Ejecución reproducible de scripts de migración, seed y ops | `engines.node >=18.0.0` |
-| Secret Scan | `secretlint` | `14.0.1` | Escáner determinista de secretos sin binario global externo | `engines.node >=22.0.0` |
-| Secret Rules | `@secretlint/secretlint-rule-preset-recommend` | `13.1.0` | Reglas de detección de claves privadas, tokens y credenciales | `engines.node >=22.0.0` |
+| Secret Scan | `secretlint` | `14.0.1` | Escáner determinista de secretos sin binario global externo (incluye internamente el preset recomendado desde v14; no añadir `@secretlint/secretlint-rule-preset-recommend` deprecado) | `engines.node >=22.0.0` |
 | SBOM | `@cyclonedx/cdxgen` | `12.9.2` | Generación SBOM CycloneDX sobre `pnpm-lock.yaml` | `engines.node` compatible con Node 24, `pnpm >=10` |
 | Perf / CWV | `@lhci/cli` | `0.16.1` | Lighthouse CI móvil (`>=90` perf, `>=95` a11y) y presupuestos | `engines.node >=22.19.0` |
 | Carga | `autocannon` | `9.0.0` | Pruebas de carga y concurrencia HTTP en Node 24 (`<LOAD_TEST>`) | Paquete Node puro sin binario Go externo |
-| DB Local G3 | `@electric-sql/pglite` | `0.5.16` | Postgres 17 WASM embebido para pre-validación SQL local sin Docker | Complemento dev local, no sustituye CI Postgres real |
-| DB Socket G3 | `@electric-sql/pglite-socket` | `0.2.19` | Servidor TCP wire-protocol local sobre PGlite para `pg` | Par compatible con `@electric-sql/pglite@0.5.16` |
+| DB Local G3 | `@electric-sql/pglite` | `0.5.16` | Postgres 17 WASM embebido vía puerto SQL interno en `src/shared/infrastructure/db/` (sin `pglite-socket`, evitando 7 extensiones peer innecesarias) | 0 dependencias ni peers; complemento dev local, no sustituye CI Postgres real |
 | Supabase CLI | `supabase` | `3.2.0` | CLI invocada localmente vía `corepack pnpm exec supabase` cuando haya Docker | Evita dependencia de instalación global |
 | UI Catalog | `storybook` | `10.6.7` | Catálogo aislado de componentes y sus estados (`BRAND_UX_CONTRACT.md §11`) | Peer `prettier` 3 y `@types/react` 19 |
 | UI Catalog | `@storybook/nextjs-vite` | `10.6.7` | Integración Storybook con Next.js 16 y Vite 8 | Peer Next 16, Vite 8, React 19 |
@@ -111,7 +109,7 @@ Dado que el host local inventariado en `P0-001` no dispone de `docker` ni `supab
    - Cada job de `G3` levanta una instancia efímera y aislada por ejecución usando `supabase start` (`supabase@3.2.0` vía `corepack pnpm exec supabase` o acción `supabase/setup-cli` fijada en CI) o contenedor `postgres:17-alpine` + esquema de roles/funciones Supabase (`auth.uid()`, `auth.role()`, roles `anon`, `authenticated`, `service_role`) cuando el test solo requiera SQL/RLS.
    - Sobre esta instancia efímera recién creada (nunca reutilizada entre runs) se ejecutan obligatoriamente: `<DB_MIGRATE_FRESH>`, `<DB_MIGRATE_FROM_PREVIOUS>`, `<SEED_IDEMPOTENCY_CHECK>`, `<INTEGRATION_TEST>` (incluyendo RLS negativo y concurrencia real multi-conexión TCP sobre última plaza con `SELECT ... FOR UPDATE`) y `<CONTRACT_TEST>`.
 2. **Pre-validación Rápida Local sin Docker (`G3_DB_MODE=pglite-dev`):**
-   - Para que los desarrolladores puedan validar localmente en Windows sin Docker las migraciones SQL, triggers, constraints, idempotencia de seed y sintaxis de políticas RLS antes de abrir PR, el runner de tests soporta `@electric-sql/pglite@0.5.16` + `@electric-sql/pglite-socket@0.2.19` ejecutando PostgreSQL 17 en WASM completamente efímero en memoria o carpeta temporal.
+   - Para que los desarrolladores puedan validar localmente en Windows sin Docker las migraciones SQL, triggers, constraints, idempotencia de seed y sintaxis de políticas RLS antes de abrir PR, el puerto SQL en `src/shared/infrastructure/db/` soporta `@electric-sql/pglite@0.5.16` directo (`pglite.query`/`pglite.transaction`) ejecutando PostgreSQL 17 en WASM completamente efímero en memoria o carpeta temporal, sin requerir `@electric-sql/pglite-socket`.
    - **Límite explícito y regla anti-engaño:** Un run en modo `pglite-dev` imprime una etiqueta clara `DEV_PRECHECK_ONLY (NO_CERTIFIES_G3)` y **no certifica `G3 PASS`**, ya que no reproduce latencia ni contención TCP multi-proceso ni GoTrue/PostgREST HTTP completos.
 3. **Alternativa Local Conectada Aislada (`G3_DB_MODE=ephemeral-pg-url`):**
    - En ausencia local de Docker, puede ejecutarse la suite completa contra una base o branch PostgreSQL/Supabase **desechable dedicada exclusivamente a tests** (`G3_TEST_DATABASE_URL`), sujeta a un guardia fail-closed que aborta (`exit != 0`) si la URL apunta a `staging` o `producción` o si no incluye un esquema o identificador de aislamiento efímero.

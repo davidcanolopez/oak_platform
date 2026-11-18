@@ -7,13 +7,14 @@
 2. Verificación de versiones locales y compatibilidad real de paquetes en el registro npm (solo lectura):
    - `node -v; corepack --version; npm -v; python --version; git config core.autocrlf`
      -> `v24.16.0`, `0.35.0`, `11.13.0`, `Python 3.13.3`, `core.autocrlf=true` (exit 0)
-   - Consulta paralela Node `fetch` contra `https://registry.npmjs.org/<pkg>/latest` y metadatos `engines` / `peerDependencies` / `bin` para los 55 paquetes/herramientas fijados en ADR-001 (`pnpm@10.34.9` vs `12.21.0`, `eslint@9.39.5` vs `10.15.0`, `typescript@5.9.3` vs `7.0.2`, `@types/node@24.19.2`, `next@16.4.6`, `react@19.3.1`, `tailwindcss@4.3.5`, `zod@4.6.7`, `vitest@5.1.1`, `@playwright/test@1.65.1`, `@axe-core/playwright@4.14.0`, `@supabase/supabase-js@2.119.1`, `stripe@23.1.0`, `resend@6.39.0`, `@sentry/nextjs@11.14.0`, `secretlint@14.0.1`, `autocannon@9.0.0`, `@lhci/cli@0.16.1`, `@cyclonedx/cdxgen@12.9.2`, `@electric-sql/pglite@0.5.16`) (exit 0)
+   - Consulta paralela Node `fetch` contra `https://registry.npmjs.org/<pkg>/latest` y metadatos `engines` / `peerDependencies` / `deprecated` / `bin` para los 53 paquetes/herramientas fijados en ADR-001 (confirmando `pnpm@10.34.9` vs `12.21.0`, `eslint@9.39.5` vs `10.15.0`, `typescript@5.9.3` vs `7.0.2`, `@types/node@24.19.2`, `secretlint@14.0.1` incluyendo preset sin paquete deprecado, y `@electric-sql/pglite@0.5.16` sin `pglite-socket`) (exit 0)
    - Inspección read-only de `C:\Program Files\nodejs\node_modules\corepack\dist\lib\corepack.cjs` confirmando soporte de `pnpm` `6.x..10.x` vía `./bin/pnpm.cjs` (`pnpm@10.34.9` compatible; `pnpm@12.21.0` usa bin sin extensión incompatible) (exit 0)
 
-3. Verificación automatizada en Python sobre todos los entregables (reproducible en checkout limpio):
-   - Comprueba: `30/30` tokens canónicos de `docs/agentic/QUALITY_GATES.md` §5 presentes en `ADR-002` (`9` activos en `G0` + `21` fail-closed), `55/55` versiones exactas `X.Y.Z` sin rangos flotantes en `ADR-001`, estados obligatorios de `MASTER_EXECUTION_PLAN.md §7.4` y módulos `§7.2` en `SYSTEM_ARCHITECTURE.md`, presupuestos cuantitativos `G0`/`G5` en `ADR-004`, y `0` PII / `0` emails no RFC-2606 / `0` secretos / `0` placeholders en todos los entregables y evidencias:
+3. Verificación automatizada en Python sobre todos los entregables (reproducible en Git Bash con `python -c '...'` y en PowerShell mediante here-string `@' ... '@ | python -`; lectura explícita UTF-8):
+   - Comprueba: `30/30` tokens canónicos de `docs/agentic/QUALITY_GATES.md` §5 presentes en `ADR-002` (`9` activos en `G0` + `21` fail-closed), `53/53` versiones exactas `X.Y.Z` sin rangos flotantes en `ADR-001`, estados obligatorios de `MASTER_EXECUTION_PLAN.md §7.4` y DAG acíclico + compensación + outbox en `SYSTEM_ARCHITECTURE.md`, presupuestos cuantitativos `G0`/`G5` en `ADR-004`, y `0` PII / `0` emails no RFC-2606 / `0` secretos / `0` placeholders en todos los entregables y evidencias:
 
    ```bash
+   # Git Bash / POSIX (en PowerShell usar: @' <cuerpo> '@ | python -)
    python -c '
    import re
    from pathlib import Path

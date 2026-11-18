@@ -20,7 +20,7 @@ A la fecha de `P0-003`:
 ### 2.1 Reglas generales de ejecución
 
 - Todos los comandos Node/JS se invocan mediante `corepack pnpm ...` (o script de `package.json` ejecutado vía `corepack pnpm run <script>`), garantizando la versión fijada `pnpm@10.34.9` sin exigir instalación global previa.
-- Todos los scripts emiten artefactos máquina en `reports/<categoria>/` (ruta excluida en `.gitignore`) además de su salida estándar legible.
+- Todos los scripts emiten artefactos máquina en `reports/<categoria>/` (ruta excluida en `.gitignore`). Para garantizar portabilidad Windows PowerShell / Linux Bash, los scripts que no disponen de bandera nativa `--output-file` (`format:check`, `typecheck`, `build`) se envuelven en un ejecutor Node/TS (`scripts/ci/run-and-capture.mjs` o configuración `coverage.reportsDirectory: "reports/coverage"` en Vitest) que crea el directorio y escribe el fichero de salida sin depender de redirecciones de shell.
 - Ningún comando simula éxito con `echo ok`, `true`, `--passWithNoTests` ni `--force`.
 
 ### 2.2 Los 9 comandos ACTIVOS en `G0` (obligatorios `exit 0` desde clon limpio en `P0-004`)
@@ -28,21 +28,21 @@ A la fecha de `P0-003`:
 | # | Token canónico (`QUALITY_GATES.md §5`) | Script `package.json` (`P0-004`) | Comando real no interactivo | Artefacto máquina | Criterio de `exit 0` en `G0` |
 |---:|---|---|---|---|---|
 | 1 | `<INSTALL_LOCKED>` | *(nativo pnpm)* | `corepack pnpm install --frozen-lockfile` | `pnpm-lock.yaml` + log CI | Instala exactamente el lockfile sin modificarlo |
-| 2 | `<FORMAT_CHECK>` | `format:check` | `corepack pnpm exec prettier --check .` | `reports/static/prettier.log` | `0` archivos desalineados (LF consistente) |
+| 2 | `<FORMAT_CHECK>` | `format:check` | `node scripts/ci/run-and-capture.mjs --out reports/static/prettier.log -- corepack pnpm exec prettier --check .` | `reports/static/prettier.log` | `0` archivos desalineados (LF consistente) |
 | 3 | `<LINT>` | `lint` | `corepack pnpm exec eslint . --max-warnings=0 --format json --output-file reports/static/eslint.json` | `reports/static/eslint.json` | `0` errores y `0` warnings |
-| 4 | `<TYPECHECK>` | `typecheck` | `corepack pnpm exec tsc --noEmit` | `reports/static/tsc.log` | `0` errores TypeScript en modo `strict` |
+| 4 | `<TYPECHECK>` | `typecheck` | `node scripts/ci/run-and-capture.mjs --out reports/static/tsc.log -- corepack pnpm exec tsc --noEmit` | `reports/static/tsc.log` | `0` errores TypeScript en modo `strict` |
 | 5 | `<UNIT_TEST>` | `test:unit` | `corepack pnpm exec vitest run --project unit --reporter=default --reporter=junit --outputFile=reports/unit/junit.xml` | `reports/unit/junit.xml` | 100% tests unitarios reales en PASS; 0 skips/only |
-| 6 | `<COVERAGE>` | `test:coverage` | `corepack pnpm exec vitest run --project unit --coverage --coverage.reporter=json-summary --coverage.reporter=lcov --coverage.reporter=text` | `reports/coverage/coverage-summary.json` | Líneas `>= 85%`, ramas `>= 80%` (y diff `>= 90%` en PR) |
-| 7 | `<BUILD>` | `build` | `corepack pnpm exec next build` | `.next/` + manifest de build | Build reproducible de producción con `exit 0` |
-| 8 | `<SCA>` | `security:sca` | `corepack pnpm exec tsx scripts/security/run-sca.ts` | `reports/security/sca-audit.json` | Ejecuta `corepack pnpm audit --audit-level=high --json`; falla si hay vulnerabilidades `Critical`/`High` o si la auditoría falla en red |
+| 6 | `<COVERAGE>` | `test:coverage` | `corepack pnpm exec vitest run --project unit --coverage --coverage.reportsDirectory=reports/coverage --coverage.reporter=json-summary --coverage.reporter=lcov --coverage.reporter=text` | `reports/coverage/coverage-summary.json` | Líneas `>= 85%`, ramas `>= 80%` (y diff `>= 90%` en PR) |
+| 7 | `<BUILD>` | `build` | `node scripts/ci/run-and-capture.mjs --out reports/build/next-build.log -- corepack pnpm exec next build` | `reports/build/next-build.log` + `.next/` | Build reproducible de producción con `exit 0` |
+| 8 | `<SCA>` | `security:sca` | `corepack pnpm exec tsx scripts/security/run-sca.ts --report reports/security/sca-audit.json` | `reports/security/sca-audit.json` | Ejecuta `corepack pnpm audit --audit-level=high --json` y escribe el artefacto; falla si hay `Critical`/`High` o error de auditoría |
 | 9 | `<SECRET_SCAN>` | `security:secrets` | `node scripts/security/secret-scan.mjs` | `reports/security/secret-scan.json` | Escaneo real reproducible en local/CI sin requerir `gitleaks` global (ver §2.3) |
 
 ### 2.3 Diseño detallado de `<SECRET_SCAN>` reproducible sin `gitleaks` global
 
 Para cumplir `QUALITY_GATES.md §3` (fail-closed, reproducible en clon limpio local y CI) con `gitleaks.installed = false` en el entorno actual:
 
-1. **Motor primario incluido en el repositorio (`devDependencies`):** `scripts/security/secret-scan.mjs` enumera todos los archivos rastreados y en staging mediante `git ls-files -z`, excluyendo únicamente extensiones binarias verificadas (`.png`, `.jpg`, `.webp`, `.avif`, `.woff2`, `.ico`, `.docx`, `.xlsx`), y ejecuta:
-   - **`secretlint` (`14.0.1`) + `@secretlint/secretlint-rule-preset-recommend` (`13.1.0`)** con salida JSON estructurada (`reports/security/secret-scan.json`).
+1. **Motor primario incluido en el repositorio (`devDependencies`):** `scripts/security/secret-scan.mjs` enumera los archivos rastreados **y** nuevos archivos locales no ignorados mediante `git ls-files -z --cached --others --exclude-standard`, excluyendo únicamente extensiones binarias verificadas (`.png`, `.jpg`, `.webp`, `.avif`, `.woff2`, `.ico`, `.docx`, `.xlsx`), y ejecuta:
+   - **`secretlint` (`14.0.1`)** (que ya incluye de serie el preset `@secretlint/secretlint-rule-preset-recommend` desde v14, sin requerir el paquete deprecado separado) con salida JSON estructurada (`reports/security/secret-scan.json`).
    - **Reglas deterministas específicas de OAK:** detección de claves privadas (`-----BEGIN ... PRIVATE KEY-----`), prefijos de claves reales de Stripe (`sk_live_`, `pk_live_`), tokens de Resend, tokens personales Supabase, valores JWT reales en `SUPABASE_SERVICE_ROLE_KEY`, cadenas de conexión Postgres con contraseña no sintética y correos reales fuera de dominios reservados RFC 2606 (`.invalid`, `.example`, `.test`).
 2. **Capa aditiva cuando `gitleaks` está disponible (CI `ubuntu-latest` en `P0-005` o local si se instala):** Si `gitleaks` existe en `PATH`, el script ejecuta adicionalmente `gitleaks detect --source . --no-banner --redact --report-format json --report-path reports/security/gitleaks.json` y fusiona su veredicto. Si `gitleaks` no está en local, la comprobación **NO simula éxito**: ejecuta íntegramente `secretlint` + reglas OAK sobre el 100% de archivos textuales rastreados y devuelve `exit 1` ante cualquier hallazgo o fallo de ejecución. En CI (`P0-005`) la ejecución conjunta con `gitleaks` es obligatoria.
 
@@ -96,7 +96,7 @@ En `P0-004`, todos estos scripts existirán en `package.json` invocando un guard
    - `producción`: GitHub Environment `production` con **Required Reviewers** + Vercel Production Encrypted Environment Variables + bóveda/gestor del usuario fuera de Git.
 2. **Validación al arranque (`src/shared/env.ts`):**
    - Esquema Zod discriminado por `APP_ENV` (`local | preview | staging | production`).
-   - Si falta cualquier secreto obligatorio para el modo activo (p. ej. `<STRIPE_WEBHOOK_SECRET>`, `<SUPABASE_SERVICE_ROLE_KEY>`, `<NEXT_PUBLIC_SUPABASE_URL>`), la aplicación **falla al arrancar / en la petición sin degradar silenciosamente**.
+   - Si falta cualquier secreto obligatorio para el modo activo (p. ej. `<DATABASE_URL>` con rol aplicativo sin `BYPASSRLS`, `<MIGRATION_DATABASE_URL>` en tareas CLI de migración, `<STRIPE_WEBHOOK_SECRET>`, `<SUPABASE_SERVICE_ROLE_KEY>`, `<NEXT_PUBLIC_SUPABASE_URL>`), la aplicación **falla al arrancar / en la petición sin degradar silenciosamente**.
    - Guardia explícita anti-cobro real accidental: si `APP_ENV !== "production"` o `OAK_ENABLE_LIVE_PAYMENTS !== "true"`, cualquier clave Stripe en modo live provoca terminación inmediata con error fatal.
 3. **Rotación y no-exposición:** Ningún secreto se imprime en logs, respuestas HTTP, trazas Sentry ni artefactos de `docs/evidence/**`.
 

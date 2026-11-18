@@ -2,8 +2,8 @@
 
 | Rol | Agente | Estado | SHA evaluado | Notas |
 |---|---|---|---|---|
-| Owner | `arquitecto-seguridad` | Entregado (`PEER_REVIEW`) | Ver commit candidato en `feat/p0-003-architecture-adrs` | ADR-001..004, `SYSTEM_ARCHITECTURE.md`, evidencias y verificación reproducible `30/30` tokens / `55/55` versiones exactas / `0` PII |
-| Peer Reviewer 1 | `devops-release` | PENDIENTE | - | Revisión independiente solicitada (30 comandos canónicos, entornos, CI, presupuestos y `.gitattributes`) |
-| Peer Reviewer 2 | `backend-datos` | PENDIENTE | - | Revisión independiente solicitada (DB efímera `G3`, migraciones, seed, RBAC/RLS, Stripe/Resend e invariantes) |
+| Owner | `arquitecto-seguridad` | Entregado (`PEER_REVIEW` v2) | Nuevo commit candidato en `feat/p0-003-architecture-adrs` | Resueltos `[BLK-01]`, `[BLK-02]`, `[OBS-01]`, `[OBS-02]` y observaciones `[DEVOPS]` sobre la ronda anterior (`8d0eba039604de87373da8832a18f2a48711174a`) |
+| Peer Reviewer 1 | `devops-release` | PENDIENTE (re-verificación) | - | Ronda 1 en `PASS` sobre `8d0eba0`; solicitada confirmación de ajustes de `P0-004` (`secretlint@14`, captura `reports/`, `.npmrc`) |
+| Peer Reviewer 2 | `backend-datos` | PENDIENTE (re-revisión) | - | Ronda 1 `FAIL` en `8d0eba0` por `[BLK-01]` y `[BLK-02]`; solicitada re-revisión independiente tras corrección |
 | Release Guardian | `release-guardian` | PENDIENTE | - | Verificación independiente sobre checkout limpio tras Peer Review |
 

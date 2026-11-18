@@ -29,18 +29,20 @@ flowchart TD
 
 ## 2. Los 10 Módulos de Dominio y Entidades Mínimas (`§7.2`, `§7.3`)
 
-| # | Módulo (`src/modules/*`) | Responsabilidad principal | Entidades y agregados propios | Dependencias públicas permitidas |
+El grafo de dependencias inter-módulo es **estrictamente acíclico (DAG)**; ningún módulo puede importar directa ni transitivamente a un módulo de nivel superior ni escribir sobre tablas pertenecientes a otro agregado (las escrituras coordinadas en una misma transacción SQL se ejecutan invocando el servicio público del módulo dueño pasando el manejador `DbTransaction`).
+
+| # | Módulo (`src/modules/*`) | Responsabilidad principal | Entidades y agregados propios | Dependencias públicas permitidas (DAG acíclico) |
 |---:|---|---|---|---|
-| 1 | `identity` | Cuenta, sesión SSR `HttpOnly`, verificación de correo, recuperación sin enumeración, re-autenticación reciente | `User` | `audit-observability` |
-| 2 | `athlete` | Perfil reutilizable del deportista, consentimientos versionados, exportación RGPD y solicitud de borrado/anonimización | `AthleteProfile`, `ConsentRecord` | `identity`, `audit-observability` |
-| 3 | `organization` | Organizaciones, invitaciones cerradas de un uso, membresías, roles RBAC y resolución de pertenencia multi-tenant | `Organization`, `OrganizationMembership` | `identity`, `audit-observability` |
-| 4 | `catalog` | Consulta pública de eventos `PUBLISHED`, modalidades, tramos de precio visibles, búsqueda, filtros por disciplina/ubicación/fecha/distancia/nivel y favoritos idempotentes | `Event` (vista pública), `EventModality`, `PriceTier`, `EventMedia`, `Favourite` | `identity`, `organization` (datos públicos org) |
-| 5 | `registration` | Borrador recuperable, datos de participante, recálculo server-side de precio en céntimos, reserva atómica de cupo (`SELECT ... FOR UPDATE`), confirmación y cancelación | `Registration`, `RegistrationParticipant` | `catalog`, `athlete`, `identity`, `audit-observability` |
-| 6 | `payments` | Sesión Stripe Checkout modo test con `Idempotency-Key`, verificación de firma webhook, registro único `PaymentWebhookEvent`, transiciones de pago y reembolso de prueba | `Payment`, `PaymentWebhookEvent` | `registration`, `communications`, `audit-observability` |
-| 7 | `journey` | Próximos retos, historial de inscripciones y métricas derivadas únicamente de inscripciones `CONFIRMED` / eventos `COMPLETED` | *(Proyecciones de lectura sin escritura directa)* | `registration`, `catalog`, `athlete` |
-| 8 | `organizer-ops` | Alta y edición de eventos draft, modalidades/cupos/tiers, checklist de publicación, cierre/completado, consulta aislada de participantes, export CSV seguro y KPIs reconciliados | `Event`, `EventModality`, `PriceTier`, `EventMedia` | `organization`, `registration`, `payments`, `communications`, `audit-observability` |
-| 9 | `communications` | Confirmación idempotente de inscripción y envío de briefing de evento confirmado por el organizador (sandbox en V1) | `CommunicationLog` | `organization`, `registration`, `audit-observability` |
-| 10 | `audit-observability` | Registro inmutable de auditoría (`AuditLog`), logger JSON con `correlationId` y cero PII, métricas/trazas Sentry | `AuditLog` | *(Módulo transversal base; cero dependencias de negocio)* |
+| 1 | `audit-observability` | Registro inmutable de auditoría (`AuditLog`), logger JSON con `correlationId` y cero PII, métricas/trazas Sentry | `AuditLog` | *(Nivel 0: módulo transversal base; cero dependencias de negocio)* |
+| 2 | `identity` | Cuenta, sesión SSR `HttpOnly`, verificación de correo, recuperación sin enumeración, re-autenticación reciente | `User` | `audit-observability` |
+| 3 | `communications` | Outbox transaccional y despacho idempotente de confirmación de inscripción y briefing de organizador (sandbox en V1, usando DTOs sin consultar tablas ajenas) | `CommunicationLog` | `audit-observability` |
+| 4 | `athlete` | Perfil reutilizable del deportista, consentimientos versionados, exportación RGPD y solicitud de borrado/anonimización | `AthleteProfile`, `ConsentRecord` | `identity`, `audit-observability` |
+| 5 | `organization` | Organizaciones, invitaciones cerradas de un uso, membresías, roles RBAC y resolución de pertenencia multi-tenant | `Organization`, `OrganizationMembership` | `identity`, `audit-observability` |
+| 6 | `catalog` | Consulta pública de eventos `PUBLISHED`, modalidades, tramos de precio visibles, búsqueda, filtros y favoritos idempotentes | `Event` (vista pública sin PII), `EventModality`, `PriceTier`, `EventMedia`, `Favourite` | `identity`, `organization` (solo datos públicos org) |
+| 7 | `registration` | Borrador recuperable, datos de participante, recálculo server-side de precio en céntimos, reserva atómica de cupo (`SELECT ... FOR UPDATE`), confirmación gratuita `0 EUR` con outbox, liberación por compensación/timeout y cancelación | `Registration`, `RegistrationParticipant` | `catalog`, `athlete`, `identity`, `communications`, `audit-observability` |
+| 8 | `payments` | Orquestación de Checkout (`payments -> registration`), sesión Stripe Checkout modo test con `Idempotency-Key`, compensación ante fallo/timeout, webhook firmado e idempotente (`PaymentWebhookEvent`), invocación transaccional `registration.markConfirmedFromPayment(tx)` y outbox `communications` | `Payment`, `PaymentWebhookEvent` | `registration`, `communications`, `audit-observability` |
+| 9 | `journey` | Próximos retos, historial de inscripciones y métricas derivadas únicamente de inscripciones `CONFIRMED` / eventos `COMPLETED` | *(Proyecciones de solo lectura sin escritura)* | `registration`, `catalog`, `athlete` |
+| 10 | `organizer-ops` | Alta/edición de eventos draft y tabla privada `event_private_ops`, modalidades/cupos/tiers, checklist de publicación, cierre/completado, participantes, export CSV seguro, KPIs reconciliados y solicitud de briefing | `Event`, `EventPrivateOps`, `EventModality`, `PriceTier`, `EventMedia` | `organization`, `catalog`, `registration`, `payments`, `communications`, `audit-observability` |
 
 ## 3. Máquinas de Estado Obligatorias (`§7.4`)
 
@@ -67,14 +69,14 @@ stateDiagram-v2
 ```mermaid
 stateDiagram-v2
     [*] --> DRAFT
-    DRAFT --> PENDING_PAYMENT : "cupo reservado atómicamente + precio server-side"
-    DRAFT --> CONFIRMED : "modalidad gratuita explícita (0 EUR)"
+    DRAFT --> PENDING_PAYMENT : "reserveSlotAndMarkPending (SELECT FOR UPDATE + precio server-side + TTL reserva)"
+    DRAFT --> CONFIRMED : "confirmFreeRegistration (0 EUR): SELECT FOR UPDATE + outbox en misma TX (INV-03)"
     DRAFT --> CANCELLED : "abandono o cancelación explícita"
-    PENDING_PAYMENT --> DRAFT : "sesión Checkout expirada o cancelada por usuario"
-    PENDING_PAYMENT --> CONFIRMED : "Payment SUCCEEDED (webhook idempotente)"
-    PENDING_PAYMENT --> CANCELLED : "timeout de reserva / cancelación"
+    PENDING_PAYMENT --> DRAFT : "compensación fallo/timeout Stripe (5s), TTL expirado o cancelación Checkout"
+    PENDING_PAYMENT --> CONFIRMED : "registration.markConfirmedFromPayment(tx) dentro de TX webhook"
+    PENDING_PAYMENT --> CANCELLED : "caducidad definitiva o cancelación explícita"
     CONFIRMED --> CANCELLED : "cancelación sin reembolso"
-    CONFIRMED --> REFUNDED : "Payment REFUNDED confirmado"
+    CONFIRMED --> REFUNDED : "registration.markRefundedFromPayment(tx) tras Payment REFUNDED"
     CANCELLED --> [*]
     REFUNDED --> [*]
 ```
@@ -118,45 +120,62 @@ stateDiagram-v2
 | INV-07 | El borrado de cuenta anonimiza PII preservando integridad contable y de `AuditLog` | `athlete`, `audit-observability` | Caso de uso transaccional con re-autenticación reciente y anonimización determinista | Integración `G3` verificando ausencia de PII y conservación de auditoría |
 | INV-08 | Las métricas de trayectoria se derivan solo de inscripciones `CONFIRMED` y eventos `COMPLETED` | `journey` | Consultas de solo lectura sobre estado confirmado/completado; sin setters cliente | Unit/integration tests `G2`/`G3` |
 
-## 5. Flujo Crítico End-to-End: Reserva de Cupo, Checkout Test y Confirmación Idempotente
+## 5. Flujo Crítico End-to-End: Reserva de Cupo, Compensación Checkout y Outbox Transaccional
+
+En los flujos de pago (`amount_cents > 0`), **Presentación invoca a `payments`**, que orquesta a `registration` y `communications` respetando el DAG acíclico y la propiedad de cada agregado (sin mutaciones directas sobre tablas ajenas ni dependencias circulares). En modalidades gratuitas (`amount_cents === 0`), Presentación invoca directamente `registration.confirmFreeRegistration(actor, registrationId)`, que ejecuta `SELECT ... FOR UPDATE`, transición `DRAFT -> CONFIRMED` e inserción outbox `CommunicationLog(PENDING)` en una única transacción antes de despachar Resend tras el `COMMIT`.
 
 ```mermaid
 sequenceDiagram
     actor Atleta
     participant UI as Presentación (Next.js)
-    participant Reg as Registration App
-    participant DB as PostgreSQL + RLS
     participant Pay as Payments App
+    participant Reg as Registration Service
+    participant DB as PostgreSQL (pg / RLS)
     participant Stripe as Stripe Checkout (Test)
-    participant Comm as Communications App
+    participant Comm as Communications Outbox
 
     Atleta->>UI: Confirma revisión y pulsa "Continuar al pago"
-    UI->>Reg: startCheckout(actor, registrationId)
-    Reg->>DB: BEGIN; SELECT modality FOR UPDATE; recalcula precio en céntimos
+    UI->>Pay: initiateCheckout(actor, registrationId)
+    Pay->>Reg: reserveSlotAndMarkPending(actor, registrationId)
+    Reg->>DB: BEGIN (TX1); SELECT modality FOR UPDATE; calcula EUR céntimos
     alt Cupo agotado
         DB-->>Reg: capacity_remaining == 0
         Reg-->>UI: 409 CONFLICT (sin sobreventa)
     else Cupo disponible
-        Reg->>DB: Reserva cupo + Registration = PENDING_PAYMENT; COMMIT
-        Reg->>Pay: createTestCheckoutSession(registrationId, amountCents, idempotencyKey)
-        Pay->>Stripe: checkout.sessions.create (modo test, Idempotency-Key)
-        Stripe-->>Pay: sessionId + checkoutUrl
-        Pay->>DB: Inserta Payment = CREATED
-        Pay-->>UI: Redirige a Stripe Checkout hospedado
+        DB-->>Reg: Reserva plaza + Registration = PENDING_PAYMENT (TTL 15m); COMMIT TX1
+        Pay->>DB: Crea/reutiliza Payment = CREATED (idempotency_key = reg:id:attempt:n)
+        Pay->>Stripe: checkout.sessions.create (modo test, Idempotency-Key, timeout 5s)
+        alt Fallo o timeout Stripe (> 5s) antes de sessionUrl
+            Pay->>DB: BEGIN (TX_COMP); Payment = FAILED
+            Pay->>Reg: releasePendingReservationOnInitFailure(tx_comp, registrationId)
+            Reg->>DB: SELECT FOR UPDATE; libera plaza + Registration = PENDING_PAYMENT -> DRAFT; COMMIT TX_COMP
+            Pay-->>UI: Error recuperable con reintento (sin cupo ni borrador huérfanos)
+        else Sesión Checkout creada
+            Pay->>DB: Guarda checkout_session_id en Payment
+            Pay-->>UI: Redirige a Stripe Checkout hospedado
+        end
     end
+
     Stripe->>Pay: POST /api/webhooks/stripe (stripe-signature + rawBody)
     Pay->>Stripe: constructEvent() verifica firma
-    Pay->>DB: BEGIN; INSERT PaymentWebhookEvent(provider_event_id) ON CONFLICT DO NOTHING
-    alt Evento ya procesado (duplicado)
-        DB-->>Pay: 0 filas insertadas
-        Pay-->>Stripe: 200 OK (idempotente, sin efectos repetidos)
+    Pay->>DB: BEGIN (TX_WEBHOOK); INSERT PaymentWebhookEvent(provider_event_id) ON CONFLICT DO NOTHING
+    alt Evento duplicado
+        DB-->>Pay: 0 filas insertadas; COMMIT
+        Pay-->>Stripe: 200 OK (idempotente, 0 efectos repetidos)
     else Evento nuevo válido (checkout.session.completed)
-        Pay->>DB: Payment = SUCCEEDED; Registration = CONFIRMED; AuditLog; COMMIT
-        Pay->>Comm: sendConfirmationOnce(registrationId, idempotencyKey)
-        Comm->>DB: INSERT CommunicationLog(idempotency_key) ON CONFLICT DO NOTHING
-        Comm-->>Stripe: Envío único sandbox + 200 OK
+        Pay->>DB: Payment = SUCCEEDED
+        Pay->>Reg: markConfirmedFromPayment(tx_webhook, registrationId, paymentId)
+        Reg->>DB: Valida PENDING_PAYMENT -> CONFIRMED (INV-06) + AuditLog
+        Pay->>Comm: enqueueRegistrationConfirmation(tx_webhook, payload, idempotencyKey)
+        Comm->>DB: INSERT CommunicationLog(status='PENDING', idempotency_key) ON CONFLICT DO NOTHING
+        DB-->>Pay: COMMIT TX_WEBHOOK
+        Pay->>Comm: dispatchPendingConfirmation(communicationLogId) [post-COMMIT, timeout 5s]
+        Comm-->>Stripe: Resend -> SENT (o queda PENDING/FAILED reintentable por worker) + 200 OK
     end
 ```
+
+- **Recuperación frente a caída entre `TX1` y `Stripe` (o abandono sin volver de Checkout):** Un sweeper idempotente (ejecutado periódicamente o bajo demanda en liberación de reservas caducadas) localiza `Registration` en `PENDING_PAYMENT` cuyo `reservation_expires_at < NOW()` sin `Payment SUCCEEDED`, invocando `registration.releaseExpiredPendingReservation(registrationId)` (`SELECT ... FOR UPDATE`, libera plaza y transiciona `PENDING_PAYMENT -> DRAFT`) y marcando `Payment` expirado como `FAILED`.
+- **Garantía de outbox transaccional:** Si el proceso cae entre el `COMMIT` de `TX_WEBHOOK` y la llamada a Resend, o si Resend devuelve error transitorio, la inscripción **permanece `CONFIRMED`** y el registro `CommunicationLog(status = 'PENDING' | 'FAILED')` permanece persistido en PostgreSQL para ser despachado una sola vez por el worker de reintentos sin duplicar correos (`idempotency_key UNIQUE`).
 
 ## 6. Estructura de Directorios Objetivo para `P0-004` y Fases Siguientes
 
@@ -168,7 +187,7 @@ sequenceDiagram
 │   ├── CODEOWNERS
 │   └── workflows/               # CI G1-G5 (P0-005)
 ├── .gitattributes               # Política LF + sites/** -text (ADR-002)
-├── .npmrc                       # save-exact=true, engine-strict=true
+├── .npmrc                       # save-exact=true, engine-strict=true, strict-peer-dependencies=true, auto-install-peers=true
 ├── .nvmrc                       # 24.16.0
 ├── .env.example                 # Nombres de variables sin valores reales
 ├── package.json                 # Versiones exactas fijadas (ADR-001) + 30 scripts (ADR-002)
@@ -179,7 +198,7 @@ sequenceDiagram
 ├── vitest.config.ts             # Proyectos unit / integration / contract + coverage V8
 ├── playwright.config.ts         # Chromium, Firefox, WebKit + 5 viewports + axe
 ├── scripts/
-│   ├── ci/                      # fail-closed-gate.mjs y utilidades CI
+│   ├── ci/                      # fail-closed-gate.mjs, run-and-capture.mjs y utilidades CI
 │   ├── security/                # secret-scan.mjs, run-sca.ts, run-sast.ts, run-dast.ts
 │   ├── db/                      # migrate-fresh, migrate-from-previous, seed-check, with-ephemeral-pg
 │   ├── qa/                      # e2e-flake-check, verify-a11y-manual-signoff
@@ -210,7 +229,9 @@ sequenceDiagram
 │   └── shared/
 │       ├── env.ts               # Validación Zod fail-closed por APP_ENV
 │       ├── contracts/           # DTOs y esquemas Zod versionados compartidos
-│       └── infrastructure/      # Pool pg, admin-client confinado, logger JSON, Sentry sanitizer
+│       └── infrastructure/
+│           ├── db/              # pool.ts, rls-context.ts (withRlsContext), admin-client.ts, pglite-client.ts
+│           └── telemetry/       # logger JSON sin PII, Sentry sanitizer
 ├── tests/
 │   ├── unit/                    # Tests rápidos sin I/O externo (G2)
 │   ├── integration/             # DB efímera, RLS negativo, concurrencia cupo, webhooks (G3)
