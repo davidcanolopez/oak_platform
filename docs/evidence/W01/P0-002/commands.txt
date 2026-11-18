@@ -1,11 +1,46 @@
-# Comandos verificables en P0-002 (worktree feat/p0-002-task-board sobre 87f92a1)
+# Comandos exactos reproducibles — P0-002
 
-1. Generación y validación DAG/PII inicial de TASK_BOARD.md, board-export.json y REQUIREMENTS_BASELINE.md:
-   - Resultado: exit 0 (`SUCCESS: generated 114 tasks, 44 AC requirements, critical_path_len=54`)
+Ejecutados desde la raíz del worktree `feat/p0-002-task-board` sobre `base_sha: 87f92a1fd786fe2494bba4c7c8ec89c220b14ee7`.
 
-2. Comprobación negativa sintética de invariantes (ciclo inyectado, auto-revisión y regex 0 PII):
-   - Verificado en Python sobre `docs/evidence/W01/P0-002/board-export.json`, `docs/agentic/TASK_BOARD.md`, `docs/agentic/REQUIREMENTS_BASELINE.md` y `docs/evidence/W01/P0-002/*`.
+## 1. Validación positiva de invariantes (114 tareas, wave en todas, 44 AC, 9 NFR, DAG sin ciclos, 0 auto-revisiones, 0 Fase 1+ activa, 0 PII)
 
-3. Commit limpio y verificación de árbol:
-   - `git status --short` (solo rutas permitidas de P0-002 antes de commit; vacío tras commit)
-   - `git diff --name-only 87f92a1fd786fe2494bba4c7c8ec89c220b14ee7..HEAD`
+Comando exacto:
+```powershell
+python -c "import json,re;from pathlib import Path;d=json.loads(Path('docs/evidence/W01/P0-002/board-export.json').read_text(encoding='utf-8'));ts=d['tasks'];m={t['task_id']:t for t in ts};assert len(ts)==114;assert all(t.get('wave') for t in ts);assert all(t['owner_agent'] not in [r.strip() for r in t['reviewer_agent'].split(',')] for t in ts);assert all(t['status']=='PROPUESTA' for t in ts if t['phase_code']!='P0');v,ok=set(),set();dfs=lambda k:None if k in ok else (_ for _ in ()).throw(ValueError(k)) if k in v else (v.add(k),[dfs(x) for x in m[k]['dependencies']],v.remove(k),ok.add(k));[dfs(k) for k in m];tb=Path('docs/agentic/TASK_BOARD.md').read_text(encoding='utf-8');rb=Path('docs/agentic/REQUIREMENTS_BASELINE.md').read_text(encoding='utf-8');assert all(t['task_id'] in tb and t['wave'] in tb for t in ts);assert len(set(re.findall(r'AC-J0[1-8]-\d{2}',rb)))==44;assert len(set(re.findall(r'NFR-0[1-9]',rb)))==9;em=re.compile(r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}');assert not any(em.findall(Path(p).read_text(encoding='utf-8')) for p in ['docs/agentic/TASK_BOARD.md','docs/agentic/REQUIREMENTS_BASELINE.md','docs/evidence/W01/P0-002/board-export.json','docs/evidence/W01/P0-002/summary.md','docs/evidence/W01/P0-002/approvals.md']);print(f'PASS tasks={len(ts)} ac=44 nfr=9 pii=0 cycles=0')"
+```
+
+Salida real (`exit_code: 0`):
+```text
+PASS tasks=114 ac=44 nfr=9 pii=0 cycles=0
+```
+
+## 2. Prueba negativa — Inyección sintética de ciclo (`P0-001 -> P0-002 -> P0-001`)
+
+Comando exacto:
+```powershell
+python -c "import json,copy;from pathlib import Path;d=json.loads(Path('docs/evidence/W01/P0-002/board-export.json').read_text(encoding='utf-8'));m={t['task_id']:t for t in copy.deepcopy(d['tasks'])};m['P0-001']['dependencies'].append('P0-002');v,ok=set(),set();dfs=lambda k:None if k in ok else (_ for _ in ()).throw(SystemExit(f'CYCLE_DETECTED:{k}')) if k in v else (v.add(k),[dfs(x) for x in m[k]['dependencies']],v.remove(k),ok.add(k));[dfs(k) for k in m]"
+```
+
+Salida real (`exit_code: 1`):
+```text
+CYCLE_DETECTED:P0-001
+```
+
+## 3. Verificación de alcance y diff limpio frente a base SHA (`87f92a1fd786fe2494bba4c7c8ec89c220b14ee7`)
+
+Comandos reproducibles tras el commit en la rama `feat/p0-002-task-board`:
+```powershell
+git diff --name-only 87f92a1fd786fe2494bba4c7c8ec89c220b14ee7..HEAD
+git status --short
+```
+
+Archivos esperados exclusivamente dentro de `allowed_paths`:
+```text
+docs/agentic/REQUIREMENTS_BASELINE.md
+docs/agentic/TASK_BOARD.md
+docs/agentic/packets/P0-002.md
+docs/evidence/W01/P0-002/approvals.md
+docs/evidence/W01/P0-002/board-export.json
+docs/evidence/W01/P0-002/commands.txt
+docs/evidence/W01/P0-002/summary.md
+```

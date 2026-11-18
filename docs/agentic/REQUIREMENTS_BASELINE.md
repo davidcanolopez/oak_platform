@@ -55,14 +55,14 @@ Total de criterios funcionales mínimos priorizados: **44**.
 
 ## 2. Requisitos No Funcionales Priorizados (`MASTER_EXECUTION_PLAN.md` §11 y `QUALITY_GATES.md` §6)
 
-| ID | Prioridad | Categoría | Umbral / Criterio medible | Gate de verificación |
-| --- | --- | --- | --- | --- |
-| `NFR-01` | `P0` | Integridad transaccional (cupo) | Cero sobreventa bajo prueba concurrente sobre última plaza | `G2`, `G3`, `G4` |
-| `NFR-02` | `P0` | Idempotencia financiera | Webhook de pago efectivamente exactly-once e importe calculado en servidor en minor units enteros | `G2`, `G3`, `G5` |
-| `NFR-03` | `P0` | Seguridad y aislamiento | Autorización deny-by-default, aislamiento multi-tenant/RLS, 0 vulnerabilidades Critical/High, 0 secretos, 0 PII en logs/fixtures | `G1`, `G3`, `G5` |
-| `NFR-04` | `P0` | Accesibilidad (WCAG 2.2 AA) | 0 violaciones Critical/Serious en axe, revisión manual teclado/foco >=3px/objetivos >=48x48px/zoom 200%/reflow 320px/reduced-motion/NVDA+lector móvil, contraste AA | `G4`, `G5` |
-| `NFR-05` | `P0` | Fiabilidad de suite E2E | Tasa de flake `0 %` en 3 ejecuciones consecutivas de release; 0 skips/only silenciosos | `G4`, `G7` |
-| `NFR-06` | `P1` | Rendimiento web (CWV y Lighthouse) | LCP <= 2,5 s, INP <= 200 ms, CLS <= 0,1 (p75 móvil); Lighthouse móvil >= 90 perf / >= 95 a11y; presupuestos de bundle fijados en `ADR-004` | `G5` |
-| `NFR-07` | `P1` | Latencia y carga API | Respuesta p95 <= 500 ms para catálogo, detalle y consultas normales bajo perfil de carga fijado en `ADR-004` | `G5` |
-| `NFR-08` | `P1` | Continuidad operativa | RPO <= 24 h y RTO <= 4 h demostrados mediante simulacro de backup/restore y rollback en staging | `G6`, `G7` |
-| `NFR-09` | `P2` | Compatibilidad multi-navegador | 2 últimas versiones estables de Chrome, Edge, Firefox y Safari; Safari iOS y Chrome Android en los 5 viewports (`320x568`, `390x844`, `768x1024`, `1200x800`, `1440x900`) | `G4`, `G5` |
+| ID | Prioridad | Categoría | Umbral / Criterio medible | Fase objetivo | Gate de verificación |
+| --- | --- | --- | --- | --- | --- |
+| `NFR-01` | `P0` | Integridad transaccional (cupo) | Cero sobreventa bajo prueba concurrente sobre última plaza | Fase 4 | `G2`, `G3`, `G4` |
+| `NFR-02` | `P0` | Idempotencia financiera | Webhook de pago efectivamente exactly-once e importe calculado en servidor en minor units enteros | Fase 4 | `G2`, `G3`, `G5` |
+| `NFR-03` | `P0` | Seguridad y aislamiento | Autorización deny-by-default, aislamiento multi-tenant/RLS, 0 vulnerabilidades Critical/High, 0 secretos, 0 PII en logs/fixtures | Transversal (Fase 2–7) | `G1`, `G3`, `G5` |
+| `NFR-04` | `P0` | Accesibilidad (WCAG 2.2 AA) | 0 violaciones Critical/Serious en axe, revisión manual teclado/foco >=3px/objetivos >=48x48px/zoom 200%/reflow 320px/reduced-motion/NVDA+lector móvil, contraste AA | Transversal (Fase 2–7) | `G4`, `G5` |
+| `NFR-05` | `P0` | Fiabilidad de suite E2E | Tasa de flake `0 %` en 3 ejecuciones consecutivas de release; 0 skips/only silenciosos | Transversal (Fase 2–8) | `G4`, `G7` |
+| `NFR-06` | `P1` | Rendimiento web (CWV y Lighthouse) | LCP <= 2,5 s, INP <= 200 ms, CLS <= 0,1 (p75 móvil); Lighthouse móvil >= 90 perf / >= 95 a11y; presupuesto numérico de bundle/transferencia cerrado en Fase 0 (`P0-003` / `ADR-004`, pendiente de `G0 PASS`) | Fase 0 (umbral) / Fase 7 (auditoría) | `G0`, `G5` |
+| `NFR-07` | `P1` | Latencia y carga API | Respuesta p95 <= 500 ms para catálogo, detalle y consultas normales bajo perfil de carga y concurrencia cerrado en Fase 0 (`P0-003` / `ADR-004`, pendiente de `G0 PASS`) | Fase 0 (umbral) / Fase 7 (auditoría) | `G0`, `G5` |
+| `NFR-08` | `P1` | Continuidad operativa | RPO <= 24 h y RTO <= 4 h demostrados mediante simulacro de backup/restore y rollback en staging | Fase 2–7 | `G6`, `G7` |
+| `NFR-09` | `P2` | Compatibilidad multi-navegador | Matriz extendida (2 últimas versiones estables de Chrome, Edge, Firefox y Safari; Safari iOS y Chrome Android en los 5 viewports); la cobertura base obligatoria (`Chromium/Firefox/WebKit`, escritorio y móvil `320 px` ligado a `AC-J01-06`) permanece exigible en `P0`/`P1` por `QUALITY_GATES.md` §6 `G4` | Fase 3–7 | `G4`, `G5` |
