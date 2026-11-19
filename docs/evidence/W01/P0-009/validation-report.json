@@ -1,0 +1,60 @@
+{
+  "datasetId": "oak-seed.v1",
+  "schemaVersion": "1.0.0",
+  "status": "VALID",
+  "organizationCount": 2,
+  "membershipCount": 5,
+  "demoAccountCount": 8,
+  "eventCount": 12,
+  "modalityCount": 14,
+  "priceTierCount": 16,
+  "registrationCount": 9,
+  "paymentCount": 7,
+  "favouriteCount": 2,
+  "disciplines": {
+    "trail": 6,
+    "running": 6
+  },
+  "eventStatuses": {
+    "DRAFT": 2,
+    "PUBLISHED": 6,
+    "CLOSED": 1,
+    "CANCELLED": 1,
+    "COMPLETED": 2
+  },
+  "membershipStatuses": {
+    "INVITED": 1,
+    "ACTIVE": 3,
+    "REVOKED": 1
+  },
+  "registrationStatuses": {
+    "DRAFT": 1,
+    "PENDING_PAYMENT": 2,
+    "CONFIRMED": 4,
+    "CANCELLED": 1,
+    "REFUNDED": 1
+  },
+  "paymentStatuses": {
+    "CREATED": 1,
+    "REQUIRES_ACTION": 1,
+    "SUCCEEDED": 3,
+    "FAILED": 1,
+    "REFUNDED": 1
+  },
+  "edgeCases": {
+    "hasSoldOutPublishedModality": true,
+    "hasLastSpotPublishedModality": true,
+    "hasNormalCapacityPublishedModality": true,
+    "hasFreeZeroEurTier": true,
+    "hasMultiTierModality": true,
+    "hasNewAthleteWithoutChallenges": true,
+    "hasHistoryAthleteWithCompletedEvents": true
+  },
+  "safetyInvariants": {
+    "allTimestampsUtcZ": true,
+    "allTimezonesEuropeMadrid": true,
+    "allAmountsIntegerEurCents": true,
+    "allEmailsReservedInvalid": true,
+    "bannedDeckDataMatches": 0
+  }
+}

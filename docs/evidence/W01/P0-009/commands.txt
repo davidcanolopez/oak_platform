@@ -1,0 +1,29 @@
+# Comandos reproducibles ejecutados en P0-009 (sin PII ni secretos)
+
+## 1. Aislamiento de rama y limpieza previa del worktree
+- `git checkout -b feat/p0-009-synthetic-dataset fc8ff5107bcbd2b8735d55588120525f3fbdcd2f` -> exit 0
+- `Remove-Item -Force docs/agentic/packets/P0-005.md` (retirado archivo untracked ajeno al paquete) -> exit 0
+- `git rev-parse HEAD` -> `fc8ff5107bcbd2b8735d55588120525f3fbdcd2f` (base SHA verificada)
+
+## 2. Generación determinista y formateo de validation-report.json
+- `corepack pnpm exec tsx -e "import { readFileSync, writeFileSync } from 'node:fs'; import { buildValidationReport, validateSyntheticDataset } from './data/fixtures/schema'; const raw = JSON.parse(readFileSync('data/fixtures/oak-seed.v1.json', 'utf8')); const report = buildValidationReport(validateSyntheticDataset(raw)); writeFileSync('docs/evidence/W01/P0-009/validation-report.json', JSON.stringify(report, null, 2) + '\n', 'utf8');"` -> exit 0
+- Formateado con Prettier vía stdin (`prettier --stdin-filepath validation-report.json`) -> exit 0
+
+## 3. Los 9 checks activos G0 ejecutados tras la última edición (todos exit 0, 0 warnings)
+- `corepack pnpm install --frozen-lockfile` -> exit 0 (`Lockfile is up to date, resolution step is skipped`, `pnpm v10.34.9`)
+- `corepack pnpm run format:check` -> exit 0 (`All matched files use Prettier code style!`, artefacto `reports/static/prettier.log`)
+- `corepack pnpm run lint` -> exit 0 (`eslint_files=18 errors=0 warnings=0`, artefacto `reports/static/eslint.json`)
+- `corepack pnpm run typecheck` -> exit 0 (`tsc --noEmit`, artefacto `reports/static/tsc.log`)
+- `corepack pnpm run test:unit` -> exit 0 (`4 files passed, 20 tests passed`, incl. `tests/unit/fixtures.test.ts` `8/8` tests en PASS, artefacto `reports/unit/junit.xml`)
+- `corepack pnpm run test:coverage` -> exit 0 (`100% Stmts 38/38, 100% Branch 23/23, 100% Funcs 9/9, 100% Lines 37/37` sobre `src/`, artefacto `reports/coverage/coverage-summary.json`)
+- `corepack pnpm run build` -> exit 0 (`Next.js 16.4.6 Turbopack`, rutas `/` y `/api/health`, artefacto `reports/build/next-build.log`)
+- `corepack pnpm run security:sca` -> exit 0 (`[SCA] PASS (high=0, critical=0, moderate=4, low=0)`, artefacto `reports/security/sca-audit.json`)
+- `corepack pnpm run security:secrets` -> exit 0 (`[SECRET_SCAN] PASS (files=131, findings=0, gitleaks=NOT_INSTALLED_IN_LOCAL_PATH)`, artefacto `reports/security/secret-scan.json`)
+
+## 4. Control de alcance, commit limpio e integridad post-commit
+- `git add docs/agentic/packets/P0-009.md data/fixtures/oak-seed.v1.json data/fixtures/schema.ts docs/data/SYNTHETIC_DATASET.md tests/unit/fixtures.test.ts docs/evidence/W01/P0-009/summary.md docs/evidence/W01/P0-009/commands.txt docs/evidence/W01/P0-009/validation-report.json docs/evidence/W01/P0-009/approvals.md` -> exit 0
+- `git diff --cached --name-only` -> exactamente los 9 archivos de `allowed_paths`
+- `git commit -m "feat(P0-009): define versioned synthetic dataset, Zod schema, unit tests and catalog"` -> exit 0
+- `git status --short` -> salida vacía (exit 0)
+- `git rev-parse HEAD` -> SHA completo del commit candidato en `feat/p0-009-synthetic-dataset`
+
