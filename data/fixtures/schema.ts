@@ -383,55 +383,38 @@ function findBannedTermInString(text: string): string | null {
   return null;
 }
 
-export function assertNoBannedMockData(raw: unknown): void {
-  const seen = new WeakSet<object>();
-  const stack: Array<{ value: unknown; path: string }> = [{ value: raw, path: "$" }];
-
-  while (stack.length > 0) {
-    const current = stack.pop();
-    if (!current) {
-      continue;
+function scanBannedMockValue(value: unknown, path: string, seen: WeakSet<object>): void {
+  if (typeof value === "string") {
+    const matched = findBannedTermInString(value);
+    if (matched !== null) {
+      throw new Error(`Banned deck mock data "${matched}" detected at ${path}.`);
     }
-    const { value, path } = current;
-
-    if (typeof value === "string") {
-      const matched = findBannedTermInString(value);
-      if (matched !== null) {
-        throw new Error(`Banned deck mock data "${matched}" detected at ${path}.`);
-      }
-      continue;
-    }
-
-    if (typeof value !== "object" || value === null) {
-      continue;
-    }
-
-    if (seen.has(value)) {
-      continue;
-    }
-    seen.add(value);
-
-    if (Array.isArray(value)) {
-      for (let i = value.length - 1; i >= 0; i -= 1) {
-        stack.push({ value: value.at(i), path: `${path}[${String(i)}]` });
-      }
-      continue;
-    }
-
-    const entries = Object.entries(value);
-    for (let i = entries.length - 1; i >= 0; i -= 1) {
-      const entry = entries.at(i);
-      if (!entry) {
-        continue;
-      }
-      const [key, nestedValue] = entry;
-      const keyMatch = findBannedTermInString(key);
-      if (keyMatch !== null) {
-        throw new Error(`Banned deck mock data "${keyMatch}" detected in key at ${path}.${key}.`);
-      }
-      stack.push({ value: nestedValue, path: `${path}.${key}` });
-    }
+    return;
   }
+
+  if (typeof value !== "object" || value === null || seen.has(value)) {
+    return;
+  }
+  seen.add(value);
+
+  if (Array.isArray(value)) {
+    for (const [index, item] of value.entries()) {
+      scanBannedMockValue(item, `${path}[${String(index)}]`, seen);
+    }
+    return;
+  }
+
+  for (const [key, nestedValue] of Object.entries(value)) {
+    const keyMatch = findBannedTermInString(key);
+    if (keyMatch !== null) {
+      throw new Error(`Banned deck mock data "${keyMatch}" detected in key at ${path}.${key}.`);
+    }
+    scanBannedMockValue(nestedValue, `${path}.${key}`, seen);
+  }
+}
+
+export function assertNoBannedMockData(raw: unknown): void {
+  scanBannedMockValue(raw, "$", new WeakSet<object>());
 }
 
 function assertUniqueIdentifier(seen: Set<string>, value: string, entityLabel: string): void {
@@ -805,10 +788,10 @@ export function validateSyntheticDataset(raw: unknown): SyntheticDataset {
 
   const parsed = syntheticDatasetSchema.safeParse(raw);
   if (!parsed.success) {
-    const firstIssue = parsed.error.issues.at(0);
-    const issuePath = firstIssue ? firstIssue.path.join(".") || "$" : "$";
-    const issueMessage = firstIssue ? firstIssue.message : "Unknown schema error";
-    throw new Error(`Synthetic dataset validation failed at ${issuePath}: ${issueMessage}`);
+    const issueSummary = parsed.error.issues
+      .map((issue) => `${issue.path.join(".") || "$"}: ${issue.message}`)
+      .join("; ");
+    throw new Error(`Synthetic dataset validation failed at ${issueSummary}`);
   }
 
   assertDatasetInvariants(parsed.data);
@@ -816,23 +799,86 @@ export function validateSyntheticDataset(raw: unknown): SyntheticDataset {
 }
 
 function countByKey<T extends string>(keys: readonly T[], values: readonly T[]): Record<T, number> {
-  const counts = new Map<T, number>();
-  for (const key of keys) {
-    counts.set(key, 0);
-  }
-  for (const value of values) {
-    counts.set(value, (counts.get(value) ?? 0) + 1);
-  }
-  return Object.fromEntries(keys.map((key) => [key, counts.get(key) ?? 0])) as Record<T, number>;
+  return Object.fromEntries(
+    keys.map((key) => [key, values.filter((value) => value === key).length]),
+  ) as Record<T, number>;
 }
 
-export function buildValidationReport(dataset: SyntheticDataset): SyntheticValidationReport {
+function collectDatasetTimestamps(dataset: SyntheticDataset): string[] {
+  const timestamps: string[] = [dataset.generatedAtUtc];
+
+  for (const membership of dataset.memberships) {
+    if (membership.invitationExpiresAtUtc !== null) {
+      timestamps.push(membership.invitationExpiresAtUtc);
+    }
+    if (membership.acceptedAtUtc !== null) {
+      timestamps.push(membership.acceptedAtUtc);
+    }
+    if (membership.revokedAtUtc !== null) {
+      timestamps.push(membership.revokedAtUtc);
+    }
+  }
+
+  for (const event of dataset.events) {
+    timestamps.push(event.startsAtUtc, event.registrationClosesAtUtc);
+    for (const modality of event.modalities) {
+      for (const tier of modality.priceTiers) {
+        timestamps.push(tier.validFromUtc, tier.validUntilUtc);
+      }
+    }
+  }
+
+  for (const fav of dataset.favourites) {
+    timestamps.push(fav.createdAtUtc);
+  }
+
+  for (const reg of dataset.registrations) {
+    timestamps.push(reg.createdAtUtc, reg.updatedAtUtc);
+    if (reg.confirmedAtUtc !== null) {
+      timestamps.push(reg.confirmedAtUtc);
+    }
+  }
+
+  for (const payment of dataset.payments) {
+    timestamps.push(payment.createdAtUtc);
+    if (payment.succeededAtUtc !== null) {
+      timestamps.push(payment.succeededAtUtc);
+    }
+    if (payment.refundedAtUtc !== null) {
+      timestamps.push(payment.refundedAtUtc);
+    }
+  }
+
+  return timestamps;
+}
+
+function collectDatasetEmails(dataset: SyntheticDataset): string[] {
+  const emails: string[] = [
+    ...dataset.organizations.map((org) => org.publicContactEmail),
+    ...dataset.demoAccounts.map((acc) => acc.email),
+    ...dataset.events.map((ev) => ev.publicContactEmail),
+    ...dataset.registrations.map((reg) => reg.participant.email),
+  ];
+
+  for (const membership of dataset.memberships) {
+    if (membership.invitedEmail !== null) {
+      emails.push(membership.invitedEmail);
+    }
+  }
+
+  return emails;
+}
+
+export function buildValidationReport(rawDataset: unknown): SyntheticValidationReport {
+  const dataset = validateSyntheticDataset(rawDataset);
   const modalities = dataset.events.flatMap((event) => event.modalities);
   const priceTiers = modalities.flatMap((modality) => modality.priceTiers);
   const publishedModalities = dataset.events
     .filter((event) => event.status === "PUBLISHED")
     .flatMap((event) => event.modalities);
   const publishedTiers = publishedModalities.flatMap((modality) => modality.priceTiers);
+  const timestamps = collectDatasetTimestamps(dataset);
+  const emails = collectDatasetEmails(dataset);
 
   return {
     datasetId: dataset.datasetId,
@@ -882,27 +928,41 @@ export function buildValidationReport(dataset: SyntheticDataset): SyntheticValid
       hasHistoryAthleteWithCompletedEvents: dataset.demoAccounts.some(
         (acc) =>
           acc.kind === "athlete-history" &&
-          dataset.registrations.some((reg) => {
-            const linkedEvent = dataset.events.find((ev) => ev.id === reg.eventId);
-            return (
+          dataset.registrations.some(
+            (reg) =>
               reg.userId === acc.id &&
               reg.status === "CONFIRMED" &&
-              linkedEvent?.status === "COMPLETED"
-            );
-          }),
+              dataset.events.some((ev) => ev.id === reg.eventId && ev.status === "COMPLETED"),
+          ),
       ),
     },
     safetyInvariants: {
-      allTimestampsUtcZ: true,
-      allTimezonesEuropeMadrid: dataset.events.every((ev) => ev.timezone === EXPECTED_TIMEZONE),
-      allAmountsIntegerEurCents: priceTiers.every(
-        (tier) =>
-          Number.isInteger(tier.amountCents) &&
-          Number.isInteger(tier.managementFeeCents) &&
-          Number.isInteger(tier.totalCents) &&
-          tier.currency === EXPECTED_CURRENCY,
+      allTimestampsUtcZ: timestamps.every(isStrictUtcIsoTimestamp),
+      allTimezonesEuropeMadrid:
+        dataset.defaultTimezone === EXPECTED_TIMEZONE &&
+        dataset.events.every((ev) => ev.timezone === EXPECTED_TIMEZONE),
+      allAmountsIntegerEurCents:
+        priceTiers.every(
+          (tier) =>
+            Number.isInteger(tier.amountCents) &&
+            Number.isInteger(tier.managementFeeCents) &&
+            Number.isInteger(tier.totalCents) &&
+            tier.currency === EXPECTED_CURRENCY,
+        ) &&
+        dataset.registrations.every(
+          (reg) =>
+            Number.isInteger(reg.unitAmountCents) &&
+            Number.isInteger(reg.feeCents) &&
+            Number.isInteger(reg.totalCents) &&
+            reg.currency === EXPECTED_CURRENCY,
+        ) &&
+        dataset.payments.every(
+          (payment) =>
+            Number.isInteger(payment.amountCents) && payment.currency === EXPECTED_CURRENCY,
+        ),
+      allEmailsReservedInvalid: emails.every((email) =>
+        email.toLowerCase().endsWith(REQUIRED_EMAIL_SUFFIX),
       ),
-      allEmailsReservedInvalid: true,
       bannedDeckDataMatches: 0,
     },
   };
