@@ -1,0 +1,53 @@
+# Comandos reproducibles ejecutados en P0-010 (auditoria G0 Baseline sobre master @ 750f24859742261f86efcdc607f2dea7145d6874)
+
+## 1. Entorno limpio y verificaciones previas en worktree aislado (chore/p0-010-g0-audit -> base_sha 750f24859742261f86efcdc607f2dea7145d6874)
+- `git worktree add -b chore/p0-010-g0-audit C:/Users/David/Documents/_oak_wt_p0010 750f24859742261f86efcdc607f2dea7145d6874` -> exit 0
+- `git rev-parse HEAD` -> `750f24859742261f86efcdc607f2dea7145d6874` (base exacta de auditoria; sin mezclar `feat/p0-005-ci-baseline` @ `0664fe4422cb3fb5171c32c430bd18cf865f5cad`)
+- Entorno verificado: `Windows NT 10.0.26100.0`, `node v24.16.0`, `corepack 0.35.0`, `pnpm 10.34.9`, `git 2.49.0.windows.1`
+- `git remote -v` -> vacio (remoto GitHub ausente -> confirma `BL-01`)
+- `Get-Command gh` / `Get-Command gitleaks` -> ausentes en `PATH` local
+- Verificacion `sha256` contra `docs/evidence/W01/P0-001/sha256-sites.txt` -> `19/19 MATCH` en `sites/**`
+- Escaneo de placeholders ejecutables `<...>` en `package.json` y `scripts/` -> `0` hallazgos
+- Escaneo de skips/only (`it.skip`, `describe.skip`, `test.skip`, `.only`) en `tests/` -> `0` hallazgos
+- Verificacion de fijacion en `package.json` -> `50/50` dependencias fijadas (`0` rangos flotantes, `1` override exacto)
+- Presencia de `36` artefactos normativos y de evidencia Fase 0 -> `36/36` presentes (`0` ausentes)
+
+## 2. Los 9 comandos canonicos activos G0 + sonda directa sobre data/fixtures/schema.ts (todos exit 0)
+- `corepack pnpm install --frozen-lockfile` -> exit 0 (`+1074 packages`, `pnpm@10.34.9`)
+- `corepack pnpm run format:check` -> exit 0 (`4453 ms`, `reports/static/prettier.log`: `All matched files use Prettier code style!`)
+- `corepack pnpm run lint` -> exit 0 (`23197 ms`, `reports/static/eslint.json`: `18` files, `0` errors, `0` warnings)
+- `corepack pnpm run typecheck` -> exit 0 (`8293 ms`, `reports/static/tsc.log`: `tsc --noEmit` `0` errors)
+- `corepack pnpm run test:unit` -> exit 0 (`9846 ms`, `reports/unit/junit.xml`: `4` files passed, `26/26` tests passed, `0` failed, `0` skipped)
+- `corepack pnpm run test:coverage` -> exit 0 (`9786 ms`, `reports/coverage/coverage-summary.json`: `src/` `100%` lines `37/37`, stmts `38/38`, funcs `9/9`, branches `23/23`)
+- `corepack pnpm exec vitest run --project unit tests/unit/fixtures.test.ts --coverage --coverage.include="data/fixtures/schema.ts" --coverage.reportsDirectory=reports/coverage-schema --coverage.reporter=json-summary --coverage.reporter=text` -> exit 0 (`6240 ms`, `reports/coverage-schema/coverage-summary.json`: `14/14` tests; `schema.ts` `100%` lines `355/355`, stmts `361/361`, funcs `52/52`, branches `231/231`)
+- `corepack pnpm run build` -> exit 0 (`25223 ms`, `reports/build/next-build.log`: Next.js `16.4.6` Turbopack, routes `/`, `/_not-found`, `/api/health`)
+- `corepack pnpm run security:sca` -> exit 0 (`4352 ms`, `reports/security/sca-audit.json`: `1301` deps, `high=0, critical=0, moderate=4, low=0`)
+- `corepack pnpm run security:secrets` -> exit 0 (`1781 ms`, `reports/security/secret-scan.json`: `132` files scanned, `secretlintFindingsCount=0, oakFindingsCount=0, gitleaks=NOT_INSTALLED_IN_LOCAL_PATH`)
+
+## 3. Ejecucion completa de los 21 scripts futuros fail-closed de package.json (todos exit 2, FAIL_CLOSED_NOT_IMPLEMENTED)
+- `corepack pnpm run test:integration` (`INTEGRATION_TEST`, fase `P2-002/P2-010`) -> exit 2 (`1176 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/integration/fail-closed.json`)
+- `corepack pnpm run test:contract` (`CONTRACT_TEST`, fase `P2-010/P3-001`) -> exit 2 (`1103 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/contract/fail-closed.json`)
+- `corepack pnpm run db:migrate:fresh` (`DB_MIGRATE_FRESH`, fase `P2-002`) -> exit 2 (`1099 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/db/migrate-fresh.json`)
+- `corepack pnpm run db:migrate:previous` (`DB_MIGRATE_FROM_PREVIOUS`, fase `P2-002`) -> exit 2 (`1017 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/db/migrate-previous.json`)
+- `corepack pnpm run db:seed:check` (`SEED_IDEMPOTENCY_CHECK`, fase `P2-003`) -> exit 2 (`1135 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/db/seed-check.json`)
+- `corepack pnpm run test:e2e:critical` (`E2E_CRITICAL`, fase `P2-008/P2-010`) -> exit 2 (`1276 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/e2e/critical-results.json`)
+- `corepack pnpm run test:e2e:full` (`E2E_FULL`, fase `P4-011/P6-010`) -> exit 2 (`1247 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/e2e/full-results.json`)
+- `corepack pnpm run test:e2e:flake` (`E2E_FLAKE_CHECK`, fase `P2-010/P8-001`) -> exit 2 (`996 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/e2e/flake-check.json`)
+- `corepack pnpm run test:a11y` (`A11Y_AUTOMATED`, fase `P2-007/P2-008`) -> exit 2 (`942 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/a11y/axe-results.json`)
+- `corepack pnpm run test:a11y:manual-check` (`A11Y_MANUAL`, fase `P7-001`) -> exit 2 (`1010 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/a11y/manual-signoff.json`)
+- `corepack pnpm run security:sast` (`SAST`, fase `P2-005/P7-005`) -> exit 2 (`1133 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/security/sast-fail-closed.json`)
+- `corepack pnpm run security:dast` (`DAST`, fase `P5-013/P7-006`) -> exit 2 (`1091 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/security/dast.json`)
+- `corepack pnpm run security:sbom` (`SBOM`, fase `P7-005`) -> exit 2 (`1110 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/security/sbom.cdx.json`)
+- `corepack pnpm run test:perf` (`PERFORMANCE`, fase `P7-003`) -> exit 2 (`964 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/perf/perf-gate.json`)
+- `corepack pnpm run test:load` (`LOAD_TEST`, fase `P7-003/P7-004`) -> exit 2 (`997 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/perf/load-test.json`)
+- `corepack pnpm run deploy:preview` (`DEPLOY_PREVIEW`, fase `P2-001`) -> exit 2 (`1180 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/ops/deploy-preview.json`)
+- `corepack pnpm run deploy:staging` (`DEPLOY_STAGING`, fase `P5-013`) -> exit 2 (`1311 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/ops/deploy-staging.json`)
+- `corepack pnpm run test:smoke` (`SMOKE_TEST`, fase `P5-013`) -> exit 2 (`988 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/ops/smoke.json`)
+- `corepack pnpm run ops:observability-check` (`OBSERVABILITY_CHECK`, fase `P2-009/P7-008`) -> exit 2 (`1025 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/ops/observability.json`)
+- `corepack pnpm run ops:backup-restore-drill` (`BACKUP_RESTORE_DRILL`, fase `P7-009`) -> exit 2 (`1059 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/ops/backup-restore.json`)
+- `corepack pnpm run ops:rollback-drill` (`ROLLBACK_DRILL`, fase `P7-010`) -> exit 2 (`1001 ms`, status `FAIL_CLOSED_NOT_IMPLEMENTED`, `reports/ops/rollback.json`)
+
+## 4. Verificacion determinista del dataset sintetico, terminos prohibidos e higiene RFC 2606
+- `buildValidationReport(oak-seed.v1.json)` vs `docs/evidence/W01/P0-009/validation-report.json` -> `deterministicMatch: true`, `reportStatus: "VALID"`, `seedEmailCount: 32`, `nonOakInvalidCount: 0`, `bannedDeckDataMatches: 0`
+- Escaneo de los `8` terminos prohibidos de los decks en `src/` y `data/fixtures/oak-seed.v1.json` -> `0` coincidencias
+- Escaneo de correos fuera de dominios reservados RFC 2606 en `127` archivos rastreados no binarios (excluyendo `sites/**` y `pnpm-lock.yaml`) -> `0` hallazgos
