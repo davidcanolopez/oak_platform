@@ -1,7 +1,7 @@
 # Tablero de Tareas y Ruta Crítica — OAK
 
-**Task origen:** `P0-002` | **Última sincronización Fase 0:** `013314afe1e35fbf4410dbb3ceb28e31d1c275a5` (merge `P0-009`) | **Total tareas:** `114` (`113` de `MASTER_EXECUTION_PLAN.md` §12 + `P0-011` añadida para requisito #14 de `QUALITY_GATES.md` §6 `G0`)  
-**Estado de Gates:** `G0 = FAIL` (`9/11` tareas Fase 0 `ACEPTADA`; `P0-005 = BLOCKED` en `BL-01` por remoto GitHub ausente) | **`D0 = PENDING USER VALIDATION`**
+**Task origen:** `P0-002` | **Última sincronización Fase 0:** `c0c00be41254bf6769c987616b035b2d2b156175` (merge `P0-010`) | **Total tareas:** `114` (`113` de `MASTER_EXECUTION_PLAN.md` §12 + `P0-011` añadida para requisito #14 de `QUALITY_GATES.md` §6 `G0`)  
+**Estado de Gates:** `G0 = BLOCKED` (`BL-01`: remoto GitHub ausente y `P0-005` en `BLOCKED`; `10/11` tareas Fase 0 en `ACEPTADA`) | **`D0 = PENDING USER VALIDATION`**
 
 ## 1. Reglas operativas y desviaciones declaradas respecto a `MASTER_EXECUTION_PLAN.md` §12
 
@@ -24,7 +24,8 @@ Cadena de dependencias más larga (54 nodos hacia `P8-011`):
 - **Ola 1 (`ACEPTADA`):** `P0-002` (`bd3cf59b9f228dffa9c8be66eb4e624723e995b9`), `P0-003` (`1a041b8288c6900fdc285d5e1a4da1cc91d556a9`), `P0-006` (`133fd75e42e24858b9ad60a1f9d5351f01bbcb3c`), `P0-007` (`224a30aac6d366525c2ef2167f67a6c17b01cf9d`)
 - **Ola 2 (`ACEPTADA`):** `P0-004` (`0ead1fafcdc9dc0f692c62f47af4a5713f827e5a`), `P0-008` (`84a96301a11b239646d33e148ab3fc66b2aa0a18`), `P0-011` (`470ed338a9836667228e0affac58e430474422`)
 - **Ola 3 (`PARCIAL`):** `P0-009` (`ACEPTADA` en `c7e7295a0979ac06ba259613069bb5c89121738b`, merge `013314a`); `P0-005` (`BLOCKED` en `BL-01`, validación local `PASS` sobre `0664fe4422cb3fb5171c32c430bd18cf865f5cad` en `feat/p0-005-ci-baseline`)
-- **Ola 4 (`READY`, auditoría fail-closed `G0`):** `P0-010` (`release-guardian`)
+- **Ola 4 (`ACEPTADA` con `G0 = BLOCKED`):** `P0-010` (`69cfd195cdbf2afd2cc16daf483e62f841332cc3`, merge `c0c00be`, `PEER_REVIEW PASS` `auditor-no-funcional`; `Gate G0` permanece `BLOCKED` por `BL-01`)
+- **Backlog menor `P3` no bloqueante registrado en Fase 0:** `P0-005` (`summary.md` L14/L22 profundidad `../` vs `../../../../`); `P0-010` (`P3-01` campos `name`/`format` en `gate-manifest.json artifacts[]`, `P3-02` numeración editorial `AC-05` en `delivery_report` de `P0-010.md`).
 
 ## 3. Inventario completo de tareas
 
@@ -42,7 +43,7 @@ Cadena de dependencias más larga (54 nodos hacia `P8-011`):
 | `P0-008` | `ACEPTADA` (`84a9630`) | `Ola 2` | `orquestador-oak` (SUP) | `qa-e2e` | P0-002, P0-006, P0-007 | Publicar DoR, DoD, plantilla de evidencia y protocolo de excepciones | G0 |
 | `P0-009` | `ACEPTADA` (`c7e7295`) | `Ola 3` | `backend-datos` (BE) | `arquitecto-seguridad, qa-e2e` | P0-003, P0-004, P0-006 | Definir dataset sintético y cuentas demo sin PII real | G0 |
 | `P0-011` | `ACEPTADA` (`470ed33`) | `Ola 2` | `ux-brand` (BRUX (adición Fase 0 req. #14)) | `auditor-no-funcional` | P0-001 | Formalizar baseline de referencias de marca y criterios UX accesibles para G0 (Req. #14) | G0 |
-| `P0-010` | `READY` | `Ola 4` | `release-guardian` (RG) | `auditor-no-funcional` | P0-001, P0-002, P0-003, P0-004, P0-005, P0-006, P0-007, P0-008, P0-009, P0-011 | Auditar y decidir G0 | G0 |
+| `P0-010` | `ACEPTADA` (`69cfd19`; `G0 = BLOCKED BL-01`) | `Ola 4` | `release-guardian` (RG) | `auditor-no-funcional` | P0-001, P0-002, P0-003, P0-004, P0-005, P0-006, P0-007, P0-008, P0-009, P0-011 | Auditar y decidir G0 | G0 |
 
 ### Fase 1. Contrato de producto, marca y arquitectura
 
