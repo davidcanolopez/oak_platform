@@ -1,0 +1,23 @@
+# P0-005 Controlled Intentional Failure Log (Local Equivalent of PR Gate Block)
+timestamp_utc: 2026-11-19T07:10:06Z
+injected_probe: src/shared/__ci_intentional_failure_probe__.ts (reverted immediately after capture)
+command: corepack pnpm run typecheck
+exit_code: 2
+
+--- stdout ---
+
+> oak-platform@0.1.0 typecheck C:\Users\David\.gemini\antigravity\worktrees\5694b646-a82e-460a-82fd-3b847981abc6\subagent-P0-005-CI-Baseline-Owner-devops-release-d487aaba
+> node scripts/ci/run-and-capture.mjs --out reports/static/tsc.log -- corepack pnpm exec tsc --noEmit
+
+src/shared/__ci_intentional_failure_probe__.ts(2,14): error TS2322: Type 'string' is not assignable to type 'number'.
+ ELIFECYCLE  Command failed with exit code 2.
+
+--- stderr ---
+
+
+--- reports/static/tsc.log ---
+[run-and-capture] started_at_utc=2026-11-19T07:10:08.761Z
+[run-and-capture] command=corepack pnpm exec tsc --noEmit
+src/shared/__ci_intentional_failure_probe__.ts(2,14): error TS2322: Type 'string' is not assignable to type 'number'.
+
+[run-and-capture] finished_at_utc=2026-11-19T07:10:23.895Z exit_code=2 signal=none

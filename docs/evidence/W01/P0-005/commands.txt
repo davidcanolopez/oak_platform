@@ -1,0 +1,33 @@
+# Comandos reproducibles ejecutados en P0-005 (sin PII ni secretos)
+
+## 1. Aislamiento de rama, limpieza y verificación de remoto/CLI
+- `git checkout -b feat/p0-005-ci-baseline fc8ff5107bcbd2b8735d55588120525f3fbdcd2f` -> exit 0
+- Retirado archivo untracked ajeno `docs/agentic/packets/P0-009.md` de la copia de rama -> exit 0
+- `git remote -v` -> salida vacía (`PR_REMOTE_EXECUTION = BLOCKED_PENDING_REMOTE`)
+- `Get-Command gh -ErrorAction SilentlyContinue` -> `GH_CLI=NOT_FOUND`
+
+## 2. Verificación criptográfica de acciones y binario Gitleaks (red GitHub)
+- `git ls-remote --tags https://github.com/actions/checkout.git` (`v4.3.1`) -> `34e114876b0b11c390a56381ad16ebd13914f8d5` (commit API 200)
+- `git ls-remote --tags https://github.com/actions/setup-node.git` (`v4.4.0`) -> `49933ea5288caeca8642d1e84afbd3f7d6820020` (commit API 200)
+- `git ls-remote --tags https://github.com/actions/cache.git` (`v4.3.0`) -> `0057852bfaa89a56745cba8c7296529d2fc39830` (commit API 200)
+- `git ls-remote --tags https://github.com/actions/upload-artifact.git` (`v4.6.2`) -> `ea165f8d65b6e75b540449e92b4886f43607fa02` (commit API 200)
+- Verificación `gitleaks_8.30.1_linux_x64.tar.gz` frente a `gitleaks_8.30.1_checksums.txt` -> SHA-256 `551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb` (contenido: `LICENSE`, `README.md`, `gitleaks`)
+
+## 3. Demostración controlada de fallo intencional y reversión completa
+- Sonda temporal creada en `src/shared/__ci_intentional_failure_probe__.ts` (error `TS2322`)
+- `corepack pnpm run typecheck` -> exit 2 (`error TS2322: Type 'string' is not assignable to type 'number'.`), captura guardada en `docs/evidence/W01/P0-005/intentional-failure.log`
+- Eliminada sonda temporal (`Probe exists after cleanup: False`) y verificado `git status --short src/` vacío -> exit 0
+
+## 4. Validación YAML y estructural de `.github/workflows/ci.yml` (Python + `yaml@2.9.1`)
+- Validación Python de `.github/workflows/ci.yml`: disparadores `pull_request`/`push` sobre `master`, `permissions.contents == 'read'`, `concurrency.cancel-in-progress == True`, `floating_tags=0`, `pinned_actions_count=12`, presencia de los 9 checks `G0` + `corepack enable` + `gitleaks` SHA-256 + `actions/upload-artifact` de `reports/**` con `if: always()` en los 3 jobs -> exit 0 (`CI_YAML_VALIDATION=PASS`)
+
+## 5. Ejecución final de los 9 comandos activos de G0 tras la última edición (todos exit 0)
+- `corepack pnpm install --frozen-lockfile` -> exit 0 (`Lockfile is up to date, resolution step is skipped`)
+- `corepack pnpm run format:check` -> exit 0 (`All matched files use Prettier code style!`, artefacto `reports/static/prettier.log`)
+- `corepack pnpm run lint` -> exit 0 (`0 errors, 0 warnings`, artefacto `reports/static/eslint.json`)
+- `corepack pnpm run typecheck` -> exit 0 (`tsc --noEmit`, artefacto `reports/static/tsc.log`)
+- `corepack pnpm run test:unit` -> exit 0 (`3 files passed, 12 tests passed`, artefacto `reports/unit/junit.xml`)
+- `corepack pnpm run test:coverage` -> exit 0 (`100% Stmts 38/38, 100% Branch 23/23, 100% Funcs 9/9, 100% Lines 37/37`, artefacto `reports/coverage/coverage-summary.json`)
+- `corepack pnpm run build` -> exit 0 (`Next.js 16.4.6 Turbopack`, rutas `/` y `/api/health`, artefacto `reports/build/next-build.log`)
+- `corepack pnpm run security:sca` -> exit 0 (`[SCA] PASS (high=0, critical=0, moderate=4, low=0)`, artefacto `reports/security/sca-audit.json`)
+- `corepack pnpm run security:secrets` -> exit 0 (`[SECRET_SCAN] PASS (files=129, findings=0, gitleaks=NOT_INSTALLED_IN_LOCAL_PATH)`, artefacto `reports/security/secret-scan.json`)
