@@ -1,0 +1,450 @@
+{
+  "task_id": "P0-010",
+  "gate_id": "G0",
+  "commit_sha": "750f24859742261f86efcdc607f2dea7145d6874",
+  "base_sha": "750f24859742261f86efcdc607f2dea7145d6874",
+  "environment": {
+    "os": "Microsoft Windows NT 10.0.26100.0",
+    "node": "v24.16.0",
+    "corepack": "0.35.0",
+    "pnpm": "10.34.9",
+    "git": "2.49.0.windows.1",
+    "worktree": "clean isolated worktree chore/p0-010-g0-audit from master @ 750f24859742261f86efcdc607f2dea7145d6874 (without feat/p0-005-ci-baseline)",
+    "github_remote": "ABSENT",
+    "gh_cli": false,
+    "gitleaks_local": false
+  },
+  "started_at": "2026-11-19T08:05:41Z",
+  "finished_at": "2026-11-19T08:12:33Z",
+  "commands": [
+    {
+      "token": "INSTALL_LOCKED",
+      "script": "(pnpm install)",
+      "command": "corepack pnpm install --frozen-lockfile",
+      "exit_code": 0,
+      "duration_ms": null,
+      "status": "PASS",
+      "report": "pnpm-lock.yaml",
+      "notes": "+1074 packages from frozen lockfile; 50/50 pinned deps, 0 floating, 1 exact override"
+    },
+    {
+      "token": "FORMAT_CHECK",
+      "script": "format:check",
+      "command": "corepack pnpm run format:check",
+      "exit_code": 0,
+      "duration_ms": 4453,
+      "status": "PASS",
+      "report": "reports/static/prettier.log",
+      "notes": "All matched files use Prettier code style"
+    },
+    {
+      "token": "LINT",
+      "script": "lint",
+      "command": "corepack pnpm run lint",
+      "exit_code": 0,
+      "duration_ms": 23197,
+      "status": "PASS",
+      "report": "reports/static/eslint.json",
+      "notes": "18 files checked, 0 errors, 0 warnings"
+    },
+    {
+      "token": "TYPECHECK",
+      "script": "typecheck",
+      "command": "corepack pnpm run typecheck",
+      "exit_code": 0,
+      "duration_ms": 8293,
+      "status": "PASS",
+      "report": "reports/static/tsc.log",
+      "notes": "tsc --noEmit strict passed with 0 errors"
+    },
+    {
+      "token": "UNIT_TEST",
+      "script": "test:unit",
+      "command": "corepack pnpm run test:unit",
+      "exit_code": 0,
+      "duration_ms": 9846,
+      "status": "PASS",
+      "report": "reports/unit/junit.xml",
+      "notes": "4 test files, 26/26 passed, 0 failed, 0 skipped"
+    },
+    {
+      "token": "COVERAGE",
+      "script": "test:coverage",
+      "command": "corepack pnpm run test:coverage",
+      "exit_code": 0,
+      "duration_ms": 9786,
+      "status": "PASS",
+      "report": "reports/coverage/coverage-summary.json",
+      "notes": "src/: 100% lines (37/37), stmts (38/38), funcs (9/9), branches (23/23)"
+    },
+    {
+      "token": "SCHEMA_COVERAGE_PROBE",
+      "script": "(vitest probe)",
+      "command": "corepack pnpm exec vitest run --project unit tests/unit/fixtures.test.ts --coverage --coverage.include=\"data/fixtures/schema.ts\" --coverage.reportsDirectory=reports/coverage-schema --coverage.reporter=json-summary --coverage.reporter=text",
+      "exit_code": 0,
+      "duration_ms": 6240,
+      "status": "PASS",
+      "report": "reports/coverage-schema/coverage-summary.json",
+      "notes": "14/14 tests; data/fixtures/schema.ts 100% lines (355/355), stmts (361/361), funcs (52/52), branches (231/231)"
+    },
+    {
+      "token": "BUILD",
+      "script": "build",
+      "command": "corepack pnpm run build",
+      "exit_code": 0,
+      "duration_ms": 25223,
+      "status": "PASS",
+      "report": "reports/build/next-build.log",
+      "notes": "Next.js 16.4.6 Turbopack; routes /, /_not-found, /api/health"
+    },
+    {
+      "token": "SCA",
+      "script": "security:sca",
+      "command": "corepack pnpm run security:sca",
+      "exit_code": 0,
+      "duration_ms": 4352,
+      "status": "PASS",
+      "report": "reports/security/sca-audit.json",
+      "notes": "1301 deps: high=0, critical=0, moderate=4, low=0"
+    },
+    {
+      "token": "SECRET_SCAN",
+      "script": "security:secrets",
+      "command": "corepack pnpm run security:secrets",
+      "exit_code": 0,
+      "duration_ms": 1781,
+      "status": "PASS",
+      "report": "reports/security/secret-scan.json",
+      "notes": "132 files scanned: secretlint=0, oak=0, gitleaks=NOT_INSTALLED_IN_LOCAL_PATH"
+    },
+    {
+      "token": "INTEGRATION_TEST",
+      "script": "test:integration",
+      "command": "corepack pnpm run test:integration",
+      "exit_code": 2,
+      "duration_ms": 1176,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P2-002/P2-010",
+      "report": "reports/integration/fail-closed.json"
+    },
+    {
+      "token": "CONTRACT_TEST",
+      "script": "test:contract",
+      "command": "corepack pnpm run test:contract",
+      "exit_code": 2,
+      "duration_ms": 1103,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P2-010/P3-001",
+      "report": "reports/contract/fail-closed.json"
+    },
+    {
+      "token": "DB_MIGRATE_FRESH",
+      "script": "db:migrate:fresh",
+      "command": "corepack pnpm run db:migrate:fresh",
+      "exit_code": 2,
+      "duration_ms": 1099,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P2-002",
+      "report": "reports/db/migrate-fresh.json"
+    },
+    {
+      "token": "DB_MIGRATE_FROM_PREVIOUS",
+      "script": "db:migrate:previous",
+      "command": "corepack pnpm run db:migrate:previous",
+      "exit_code": 2,
+      "duration_ms": 1017,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P2-002",
+      "report": "reports/db/migrate-previous.json"
+    },
+    {
+      "token": "SEED_IDEMPOTENCY_CHECK",
+      "script": "db:seed:check",
+      "command": "corepack pnpm run db:seed:check",
+      "exit_code": 2,
+      "duration_ms": 1135,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P2-003",
+      "report": "reports/db/seed-check.json"
+    },
+    {
+      "token": "E2E_CRITICAL",
+      "script": "test:e2e:critical",
+      "command": "corepack pnpm run test:e2e:critical",
+      "exit_code": 2,
+      "duration_ms": 1276,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P2-008/P2-010",
+      "report": "reports/e2e/critical-results.json"
+    },
+    {
+      "token": "E2E_FULL",
+      "script": "test:e2e:full",
+      "command": "corepack pnpm run test:e2e:full",
+      "exit_code": 2,
+      "duration_ms": 1247,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P4-011/P6-010",
+      "report": "reports/e2e/full-results.json"
+    },
+    {
+      "token": "E2E_FLAKE_CHECK",
+      "script": "test:e2e:flake",
+      "command": "corepack pnpm run test:e2e:flake",
+      "exit_code": 2,
+      "duration_ms": 996,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P2-010/P8-001",
+      "report": "reports/e2e/flake-check.json"
+    },
+    {
+      "token": "A11Y_AUTOMATED",
+      "script": "test:a11y",
+      "command": "corepack pnpm run test:a11y",
+      "exit_code": 2,
+      "duration_ms": 942,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P2-007/P2-008",
+      "report": "reports/a11y/axe-results.json"
+    },
+    {
+      "token": "A11Y_MANUAL",
+      "script": "test:a11y:manual-check",
+      "command": "corepack pnpm run test:a11y:manual-check",
+      "exit_code": 2,
+      "duration_ms": 1010,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P7-001",
+      "report": "reports/a11y/manual-signoff.json"
+    },
+    {
+      "token": "SAST",
+      "script": "security:sast",
+      "command": "corepack pnpm run security:sast",
+      "exit_code": 2,
+      "duration_ms": 1133,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P2-005/P7-005",
+      "report": "reports/security/sast-fail-closed.json"
+    },
+    {
+      "token": "DAST",
+      "script": "security:dast",
+      "command": "corepack pnpm run security:dast",
+      "exit_code": 2,
+      "duration_ms": 1091,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P5-013/P7-006",
+      "report": "reports/security/dast.json"
+    },
+    {
+      "token": "SBOM",
+      "script": "security:sbom",
+      "command": "corepack pnpm run security:sbom",
+      "exit_code": 2,
+      "duration_ms": 1110,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P7-005",
+      "report": "reports/security/sbom.cdx.json"
+    },
+    {
+      "token": "PERFORMANCE",
+      "script": "test:perf",
+      "command": "corepack pnpm run test:perf",
+      "exit_code": 2,
+      "duration_ms": 964,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P7-003",
+      "report": "reports/perf/perf-gate.json"
+    },
+    {
+      "token": "LOAD_TEST",
+      "script": "test:load",
+      "command": "corepack pnpm run test:load",
+      "exit_code": 2,
+      "duration_ms": 997,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P7-003/P7-004",
+      "report": "reports/perf/load-test.json"
+    },
+    {
+      "token": "DEPLOY_PREVIEW",
+      "script": "deploy:preview",
+      "command": "corepack pnpm run deploy:preview",
+      "exit_code": 2,
+      "duration_ms": 1180,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P2-001",
+      "report": "reports/ops/deploy-preview.json"
+    },
+    {
+      "token": "DEPLOY_STAGING",
+      "script": "deploy:staging",
+      "command": "corepack pnpm run deploy:staging",
+      "exit_code": 2,
+      "duration_ms": 1311,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P5-013",
+      "report": "reports/ops/deploy-staging.json"
+    },
+    {
+      "token": "SMOKE_TEST",
+      "script": "test:smoke",
+      "command": "corepack pnpm run test:smoke",
+      "exit_code": 2,
+      "duration_ms": 988,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P5-013",
+      "report": "reports/ops/smoke.json"
+    },
+    {
+      "token": "OBSERVABILITY_CHECK",
+      "script": "ops:observability-check",
+      "command": "corepack pnpm run ops:observability-check",
+      "exit_code": 2,
+      "duration_ms": 1025,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P2-009/P7-008",
+      "report": "reports/ops/observability.json"
+    },
+    {
+      "token": "BACKUP_RESTORE_DRILL",
+      "script": "ops:backup-restore-drill",
+      "command": "corepack pnpm run ops:backup-restore-drill",
+      "exit_code": 2,
+      "duration_ms": 1059,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P7-009",
+      "report": "reports/ops/backup-restore.json"
+    },
+    {
+      "token": "ROLLBACK_DRILL",
+      "script": "ops:rollback-drill",
+      "command": "corepack pnpm run ops:rollback-drill",
+      "exit_code": 2,
+      "duration_ms": 1001,
+      "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+      "phase": "P7-010",
+      "report": "reports/ops/rollback.json"
+    },
+    {
+      "token": "SITES_IMMUTABILITY_SHA256",
+      "script": "(sha256-sites check)",
+      "command": "sha256 match against docs/evidence/W01/P0-001/sha256-sites.txt",
+      "exit_code": 0,
+      "duration_ms": null,
+      "status": "PASS",
+      "report": "docs/evidence/W01/P0-001/sha256-sites.txt",
+      "notes": "19/19 MATCH"
+    },
+    {
+      "token": "SEED_DETERMINISM_AND_SAFETY",
+      "script": "(schema probe)",
+      "command": "buildValidationReport(oak-seed.v1.json) == docs/evidence/W01/P0-009/validation-report.json",
+      "exit_code": 0,
+      "duration_ms": null,
+      "status": "PASS",
+      "report": "docs/evidence/W01/P0-009/validation-report.json",
+      "notes": "deterministicMatch=true, 32/32 @oak-demo.invalid, 0 banned terms, 0 non-RFC2606 emails"
+    }
+  ],
+  "thresholds": {
+    "sites_sha256_match": "19/19",
+    "unit_lines_min_pct": 85,
+    "unit_branches_min_pct": 80,
+    "eslint_errors_max": 0,
+    "eslint_warnings_max": 0,
+    "sca_high_critical_max": 0,
+    "secret_findings_max": 0,
+    "skipped_tests_max": 0,
+    "floating_package_ranges_max": 0,
+    "future_fail_closed_exit_code": 2,
+    "future_fail_closed_count": 21,
+    "g0_requirements_required": "14/14 PASS (or formal user exception in DECISION_LOG.md)"
+  },
+  "results": {
+    "sites_sha256_match": "19/19",
+    "g0_artifacts_present": "36/36",
+    "package_json_pinned": "50/50 (0 floating, 1 exact override)",
+    "unit_test_files_passed": 4,
+    "unit_tests_passed": 26,
+    "unit_tests_skipped": 0,
+    "src_coverage_lines_pct": 100,
+    "src_coverage_statements_pct": 100,
+    "src_coverage_functions_pct": 100,
+    "src_coverage_branches_pct": 100,
+    "schema_coverage_lines_pct": 100,
+    "schema_coverage_statements_pct": 100,
+    "schema_coverage_functions_pct": 100,
+    "schema_coverage_branches_pct": 100,
+    "eslint_files": 18,
+    "eslint_errors": 0,
+    "eslint_warnings": 0,
+    "sca_high": 0,
+    "sca_critical": 0,
+    "sca_moderate": 4,
+    "sca_low": 0,
+    "sca_dependencies_audited": 1301,
+    "secret_scan_files": 132,
+    "secret_scan_findings": 0,
+    "future_fail_closed_verified": "21/21 exit 2 (FAIL_CLOSED_NOT_IMPLEMENTED)",
+    "seed_determinism_match": true,
+    "g0_requirements_pass": 13,
+    "g0_requirements_blocked": 1
+  },
+  "artifacts": [
+    {
+      "path": "docs/evidence/W01/P0-010/g0-manifest.json",
+      "sha256": "a5d934dddd8a277b033070315b011eb30c973258a19234ecf70a5304c6d0f8b7",
+      "bytes": 20862,
+      "role": "G0 14-requirement and 30-command structured audit manifest"
+    },
+    {
+      "path": "docs/evidence/W01/P0-010/commands.txt",
+      "sha256": "61d459fd41d8a405f9760819e5fb15380bc776d4f6e1f6bc1b17e118886c9a7d",
+      "bytes": 7421,
+      "role": "Reproducible clean-worktree command log (9 active G0 + 21 fail-closed + probes)"
+    },
+    {
+      "path": "docs/evidence/W01/P0-010/summary.md",
+      "sha256": "6e8b3d0d0dce5c45c7d902770f67b0a0eb1e3c082c346068c12f93bfbc0df1fb",
+      "bytes": 7789,
+      "role": "Human-readable G0 Baseline audit report"
+    },
+    {
+      "path": "docs/evidence/W01/P0-010/approvals.md",
+      "sha256": "70198f73c5b0f3d22452760a780b705595e8c4cb787c3a5be49e156ba7e8f681",
+      "bytes": 826,
+      "role": "Independent separation-of-duties approval table"
+    },
+    {
+      "path": "docs/agentic/GATE_STATUS.md",
+      "sha256": "832ef77464287fa7e37828a4b40c4d077444fc0c35dc463831441aace4dd9b68",
+      "bytes": 1779,
+      "role": "Canonical gate status table updated fail-closed to BLOCKED"
+    },
+    {
+      "path": "docs/agentic/packets/P0-010.md",
+      "sha256": "c93295417c24b3d3db2ba15c1f6a3de5e4da496fb803982a6b4af7a6df5be41f",
+      "bytes": 32862,
+      "role": "Task packet P0-010 delivery report and checklist updated to PEER_REVIEW"
+    }
+  ],
+  "defects": [
+    {
+      "id": "BL-01",
+      "severity": "BLOCKER_EXTERNAL",
+      "gate_requirement": "G0 #1 (remote repository, protected master branch, CODEOWNERS and remote CI/gitleaks)",
+      "status": "OPEN_BLOCKING_G0",
+      "p005_candidate_sha": "0664fe4422cb3fb5171c32c430bd18cf865f5cad",
+      "description": "git remote -v is empty, gh CLI is absent, gitleaks is not installed in local PATH, and P0-005 technical baseline (0664fe4422cb3fb5171c32c430bd18cf865f5cad) cannot execute real PR checks or master protection remotely.",
+      "resolution_options": [
+        "Connect GitHub remote, protect master, merge and run real P0-005 PR workflows + gitleaks in CI, then re-audit G0.",
+        "Explicit user exception recorded in docs/agentic/DECISION_LOG.md waiving remote/CI deferral."
+      ]
+    }
+  ],
+  "reviewer": "auditor-no-funcional (PENDIENTE de PEER_REVIEW independiente sobre chore/p0-010-g0-audit)",
+  "status": "BLOCKED",
+  "reason": "Fail-closed BLOCKED por BL-01 en G0 requisito #1 (remoto GitHub ausente, sin proteccion real de master ni ejecucion PR/gitleaks de P0-005 @ 0664fe4422cb3fb5171c32c430bd18cf865f5cad). Los 13 requisitos #2..#14 y la parte local de #1 (22 commits, .github/CODEOWNERS, 19/19 sites/**, 9/9 activos exit 0, 21/21 futuros exit 2) pasan al 100% sobre master @ 750f24859742261f86efcdc607f2dea7145d6874."
+}

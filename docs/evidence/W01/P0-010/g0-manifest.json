@@ -1,0 +1,624 @@
+{
+  "task_id": "P0-010",
+  "gate_id": "G0",
+  "audited_master_sha": "750f24859742261f86efcdc607f2dea7145d6874",
+  "p005_branch": "feat/p0-005-ci-baseline",
+  "p005_candidate_sha": "0664fe4422cb3fb5171c32c430bd18cf865f5cad",
+  "p005_in_master": false,
+  "generated_at_utc": "2026-11-19T08:11:52Z",
+  "overall_status": "BLOCKED",
+  "blocking_reason": "BL-01",
+  "phase0_tasks": [
+    {
+      "task_id": "P0-001",
+      "status": "ACEPTADA",
+      "evidence": "docs/evidence/W01/P0-001/summary.md"
+    },
+    {
+      "task_id": "P0-002",
+      "status": "ACEPTADA",
+      "evidence": "docs/evidence/W01/P0-002/summary.md"
+    },
+    {
+      "task_id": "P0-003",
+      "status": "ACEPTADA",
+      "evidence": "docs/evidence/W01/P0-003/summary.md"
+    },
+    {
+      "task_id": "P0-004",
+      "status": "ACEPTADA",
+      "evidence": "docs/evidence/W01/P0-004/summary.md"
+    },
+    {
+      "task_id": "P0-005",
+      "status": "BLOCKED",
+      "candidate_sha": "0664fe4422cb3fb5171c32c430bd18cf865f5cad",
+      "blocker": "BL-01"
+    },
+    {
+      "task_id": "P0-006",
+      "status": "ACEPTADA",
+      "evidence": "docs/evidence/W01/P0-006/summary.md"
+    },
+    {
+      "task_id": "P0-007",
+      "status": "ACEPTADA",
+      "evidence": "docs/evidence/W01/P0-007/summary.md"
+    },
+    {
+      "task_id": "P0-008",
+      "status": "ACEPTADA",
+      "evidence": "docs/evidence/W01/P0-008/summary.md"
+    },
+    {
+      "task_id": "P0-009",
+      "status": "ACEPTADA",
+      "evidence": "docs/evidence/W01/P0-009/summary.md"
+    },
+    {
+      "task_id": "P0-010",
+      "status": "PEER_REVIEW",
+      "audited_master_sha": "750f24859742261f86efcdc607f2dea7145d6874",
+      "evidence": "docs/evidence/W01/P0-010/summary.md"
+    },
+    {
+      "task_id": "P0-011",
+      "status": "ACEPTADA",
+      "evidence": "docs/evidence/W01/P0-011/summary.md"
+    }
+  ],
+  "requirements_matrix": [
+    {
+      "index": 1,
+      "requirement": "repositorio con historial, remoto, rama principal protegida y CODEOWNERS",
+      "source_tasks": [
+        "P0-001",
+        "P0-004",
+        "P0-005"
+      ],
+      "evidence_paths": [
+        ".github/CODEOWNERS",
+        "docs/evidence/W01/P0-001/inventory.json"
+      ],
+      "local_status": "PASS",
+      "remote_ci_status": "BLOCKED",
+      "blocker_id": "BL-01",
+      "status": "BLOCKED",
+      "notes": "Local PASS (22 commits en master @ 750f24859742261f86efcdc607f2dea7145d6874 y .github/CODEOWNERS sin PII). Remoto/CI BLOCKED (BL-01): git remote -v vacio, gh CLI ausente, gitleaks ausente en PATH y P0-005 (0664fe4422cb3fb5171c32c430bd18cf865f5cad) sin integracion ni ejecucion remota en GitHub Actions."
+    },
+    {
+      "index": 2,
+      "requirement": "arquitectura y stack documentados con versiones soportadas",
+      "source_tasks": [
+        "P0-003",
+        "P0-004"
+      ],
+      "evidence_paths": [
+        "docs/architecture/SYSTEM_ARCHITECTURE.md",
+        "docs/adr/ADR-001-stack-and-modular-monolith.md",
+        ".nvmrc",
+        "package.json"
+      ],
+      "status": "PASS",
+      "notes": "Next.js 16.4.6, React 19.3.1, TypeScript 5.9.3, Node 24.16.0, pnpm 10.34.9, Zod 4.6.7, Vitest 5.1.1, Playwright 1.65.1 y monolito modular documentados."
+    },
+    {
+      "index": 3,
+      "requirement": "manifiesto de dependencias y lockfile",
+      "source_tasks": [
+        "P0-004"
+      ],
+      "evidence_paths": [
+        "package.json",
+        "pnpm-lock.yaml",
+        ".npmrc"
+      ],
+      "status": "PASS",
+      "notes": "50/50 dependencias fijadas exactamente (13 dependencies + 37 devDependencies), 0 rangos flotantes, 1 override exacto (@cyclonedx/cdxgen>body-parser=2.4.0), save-exact=true y engine-strict=true."
+    },
+    {
+      "index": 4,
+      "requirement": "instalacion y build correctos desde clon limpio",
+      "source_tasks": [
+        "P0-004",
+        "P0-010"
+      ],
+      "evidence_paths": [
+        "pnpm-lock.yaml",
+        "src/app/layout.tsx",
+        "src/app/page.tsx",
+        "src/app/api/health/route.ts"
+      ],
+      "status": "PASS",
+      "notes": "Reproducido en worktree limpio: pnpm install --frozen-lockfile exit 0 (+1074 packages) y pnpm run build exit 0 (Next.js 16.4.6 Turbopack, rutas /, /_not-found, /api/health)."
+    },
+    {
+      "index": 5,
+      "requirement": "comandos canonicos resueltos",
+      "source_tasks": [
+        "P0-003",
+        "P0-004",
+        "P0-010"
+      ],
+      "evidence_paths": [
+        "docs/adr/ADR-002-canonical-commands-and-environments.md",
+        "package.json",
+        "scripts/ci/fail-closed-gate.mjs",
+        "scripts/ci/run-and-capture.mjs",
+        "scripts/security/run-sca.ts",
+        "scripts/security/secret-scan.mjs"
+      ],
+      "status": "PASS",
+      "notes": "30/30 tokens de QUALITY_GATES.md §5 resueltos: 9/9 checks activos G0 exit 0, 21/21 scripts futuros fail-closed exit 2 (FAIL_CLOSED_NOT_IMPLEMENTED) y 0 placeholders <> ejecutables."
+    },
+    {
+      "index": 6,
+      "requirement": "matriz de entornos: local, preview, staging y produccion",
+      "source_tasks": [
+        "P0-003",
+        "P0-004",
+        "P0-010"
+      ],
+      "evidence_paths": [
+        "docs/adr/ADR-002-canonical-commands-and-environments.md",
+        "src/shared/env.ts",
+        "tests/unit/env.test.ts"
+      ],
+      "status": "PASS",
+      "notes": "Matriz de 4 entornos en ADR-002 §3 y parser fail-closed src/shared/env.ts validado con 9/9 unit tests (100% cobertura)."
+    },
+    {
+      "index": 7,
+      "requirement": "Definition of Ready y Definition of Done",
+      "source_tasks": [
+        "P0-008"
+      ],
+      "evidence_paths": [
+        "docs/agentic/DOR_DOD_PROTOCOL.md",
+        "docs/agentic/TASK_PACKET_TEMPLATE.md",
+        "docs/evidence/TEMPLATE_SUMMARY.md",
+        "docs/evidence/W01/P0-008/dry-run-handoff.md"
+      ],
+      "status": "PASS",
+      "notes": "Ciclo DoR/DoD, contrato de 15 claves de gate-manifest.json y dry-run verificados (P0-008 ACEPTADA en 50b8687)."
+    },
+    {
+      "index": 8,
+      "requirement": "requisitos funcionales y no funcionales priorizados",
+      "source_tasks": [
+        "P0-002"
+      ],
+      "evidence_paths": [
+        "docs/agentic/REQUIREMENTS_BASELINE.md",
+        "docs/agentic/MASTER_EXECUTION_PLAN.md",
+        "docs/agentic/TASK_BOARD.md"
+      ],
+      "status": "PASS",
+      "notes": "44 criterios funcionales AC-J01..AC-J08 + 9 NFR-01..NFR-09 y grafo DAG de 114 tareas / 54 nodos en ruta critica."
+    },
+    {
+      "index": 9,
+      "requirement": "clasificacion de datos, retencion, mapa de flujos y modelo de amenazas",
+      "source_tasks": [
+        "P0-006"
+      ],
+      "evidence_paths": [
+        "docs/security/DATA_CLASSIFICATION_RETENTION.md",
+        "docs/security/DATA_FLOW_MAP.md",
+        "docs/security/THREAT_MODEL.md"
+      ],
+      "status": "PASS",
+      "notes": "Clasificacion C0..C4, retencion RGPD, flujos DF-01..DF-08 y modelo de amenazas STRIDE/OWASP aceptados en 5ef2201."
+    },
+    {
+      "index": 10,
+      "requirement": "estrategia de autenticacion, autorizacion por rol y aislamiento multi-tenant",
+      "source_tasks": [
+        "P0-003",
+        "P0-006"
+      ],
+      "evidence_paths": [
+        "docs/adr/ADR-003-auth-tenancy-and-integrations.md",
+        "docs/security/THREAT_MODEL.md",
+        "docs/architecture/SYSTEM_ARCHITECTURE.md"
+      ],
+      "status": "PASS",
+      "notes": "Supabase SSR cookies HttpOnly/Secure/SameSite=Lax, invitaciones cerradas SHA-256 72h, MFA ADMIN y doble barrera ActorContext deny-by-default + PostgreSQL FORCE RLS sin BYPASSRLS."
+    },
+    {
+      "index": 11,
+      "requirement": "estrategia de migraciones, seed, backup, restauracion y rollback",
+      "source_tasks": [
+        "P0-003",
+        "P0-009"
+      ],
+      "evidence_paths": [
+        "docs/adr/ADR-004-migrations-recovery-and-budgets.md",
+        "data/fixtures/schema.ts",
+        "data/fixtures/oak-seed.v1.json",
+        "docs/data/SYNTHETIC_DATASET.md",
+        "tests/unit/fixtures.test.ts"
+      ],
+      "status": "PASS",
+      "notes": "Expand/Migrate/Contract, RPO<=24h y RTO<=4h en ADR-004; oak-seed.v1 determinista (14/14 tests, 100% schema.ts 355/355 lines & 231/231 branches, 32/32 @oak-demo.invalid, 0 banned terms)."
+    },
+    {
+      "index": 12,
+      "requirement": "estrategia de tests y trazabilidad",
+      "source_tasks": [
+        "P0-002",
+        "P0-007"
+      ],
+      "evidence_paths": [
+        "docs/qa/TEST_STRATEGY.md",
+        "docs/qa/BROWSER_VIEWPORT_MATRIX.md",
+        "docs/qa/TRACEABILITY_MATRIX_TEMPLATE.md",
+        "docs/agentic/TASK_BOARD.md"
+      ],
+      "status": "PASS",
+      "notes": "6 navegadores desktop/movil, 5 viewports (320x568..1440x900), politica cero flake (0/3) y plantilla de trazabilidad listos."
+    },
+    {
+      "index": 13,
+      "requirement": "inventario de integraciones externas y contratos",
+      "source_tasks": [
+        "P0-003",
+        "P0-006"
+      ],
+      "evidence_paths": [
+        "docs/adr/ADR-003-auth-tenancy-and-integrations.md",
+        "docs/security/DATA_FLOW_MAP.md",
+        "docs/architecture/SYSTEM_ARCHITECTURE.md"
+      ],
+      "status": "PASS",
+      "notes": "Inventario Supabase Auth/DB, Stripe test + webhooks idempotentes, Resend sandbox, Sentry y Vercel con limites y fail-closed."
+    },
+    {
+      "index": 14,
+      "requirement": "referencias de identidad de marca y criterios UX accesibles",
+      "source_tasks": [
+        "P0-001",
+        "P0-011"
+      ],
+      "evidence_paths": [
+        "docs/brand/BRAND_UX_CONTRACT.md",
+        "docs/brand/G0_BRAND_UX_BASELINE.md",
+        "src/styles/tokens.css",
+        "src/app/globals.css",
+        "docs/evidence/W01/P0-001/sha256-sites.txt"
+      ],
+      "status": "PASS",
+      "notes": "19/19 MATCH en sites/**, tokens semanticos espanol-primero, reglas WCAG 2.2 AA, pares prohibidos y D1 registrado en DECISION_LOG.md."
+    }
+  ],
+  "canonical_commands_coverage": {
+    "active_g0_count": 9,
+    "total_canonical_tokens": 30,
+    "future_fail_closed_count": 21,
+    "active_commands": [
+      {
+        "token": "INSTALL_LOCKED",
+        "script": "(pnpm install)",
+        "command": "corepack pnpm install --frozen-lockfile",
+        "exit_code": 0,
+        "duration_ms": null,
+        "status": "PASS",
+        "report": "pnpm-lock.yaml",
+        "notes": "+1074 packages from frozen lockfile; 50/50 pinned deps, 0 floating, 1 exact override"
+      },
+      {
+        "token": "FORMAT_CHECK",
+        "script": "format:check",
+        "command": "corepack pnpm run format:check",
+        "exit_code": 0,
+        "duration_ms": 4453,
+        "status": "PASS",
+        "report": "reports/static/prettier.log",
+        "notes": "All matched files use Prettier code style"
+      },
+      {
+        "token": "LINT",
+        "script": "lint",
+        "command": "corepack pnpm run lint",
+        "exit_code": 0,
+        "duration_ms": 23197,
+        "status": "PASS",
+        "report": "reports/static/eslint.json",
+        "notes": "18 files checked, 0 errors, 0 warnings"
+      },
+      {
+        "token": "TYPECHECK",
+        "script": "typecheck",
+        "command": "corepack pnpm run typecheck",
+        "exit_code": 0,
+        "duration_ms": 8293,
+        "status": "PASS",
+        "report": "reports/static/tsc.log",
+        "notes": "tsc --noEmit strict passed with 0 errors"
+      },
+      {
+        "token": "UNIT_TEST",
+        "script": "test:unit",
+        "command": "corepack pnpm run test:unit",
+        "exit_code": 0,
+        "duration_ms": 9846,
+        "status": "PASS",
+        "report": "reports/unit/junit.xml",
+        "notes": "4 test files, 26/26 passed, 0 failed, 0 skipped"
+      },
+      {
+        "token": "COVERAGE",
+        "script": "test:coverage",
+        "command": "corepack pnpm run test:coverage",
+        "exit_code": 0,
+        "duration_ms": 9786,
+        "status": "PASS",
+        "report": "reports/coverage/coverage-summary.json",
+        "notes": "src/: 100% lines (37/37), stmts (38/38), funcs (9/9), branches (23/23)"
+      },
+      {
+        "token": "SCHEMA_COVERAGE_PROBE",
+        "script": "(vitest probe)",
+        "command": "corepack pnpm exec vitest run --project unit tests/unit/fixtures.test.ts --coverage --coverage.include=\"data/fixtures/schema.ts\" --coverage.reportsDirectory=reports/coverage-schema --coverage.reporter=json-summary --coverage.reporter=text",
+        "exit_code": 0,
+        "duration_ms": 6240,
+        "status": "PASS",
+        "report": "reports/coverage-schema/coverage-summary.json",
+        "notes": "14/14 tests; data/fixtures/schema.ts 100% lines (355/355), stmts (361/361), funcs (52/52), branches (231/231)"
+      },
+      {
+        "token": "BUILD",
+        "script": "build",
+        "command": "corepack pnpm run build",
+        "exit_code": 0,
+        "duration_ms": 25223,
+        "status": "PASS",
+        "report": "reports/build/next-build.log",
+        "notes": "Next.js 16.4.6 Turbopack; routes /, /_not-found, /api/health"
+      },
+      {
+        "token": "SCA",
+        "script": "security:sca",
+        "command": "corepack pnpm run security:sca",
+        "exit_code": 0,
+        "duration_ms": 4352,
+        "status": "PASS",
+        "report": "reports/security/sca-audit.json",
+        "notes": "1301 deps: high=0, critical=0, moderate=4, low=0"
+      },
+      {
+        "token": "SECRET_SCAN",
+        "script": "security:secrets",
+        "command": "corepack pnpm run security:secrets",
+        "exit_code": 0,
+        "duration_ms": 1781,
+        "status": "PASS",
+        "report": "reports/security/secret-scan.json",
+        "notes": "132 files scanned: secretlint=0, oak=0, gitleaks=NOT_INSTALLED_IN_LOCAL_PATH"
+      }
+    ],
+    "future_fail_closed_commands": [
+      {
+        "token": "INTEGRATION_TEST",
+        "script": "test:integration",
+        "command": "corepack pnpm run test:integration",
+        "exit_code": 2,
+        "duration_ms": 1176,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P2-002/P2-010",
+        "report": "reports/integration/fail-closed.json"
+      },
+      {
+        "token": "CONTRACT_TEST",
+        "script": "test:contract",
+        "command": "corepack pnpm run test:contract",
+        "exit_code": 2,
+        "duration_ms": 1103,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P2-010/P3-001",
+        "report": "reports/contract/fail-closed.json"
+      },
+      {
+        "token": "DB_MIGRATE_FRESH",
+        "script": "db:migrate:fresh",
+        "command": "corepack pnpm run db:migrate:fresh",
+        "exit_code": 2,
+        "duration_ms": 1099,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P2-002",
+        "report": "reports/db/migrate-fresh.json"
+      },
+      {
+        "token": "DB_MIGRATE_FROM_PREVIOUS",
+        "script": "db:migrate:previous",
+        "command": "corepack pnpm run db:migrate:previous",
+        "exit_code": 2,
+        "duration_ms": 1017,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P2-002",
+        "report": "reports/db/migrate-previous.json"
+      },
+      {
+        "token": "SEED_IDEMPOTENCY_CHECK",
+        "script": "db:seed:check",
+        "command": "corepack pnpm run db:seed:check",
+        "exit_code": 2,
+        "duration_ms": 1135,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P2-003",
+        "report": "reports/db/seed-check.json"
+      },
+      {
+        "token": "E2E_CRITICAL",
+        "script": "test:e2e:critical",
+        "command": "corepack pnpm run test:e2e:critical",
+        "exit_code": 2,
+        "duration_ms": 1276,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P2-008/P2-010",
+        "report": "reports/e2e/critical-results.json"
+      },
+      {
+        "token": "E2E_FULL",
+        "script": "test:e2e:full",
+        "command": "corepack pnpm run test:e2e:full",
+        "exit_code": 2,
+        "duration_ms": 1247,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P4-011/P6-010",
+        "report": "reports/e2e/full-results.json"
+      },
+      {
+        "token": "E2E_FLAKE_CHECK",
+        "script": "test:e2e:flake",
+        "command": "corepack pnpm run test:e2e:flake",
+        "exit_code": 2,
+        "duration_ms": 996,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P2-010/P8-001",
+        "report": "reports/e2e/flake-check.json"
+      },
+      {
+        "token": "A11Y_AUTOMATED",
+        "script": "test:a11y",
+        "command": "corepack pnpm run test:a11y",
+        "exit_code": 2,
+        "duration_ms": 942,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P2-007/P2-008",
+        "report": "reports/a11y/axe-results.json"
+      },
+      {
+        "token": "A11Y_MANUAL",
+        "script": "test:a11y:manual-check",
+        "command": "corepack pnpm run test:a11y:manual-check",
+        "exit_code": 2,
+        "duration_ms": 1010,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P7-001",
+        "report": "reports/a11y/manual-signoff.json"
+      },
+      {
+        "token": "SAST",
+        "script": "security:sast",
+        "command": "corepack pnpm run security:sast",
+        "exit_code": 2,
+        "duration_ms": 1133,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P2-005/P7-005",
+        "report": "reports/security/sast-fail-closed.json"
+      },
+      {
+        "token": "DAST",
+        "script": "security:dast",
+        "command": "corepack pnpm run security:dast",
+        "exit_code": 2,
+        "duration_ms": 1091,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P5-013/P7-006",
+        "report": "reports/security/dast.json"
+      },
+      {
+        "token": "SBOM",
+        "script": "security:sbom",
+        "command": "corepack pnpm run security:sbom",
+        "exit_code": 2,
+        "duration_ms": 1110,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P7-005",
+        "report": "reports/security/sbom.cdx.json"
+      },
+      {
+        "token": "PERFORMANCE",
+        "script": "test:perf",
+        "command": "corepack pnpm run test:perf",
+        "exit_code": 2,
+        "duration_ms": 964,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P7-003",
+        "report": "reports/perf/perf-gate.json"
+      },
+      {
+        "token": "LOAD_TEST",
+        "script": "test:load",
+        "command": "corepack pnpm run test:load",
+        "exit_code": 2,
+        "duration_ms": 997,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P7-003/P7-004",
+        "report": "reports/perf/load-test.json"
+      },
+      {
+        "token": "DEPLOY_PREVIEW",
+        "script": "deploy:preview",
+        "command": "corepack pnpm run deploy:preview",
+        "exit_code": 2,
+        "duration_ms": 1180,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P2-001",
+        "report": "reports/ops/deploy-preview.json"
+      },
+      {
+        "token": "DEPLOY_STAGING",
+        "script": "deploy:staging",
+        "command": "corepack pnpm run deploy:staging",
+        "exit_code": 2,
+        "duration_ms": 1311,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P5-013",
+        "report": "reports/ops/deploy-staging.json"
+      },
+      {
+        "token": "SMOKE_TEST",
+        "script": "test:smoke",
+        "command": "corepack pnpm run test:smoke",
+        "exit_code": 2,
+        "duration_ms": 988,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P5-013",
+        "report": "reports/ops/smoke.json"
+      },
+      {
+        "token": "OBSERVABILITY_CHECK",
+        "script": "ops:observability-check",
+        "command": "corepack pnpm run ops:observability-check",
+        "exit_code": 2,
+        "duration_ms": 1025,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P2-009/P7-008",
+        "report": "reports/ops/observability.json"
+      },
+      {
+        "token": "BACKUP_RESTORE_DRILL",
+        "script": "ops:backup-restore-drill",
+        "command": "corepack pnpm run ops:backup-restore-drill",
+        "exit_code": 2,
+        "duration_ms": 1059,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P7-009",
+        "report": "reports/ops/backup-restore.json"
+      },
+      {
+        "token": "ROLLBACK_DRILL",
+        "script": "ops:rollback-drill",
+        "command": "corepack pnpm run ops:rollback-drill",
+        "exit_code": 2,
+        "duration_ms": 1001,
+        "status": "FAIL_CLOSED_NOT_IMPLEMENTED",
+        "phase": "P7-010",
+        "report": "reports/ops/rollback.json"
+      }
+    ]
+  },
+  "sites_immutability": {
+    "verified_files": 19,
+    "matched": 19,
+    "status": "19/19 MATCH"
+  },
+  "user_decisions": {
+    "D0": "PENDING USER VALIDATION",
+    "D1": "PENDING USER VALIDATION",
+    "D2": "PENDING",
+    "D3": "PENDING"
+  }
+}
