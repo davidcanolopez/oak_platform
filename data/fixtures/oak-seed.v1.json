@@ -1,0 +1,1121 @@
+{
+  "schemaVersion": "1.0.0",
+  "datasetId": "oak-seed.v1",
+  "generatedAtUtc": "2026-11-18T22:00:00Z",
+  "defaultTimezone": "Europe/Madrid",
+  "defaultCurrency": "EUR",
+  "safetyGuard": {
+    "requiresAllowDemoSeed": true,
+    "forbiddenInProduction": true,
+    "containsRealPii": false,
+    "allowedEmailSuffix": ".invalid"
+  },
+  "organizations": [
+    {
+      "id": "10000000-0000-4000-8000-000000000001",
+      "slug": "club-senderos-del-lozoya",
+      "displayName": "Club Deportivo Senderos del Lozoya",
+      "region": "Comunidad de Madrid",
+      "municipality": "Buitrago del Lozoya",
+      "publicDescription": "Organización sintética de pruebas de trail de montaña en la zona norte de la Comunidad de Madrid.",
+      "publicContactEmail": "contacto-lozoya@oak-demo.invalid",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "10000000-0000-4000-8000-000000000002",
+      "slug": "club-popular-manzanares-sur",
+      "displayName": "Club Popular Manzanares Sur",
+      "region": "Comunidad de Madrid",
+      "municipality": "Getafe",
+      "publicDescription": "Organización sintética de carreras populares urbanas y de parque en la Comunidad de Madrid.",
+      "publicContactEmail": "contacto-manzanares@oak-demo.invalid",
+      "status": "ACTIVE"
+    }
+  ],
+  "demoAccounts": [
+    {
+      "id": "20000000-0000-4000-8000-000000000001",
+      "accountKey": "athlete-con-historial",
+      "kind": "athlete-history",
+      "platformRole": "ATHLETE",
+      "mfaRequired": false,
+      "email": "atleta.historial@oak-demo.invalid",
+      "displayName": "Sofía Molina (Demo)",
+      "credentialPolicy": "NO_PASSWORD_IN_REPO_EPHEMERAL_DEV_ONLY",
+      "athleteProfile": {
+        "fullName": "Sofía Molina (Demo)",
+        "preferredDisciplines": ["trail", "running"],
+        "preferredLevel": "MEDIO",
+        "municipality": "Madrid"
+      },
+      "consentVersion": "v1.0-synthetic"
+    },
+    {
+      "id": "20000000-0000-4000-8000-000000000002",
+      "accountKey": "athlete-nuevo-sin-retos",
+      "kind": "athlete-new",
+      "platformRole": "ATHLETE",
+      "mfaRequired": false,
+      "email": "atleta.nuevo@oak-demo.invalid",
+      "displayName": "Lucas Herrero (Demo)",
+      "credentialPolicy": "NO_PASSWORD_IN_REPO_EPHEMERAL_DEV_ONLY",
+      "athleteProfile": {
+        "fullName": "Lucas Herrero (Demo)",
+        "preferredDisciplines": ["running"],
+        "preferredLevel": "INICIACION",
+        "municipality": "Getafe"
+      },
+      "consentVersion": "v1.0-synthetic"
+    },
+    {
+      "id": "20000000-0000-4000-8000-000000000003",
+      "accountKey": "organizer-org1-active",
+      "kind": "organizer-active",
+      "platformRole": "ATHLETE",
+      "mfaRequired": false,
+      "email": "org1.gestor@oak-demo.invalid",
+      "displayName": "Carmen Ortega (Demo Org 1)",
+      "credentialPolicy": "NO_PASSWORD_IN_REPO_EPHEMERAL_DEV_ONLY",
+      "athleteProfile": null,
+      "consentVersion": "v1.0-synthetic"
+    },
+    {
+      "id": "20000000-0000-4000-8000-000000000004",
+      "accountKey": "organizer-org2-active",
+      "kind": "organizer-active",
+      "platformRole": "ATHLETE",
+      "mfaRequired": false,
+      "email": "org2.gestor@oak-demo.invalid",
+      "displayName": "Javier Serrano (Demo Org 2)",
+      "credentialPolicy": "NO_PASSWORD_IN_REPO_EPHEMERAL_DEV_ONLY",
+      "athleteProfile": null,
+      "consentVersion": "v1.0-synthetic"
+    },
+    {
+      "id": "20000000-0000-4000-8000-000000000005",
+      "accountKey": "organizer-org1-invited",
+      "kind": "organizer-invited",
+      "platformRole": "ATHLETE",
+      "mfaRequired": false,
+      "email": "org1.invitado@oak-demo.invalid",
+      "displayName": "Nuria Campos (Demo Invitada)",
+      "credentialPolicy": "NO_PASSWORD_IN_REPO_EPHEMERAL_DEV_ONLY",
+      "athleteProfile": null,
+      "consentVersion": null
+    },
+    {
+      "id": "20000000-0000-4000-8000-000000000006",
+      "accountKey": "organizer-org1-revoked",
+      "kind": "organizer-revoked",
+      "platformRole": "ATHLETE",
+      "mfaRequired": false,
+      "email": "org1.revocado@oak-demo.invalid",
+      "displayName": "Raúl Blanco (Demo Revocado)",
+      "credentialPolicy": "NO_PASSWORD_IN_REPO_EPHEMERAL_DEV_ONLY",
+      "athleteProfile": null,
+      "consentVersion": "v1.0-synthetic"
+    },
+    {
+      "id": "20000000-0000-4000-8000-000000000007",
+      "accountKey": "organizer-org2-viewer",
+      "kind": "organizer-active",
+      "platformRole": "ATHLETE",
+      "mfaRequired": false,
+      "email": "org2.lector@oak-demo.invalid",
+      "displayName": "Irene Pardo (Demo Lectora Org 2)",
+      "credentialPolicy": "NO_PASSWORD_IN_REPO_EPHEMERAL_DEV_ONLY",
+      "athleteProfile": null,
+      "consentVersion": "v1.0-synthetic"
+    },
+    {
+      "id": "20000000-0000-4000-8000-000000000008",
+      "accountKey": "admin-soporte",
+      "kind": "admin",
+      "platformRole": "ADMIN",
+      "mfaRequired": true,
+      "email": "admin.soporte@oak-demo.invalid",
+      "displayName": "Soporte OAK (Demo Admin)",
+      "credentialPolicy": "NO_PASSWORD_IN_REPO_EPHEMERAL_DEV_ONLY",
+      "athleteProfile": null,
+      "consentVersion": "v1.0-synthetic"
+    }
+  ],
+  "memberships": [
+    {
+      "id": "30000000-0000-4000-8000-000000000001",
+      "organizationId": "10000000-0000-4000-8000-000000000001",
+      "userId": "20000000-0000-4000-8000-000000000003",
+      "orgRole": "ORG_OWNER",
+      "status": "ACTIVE",
+      "invitedEmail": null,
+      "invitationTokenHash": null,
+      "invitationExpiresAtUtc": null,
+      "acceptedAtUtc": "2026-10-01T09:00:00Z",
+      "revokedAtUtc": null
+    },
+    {
+      "id": "30000000-0000-4000-8000-000000000002",
+      "organizationId": "10000000-0000-4000-8000-000000000001",
+      "userId": null,
+      "orgRole": "ORG_MANAGER",
+      "status": "INVITED",
+      "invitedEmail": "org1.invitado@oak-demo.invalid",
+      "invitationTokenHash": "0000000000000000000000000000000000000000000000000000000000000101",
+      "invitationExpiresAtUtc": "2026-11-21T22:00:00Z",
+      "acceptedAtUtc": null,
+      "revokedAtUtc": null
+    },
+    {
+      "id": "30000000-0000-4000-8000-000000000003",
+      "organizationId": "10000000-0000-4000-8000-000000000001",
+      "userId": "20000000-0000-4000-8000-000000000006",
+      "orgRole": "ORG_MANAGER",
+      "status": "REVOKED",
+      "invitedEmail": null,
+      "invitationTokenHash": null,
+      "invitationExpiresAtUtc": null,
+      "acceptedAtUtc": "2026-10-05T10:00:00Z",
+      "revokedAtUtc": "2026-11-10T12:00:00Z"
+    },
+    {
+      "id": "30000000-0000-4000-8000-000000000004",
+      "organizationId": "10000000-0000-4000-8000-000000000002",
+      "userId": "20000000-0000-4000-8000-000000000004",
+      "orgRole": "ORG_OWNER",
+      "status": "ACTIVE",
+      "invitedEmail": null,
+      "invitationTokenHash": null,
+      "invitationExpiresAtUtc": null,
+      "acceptedAtUtc": "2026-10-02T09:00:00Z",
+      "revokedAtUtc": null
+    },
+    {
+      "id": "30000000-0000-4000-8000-000000000005",
+      "organizationId": "10000000-0000-4000-8000-000000000002",
+      "userId": "20000000-0000-4000-8000-000000000007",
+      "orgRole": "ORG_VIEWER",
+      "status": "ACTIVE",
+      "invitedEmail": null,
+      "invitationTokenHash": null,
+      "invitationExpiresAtUtc": null,
+      "acceptedAtUtc": "2026-10-12T11:30:00Z",
+      "revokedAtUtc": null
+    }
+  ],
+  "events": [
+    {
+      "id": "40000000-0000-4000-8000-000000000001",
+      "organizationId": "10000000-0000-4000-8000-000000000001",
+      "slug": "trail-puentes-viejas-lozoya",
+      "title": "Trail Puentes Viejas",
+      "discipline": "trail",
+      "status": "PUBLISHED",
+      "region": "Comunidad de Madrid",
+      "municipality": "Buitrago del Lozoya",
+      "locationName": "Área recreativa de Puentes Viejas",
+      "startsAtUtc": "2027-04-18T07:30:00Z",
+      "registrationClosesAtUtc": "2027-04-15T21:59:59Z",
+      "timezone": "Europe/Madrid",
+      "regulationSummary": "Uso obligatorio de zapatillas de montaña, cortavientos y recipiente reutilizable en avituallamientos.",
+      "cancellationPolicySummary": "Devolución íntegra hasta 14 días antes de la prueba según reglamento sintético.",
+      "publicContactEmail": "puentes-viejas@oak-demo.invalid",
+      "modalities": [
+        {
+          "id": "50000000-0000-4000-8000-000000000001",
+          "name": "Trail Corto 14K",
+          "distanceMeters": 14000,
+          "elevationGainMeters": 420,
+          "level": "MEDIO",
+          "timeLimitMinutes": 180,
+          "capacityLimit": 180,
+          "reservedCount": 64,
+          "remainingSpots": 116,
+          "priceTiers": [
+            {
+              "id": "60000000-0000-4000-8000-000000000001",
+              "label": "General",
+              "amountCents": 2200,
+              "managementFeeCents": 150,
+              "totalCents": 2350,
+              "currency": "EUR",
+              "validFromUtc": "2026-11-01T00:00:00Z",
+              "validUntilUtc": "2027-04-15T21:59:59Z",
+              "maxQuantity": 180
+            }
+          ]
+        },
+        {
+          "id": "50000000-0000-4000-8000-000000000002",
+          "name": "Trail Largo 28K",
+          "distanceMeters": 28000,
+          "elevationGainMeters": 1150,
+          "level": "AVANZADO",
+          "timeLimitMinutes": 330,
+          "capacityLimit": 120,
+          "reservedCount": 45,
+          "remainingSpots": 75,
+          "priceTiers": [
+            {
+              "id": "60000000-0000-4000-8000-000000000002",
+              "label": "Anticipada",
+              "amountCents": 2800,
+              "managementFeeCents": 200,
+              "totalCents": 3000,
+              "currency": "EUR",
+              "validFromUtc": "2026-11-01T00:00:00Z",
+              "validUntilUtc": "2027-01-31T22:59:59Z",
+              "maxQuantity": 60
+            },
+            {
+              "id": "60000000-0000-4000-8000-000000000003",
+              "label": "Ordinaria",
+              "amountCents": 3400,
+              "managementFeeCents": 200,
+              "totalCents": 3600,
+              "currency": "EUR",
+              "validFromUtc": "2027-02-01T00:00:00Z",
+              "validUntilUtc": "2027-04-15T21:59:59Z",
+              "maxQuantity": 60
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000002",
+      "organizationId": "10000000-0000-4000-8000-000000000001",
+      "slug": "subida-la-najarra-miraflores",
+      "title": "Subida a La Najarra",
+      "discipline": "trail",
+      "status": "PUBLISHED",
+      "region": "Comunidad de Madrid",
+      "municipality": "Miraflores de la Sierra",
+      "locationName": "Puerto de la Morcuera",
+      "startsAtUtc": "2027-05-09T07:00:00Z",
+      "registrationClosesAtUtc": "2027-05-06T21:59:59Z",
+      "timezone": "Europe/Madrid",
+      "regulationSummary": "Recorrido balizado de alta montaña; obligatorio teléfono con batería completa y manta térmica.",
+      "cancellationPolicySummary": "Reembolso del 80 % hasta 10 días antes de la salida.",
+      "publicContactEmail": "najarra@oak-demo.invalid",
+      "modalities": [
+        {
+          "id": "50000000-0000-4000-8000-000000000003",
+          "name": "Recorrido Clásico 19K",
+          "distanceMeters": 19000,
+          "elevationGainMeters": 890,
+          "level": "AVANZADO",
+          "timeLimitMinutes": 240,
+          "capacityLimit": 100,
+          "reservedCount": 99,
+          "remainingSpots": 1,
+          "priceTiers": [
+            {
+              "id": "60000000-0000-4000-8000-000000000004",
+              "label": "Último tramo",
+              "amountCents": 3100,
+              "managementFeeCents": 200,
+              "totalCents": 3300,
+              "currency": "EUR",
+              "validFromUtc": "2026-11-01T00:00:00Z",
+              "validUntilUtc": "2027-05-06T21:59:59Z",
+              "maxQuantity": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000003",
+      "organizationId": "10000000-0000-4000-8000-000000000001",
+      "slug": "circular-monte-abantos-escorial",
+      "title": "Circular Monte Abantos",
+      "discipline": "trail",
+      "status": "PUBLISHED",
+      "region": "Comunidad de Madrid",
+      "municipality": "San Lorenzo de El Escorial",
+      "locationName": "Pinar de la Herrería",
+      "startsAtUtc": "2027-05-23T07:00:00Z",
+      "registrationClosesAtUtc": "2027-05-20T21:59:59Z",
+      "timezone": "Europe/Madrid",
+      "regulationSummary": "Control de paso en collado principal y respeto estricto de pistas forestales.",
+      "cancellationPolicySummary": "Sin devolución una vez completado el cupo total salvo suspensión organizativa.",
+      "publicContactEmail": "abantos@oak-demo.invalid",
+      "modalities": [
+        {
+          "id": "50000000-0000-4000-8000-000000000004",
+          "name": "Montaña 22K",
+          "distanceMeters": 22000,
+          "elevationGainMeters": 960,
+          "level": "MEDIO",
+          "timeLimitMinutes": 270,
+          "capacityLimit": 150,
+          "reservedCount": 150,
+          "remainingSpots": 0,
+          "priceTiers": [
+            {
+              "id": "60000000-0000-4000-8000-000000000005",
+              "label": "General",
+              "amountCents": 2900,
+              "managementFeeCents": 200,
+              "totalCents": 3100,
+              "currency": "EUR",
+              "validFromUtc": "2026-11-01T00:00:00Z",
+              "validUntilUtc": "2027-05-20T21:59:59Z",
+              "maxQuantity": 150
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000004",
+      "organizationId": "10000000-0000-4000-8000-000000000001",
+      "slug": "kilometro-vertical-barranca-navacerrada",
+      "title": "Kilómetro Vertical de la Barranca",
+      "discipline": "trail",
+      "status": "DRAFT",
+      "region": "Comunidad de Madrid",
+      "municipality": "Navacerrada",
+      "locationName": "Valle de la Barranca",
+      "startsAtUtc": "2027-09-12T08:00:00Z",
+      "registrationClosesAtUtc": "2027-09-09T21:59:59Z",
+      "timezone": "Europe/Madrid",
+      "regulationSummary": "Borrador técnico pendiente de revisión de salidas escalonadas.",
+      "cancellationPolicySummary": "Política provisional sujeta a publicación definitiva.",
+      "publicContactEmail": "barranca@oak-demo.invalid",
+      "modalities": [
+        {
+          "id": "50000000-0000-4000-8000-000000000005",
+          "name": "Ascenso Vertical 7K",
+          "distanceMeters": 7200,
+          "elevationGainMeters": 1020,
+          "level": "AVANZADO",
+          "timeLimitMinutes": 120,
+          "capacityLimit": 80,
+          "reservedCount": 0,
+          "remainingSpots": 80,
+          "priceTiers": [
+            {
+              "id": "60000000-0000-4000-8000-000000000006",
+              "label": "Borrador",
+              "amountCents": 2600,
+              "managementFeeCents": 150,
+              "totalCents": 2750,
+              "currency": "EUR",
+              "validFromUtc": "2027-01-15T00:00:00Z",
+              "validUntilUtc": "2027-09-09T21:59:59Z",
+              "maxQuantity": 80
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000005",
+      "organizationId": "10000000-0000-4000-8000-000000000001",
+      "slug": "senda-carcavas-patones",
+      "title": "Senda de las Cárcavas",
+      "discipline": "trail",
+      "status": "CANCELLED",
+      "region": "Comunidad de Madrid",
+      "municipality": "Patones",
+      "locationName": "Patones de Arriba",
+      "startsAtUtc": "2027-03-28T08:00:00Z",
+      "registrationClosesAtUtc": "2027-03-25T22:59:59Z",
+      "timezone": "Europe/Madrid",
+      "regulationSummary": "Prueba cancelada preventivamente por acondicionamiento de senderos.",
+      "cancellationPolicySummary": "Reembolso automático del 100 % aplicado a todas las inscripciones confirmadas.",
+      "publicContactEmail": "carcavas@oak-demo.invalid",
+      "modalities": [
+        {
+          "id": "50000000-0000-4000-8000-000000000006",
+          "name": "Trail 16K",
+          "distanceMeters": 16000,
+          "elevationGainMeters": 640,
+          "level": "MEDIO",
+          "timeLimitMinutes": 210,
+          "capacityLimit": 120,
+          "reservedCount": 0,
+          "remainingSpots": 120,
+          "priceTiers": [
+            {
+              "id": "60000000-0000-4000-8000-000000000007",
+              "label": "General",
+              "amountCents": 2500,
+              "managementFeeCents": 150,
+              "totalCents": 2650,
+              "currency": "EUR",
+              "validFromUtc": "2026-11-01T00:00:00Z",
+              "validUntilUtc": "2027-03-25T22:59:59Z",
+              "maxQuantity": 120
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000006",
+      "organizationId": "10000000-0000-4000-8000-000000000001",
+      "slug": "trail-pedriza-sur-manzanares",
+      "title": "Trail La Pedriza Sur",
+      "discipline": "trail",
+      "status": "COMPLETED",
+      "region": "Comunidad de Madrid",
+      "municipality": "Manzanares el Real",
+      "locationName": "Canto Cochino",
+      "startsAtUtc": "2026-09-20T07:30:00Z",
+      "registrationClosesAtUtc": "2026-09-17T21:59:59Z",
+      "timezone": "Europe/Madrid",
+      "regulationSummary": "Edición completada con control medioambiental en accesos de la Pedriza.",
+      "cancellationPolicySummary": "Evento finalizado; periodo de reclamaciones cerrado.",
+      "publicContactEmail": "pedriza-sur@oak-demo.invalid",
+      "modalities": [
+        {
+          "id": "50000000-0000-4000-8000-000000000007",
+          "name": "Granito 17K",
+          "distanceMeters": 17000,
+          "elevationGainMeters": 720,
+          "level": "MEDIO",
+          "timeLimitMinutes": 220,
+          "capacityLimit": 200,
+          "reservedCount": 184,
+          "remainingSpots": 16,
+          "priceTiers": [
+            {
+              "id": "60000000-0000-4000-8000-000000000008",
+              "label": "General",
+              "amountCents": 2700,
+              "managementFeeCents": 150,
+              "totalCents": 2850,
+              "currency": "EUR",
+              "validFromUtc": "2026-06-01T00:00:00Z",
+              "validUntilUtc": "2026-09-17T21:59:59Z",
+              "maxQuantity": 200
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000007",
+      "organizationId": "10000000-0000-4000-8000-000000000002",
+      "slug": "media-parque-alhondiga-getafe",
+      "title": "Media Parque Alhóndiga",
+      "discipline": "running",
+      "status": "PUBLISHED",
+      "region": "Comunidad de Madrid",
+      "municipality": "Getafe",
+      "locationName": "Parque de la Alhóndiga",
+      "startsAtUtc": "2027-04-11T07:30:00Z",
+      "registrationClosesAtUtc": "2027-04-08T21:59:59Z",
+      "timezone": "Europe/Madrid",
+      "regulationSummary": "Circuito mixto homologado con cajones por ritmo estimado y cronometraje por chip.",
+      "cancellationPolicySummary": "Cambio de modalidad disponible hasta 7 días antes del inicio.",
+      "publicContactEmail": "alhondiga@oak-demo.invalid",
+      "modalities": [
+        {
+          "id": "50000000-0000-4000-8000-000000000008",
+          "name": "10K Urbano",
+          "distanceMeters": 10000,
+          "elevationGainMeters": 45,
+          "level": "INICIACION",
+          "timeLimitMinutes": 90,
+          "capacityLimit": 300,
+          "reservedCount": 142,
+          "remainingSpots": 158,
+          "priceTiers": [
+            {
+              "id": "60000000-0000-4000-8000-000000000009",
+              "label": "Anticipada",
+              "amountCents": 1400,
+              "managementFeeCents": 100,
+              "totalCents": 1500,
+              "currency": "EUR",
+              "validFromUtc": "2026-11-01T00:00:00Z",
+              "validUntilUtc": "2027-01-31T22:59:59Z",
+              "maxQuantity": 150
+            },
+            {
+              "id": "60000000-0000-4000-8000-000000000010",
+              "label": "General",
+              "amountCents": 1800,
+              "managementFeeCents": 100,
+              "totalCents": 1900,
+              "currency": "EUR",
+              "validFromUtc": "2027-02-01T00:00:00Z",
+              "validUntilUtc": "2027-04-08T21:59:59Z",
+              "maxQuantity": 150
+            }
+          ]
+        },
+        {
+          "id": "50000000-0000-4000-8000-000000000009",
+          "name": "21K Mixto",
+          "distanceMeters": 21097,
+          "elevationGainMeters": 110,
+          "level": "MEDIO",
+          "timeLimitMinutes": 165,
+          "capacityLimit": 250,
+          "reservedCount": 118,
+          "remainingSpots": 132,
+          "priceTiers": [
+            {
+              "id": "60000000-0000-4000-8000-000000000011",
+              "label": "General",
+              "amountCents": 2300,
+              "managementFeeCents": 150,
+              "totalCents": 2450,
+              "currency": "EUR",
+              "validFromUtc": "2026-11-01T00:00:00Z",
+              "validUntilUtc": "2027-04-08T21:59:59Z",
+              "maxQuantity": 250
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000008",
+      "organizationId": "10000000-0000-4000-8000-000000000002",
+      "slug": "encuentro-atletico-henares-alcala",
+      "title": "Encuentro Atlético del Henares",
+      "discipline": "running",
+      "status": "PUBLISHED",
+      "region": "Comunidad de Madrid",
+      "municipality": "Alcalá de Henares",
+      "locationName": "Parque O'Donnell y Recinto Amurallado",
+      "startsAtUtc": "2027-05-16T08:00:00Z",
+      "registrationClosesAtUtc": "2027-05-14T21:59:59Z",
+      "timezone": "Europe/Madrid",
+      "regulationSummary": "Jornada abierta sin coste de inscripción orientada a iniciación y participación comunitaria.",
+      "cancellationPolicySummary": "Baja gratuita desde el perfil para liberar plaza en caso de no asistencia.",
+      "publicContactEmail": "henares-5k@oak-demo.invalid",
+      "modalities": [
+        {
+          "id": "50000000-0000-4000-8000-000000000010",
+          "name": "Circuito Popular 5K",
+          "distanceMeters": 5000,
+          "elevationGainMeters": 20,
+          "level": "INICIACION",
+          "timeLimitMinutes": 60,
+          "capacityLimit": 400,
+          "reservedCount": 175,
+          "remainingSpots": 225,
+          "priceTiers": [
+            {
+              "id": "60000000-0000-4000-8000-000000000012",
+              "label": "Inscripción Gratuita Comunitaria",
+              "amountCents": 0,
+              "managementFeeCents": 0,
+              "totalCents": 0,
+              "currency": "EUR",
+              "validFromUtc": "2026-11-01T00:00:00Z",
+              "validUntilUtc": "2027-05-14T21:59:59Z",
+              "maxQuantity": 400
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000009",
+      "organizationId": "10000000-0000-4000-8000-000000000002",
+      "slug": "nocturna-polvoranca-leganes",
+      "title": "Nocturna de Polvoranca 6K",
+      "discipline": "running",
+      "status": "PUBLISHED",
+      "region": "Comunidad de Madrid",
+      "municipality": "Leganés",
+      "locationName": "Parque de Polvoranca",
+      "startsAtUtc": "2027-06-19T19:30:00Z",
+      "registrationClosesAtUtc": "2027-06-17T21:59:59Z",
+      "timezone": "Europe/Madrid",
+      "regulationSummary": "Salida al atardecer por caminos compactados iluminados; frontal opcional recomendado.",
+      "cancellationPolicySummary": "Reembolso completo hasta 7 días antes de la fecha del evento.",
+      "publicContactEmail": "polvoranca@oak-demo.invalid",
+      "modalities": [
+        {
+          "id": "50000000-0000-4000-8000-000000000011",
+          "name": "6K Parque Polvoranca",
+          "distanceMeters": 6000,
+          "elevationGainMeters": 35,
+          "level": "INICIACION",
+          "timeLimitMinutes": 65,
+          "capacityLimit": 250,
+          "reservedCount": 95,
+          "remainingSpots": 155,
+          "priceTiers": [
+            {
+              "id": "60000000-0000-4000-8000-000000000013",
+              "label": "Única",
+              "amountCents": 1500,
+              "managementFeeCents": 100,
+              "totalCents": 1600,
+              "currency": "EUR",
+              "validFromUtc": "2026-11-01T00:00:00Z",
+              "validUntilUtc": "2027-06-17T21:59:59Z",
+              "maxQuantity": 250
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000010",
+      "organizationId": "10000000-0000-4000-8000-000000000002",
+      "slug": "carrera-jardines-tajo-aranjuez",
+      "title": "Carrera Jardines del Tajo",
+      "discipline": "running",
+      "status": "DRAFT",
+      "region": "Comunidad de Madrid",
+      "municipality": "Aranjuez",
+      "locationName": "Sotos Históricos de Aranjuez",
+      "startsAtUtc": "2027-06-06T07:30:00Z",
+      "registrationClosesAtUtc": "2027-06-03T21:59:59Z",
+      "timezone": "Europe/Madrid",
+      "regulationSummary": "Borrador pendiente de autorización de paso por paseos arbolados.",
+      "cancellationPolicySummary": "Condiciones de devolución pendientes de cierre previo a publicación.",
+      "publicContactEmail": "aranjuez@oak-demo.invalid",
+      "modalities": [
+        {
+          "id": "50000000-0000-4000-8000-000000000012",
+          "name": "15K Sotos Históricos",
+          "distanceMeters": 15000,
+          "elevationGainMeters": 60,
+          "level": "MEDIO",
+          "timeLimitMinutes": 120,
+          "capacityLimit": 220,
+          "reservedCount": 0,
+          "remainingSpots": 220,
+          "priceTiers": [
+            {
+              "id": "60000000-0000-4000-8000-000000000014",
+              "label": "Borrador",
+              "amountCents": 1900,
+              "managementFeeCents": 100,
+              "totalCents": 2000,
+              "currency": "EUR",
+              "validFromUtc": "2027-01-10T00:00:00Z",
+              "validUntilUtc": "2027-06-03T21:59:59Z",
+              "maxQuantity": 220
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000011",
+      "organizationId": "10000000-0000-4000-8000-000000000002",
+      "slug": "10k-parque-central-tres-cantos",
+      "title": "10K Parque Central Tres Cantos",
+      "discipline": "running",
+      "status": "CLOSED",
+      "region": "Comunidad de Madrid",
+      "municipality": "Tres Cantos",
+      "locationName": "Parque Central de Tres Cantos",
+      "startsAtUtc": "2027-03-14T08:30:00Z",
+      "registrationClosesAtUtc": "2027-03-11T22:59:59Z",
+      "timezone": "Europe/Madrid",
+      "regulationSummary": "Plazo de inscripción cerrado tras preparación de dorsales y cajones.",
+      "cancellationPolicySummary": "Plazo de cambios o bajas cerrado.",
+      "publicContactEmail": "trescantos@oak-demo.invalid",
+      "modalities": [
+        {
+          "id": "50000000-0000-4000-8000-000000000013",
+          "name": "10K Asfalto y Pinar",
+          "distanceMeters": 10000,
+          "elevationGainMeters": 85,
+          "level": "MEDIO",
+          "timeLimitMinutes": 90,
+          "capacityLimit": 300,
+          "reservedCount": 280,
+          "remainingSpots": 20,
+          "priceTiers": [
+            {
+              "id": "60000000-0000-4000-8000-000000000015",
+              "label": "Cierre de plazo",
+              "amountCents": 1700,
+              "managementFeeCents": 100,
+              "totalCents": 1800,
+              "currency": "EUR",
+              "validFromUtc": "2026-11-01T00:00:00Z",
+              "validUntilUtc": "2027-03-11T22:59:59Z",
+              "maxQuantity": 300
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000012",
+      "organizationId": "10000000-0000-4000-8000-000000000002",
+      "slug": "carrera-camino-santiago-colmenar",
+      "title": "Carrera Camino de Santiago Colmenar",
+      "discipline": "running",
+      "status": "COMPLETED",
+      "region": "Comunidad de Madrid",
+      "municipality": "Colmenar Viejo",
+      "locationName": "Dehesa de Navalvillar",
+      "startsAtUtc": "2026-10-18T08:00:00Z",
+      "registrationClosesAtUtc": "2026-10-15T21:59:59Z",
+      "timezone": "Europe/Madrid",
+      "regulationSummary": "Edición celebrada en vía pecuaria y pista firme con tiempos publicados.",
+      "cancellationPolicySummary": "Evento finalizado; inscripciones cerradas.",
+      "publicContactEmail": "colmenar-12k@oak-demo.invalid",
+      "modalities": [
+        {
+          "id": "50000000-0000-4000-8000-000000000014",
+          "name": "12K Vía Verde",
+          "distanceMeters": 12000,
+          "elevationGainMeters": 140,
+          "level": "INICIACION",
+          "timeLimitMinutes": 105,
+          "capacityLimit": 260,
+          "reservedCount": 230,
+          "remainingSpots": 30,
+          "priceTiers": [
+            {
+              "id": "60000000-0000-4000-8000-000000000016",
+              "label": "General",
+              "amountCents": 2000,
+              "managementFeeCents": 150,
+              "totalCents": 2150,
+              "currency": "EUR",
+              "validFromUtc": "2026-07-01T00:00:00Z",
+              "validUntilUtc": "2026-10-15T21:59:59Z",
+              "maxQuantity": 260
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "favourites": [
+    {
+      "userId": "20000000-0000-4000-8000-000000000001",
+      "eventId": "40000000-0000-4000-8000-000000000002",
+      "createdAtUtc": "2026-11-12T18:10:00Z"
+    },
+    {
+      "userId": "20000000-0000-4000-8000-000000000001",
+      "eventId": "40000000-0000-4000-8000-000000000007",
+      "createdAtUtc": "2026-11-14T19:45:00Z"
+    }
+  ],
+  "registrations": [
+    {
+      "id": "70000000-0000-4000-8000-000000000001",
+      "registrationCode": "OAK-DEMO-2026-0001",
+      "userId": "20000000-0000-4000-8000-000000000001",
+      "eventId": "40000000-0000-4000-8000-000000000006",
+      "eventModalityId": "50000000-0000-4000-8000-000000000007",
+      "priceTierId": "60000000-0000-4000-8000-000000000008",
+      "status": "CONFIRMED",
+      "unitAmountCents": 2700,
+      "feeCents": 150,
+      "totalCents": 2850,
+      "currency": "EUR",
+      "createdAtUtc": "2026-08-20T10:00:00Z",
+      "updatedAtUtc": "2026-08-20T10:04:00Z",
+      "confirmedAtUtc": "2026-08-20T10:04:00Z",
+      "participant": {
+        "id": "90000000-0000-4000-8000-000000000001",
+        "fullName": "Sofía Molina (Demo)",
+        "email": "atleta.historial@oak-demo.invalid",
+        "clubOrTeam": "Grupo Demo Montaña Madrid",
+        "documentNumber": null
+      }
+    },
+    {
+      "id": "70000000-0000-4000-8000-000000000002",
+      "registrationCode": "OAK-DEMO-2026-0002",
+      "userId": "20000000-0000-4000-8000-000000000001",
+      "eventId": "40000000-0000-4000-8000-000000000012",
+      "eventModalityId": "50000000-0000-4000-8000-000000000014",
+      "priceTierId": "60000000-0000-4000-8000-000000000016",
+      "status": "CONFIRMED",
+      "unitAmountCents": 2000,
+      "feeCents": 150,
+      "totalCents": 2150,
+      "currency": "EUR",
+      "createdAtUtc": "2026-09-25T16:20:00Z",
+      "updatedAtUtc": "2026-09-25T16:23:00Z",
+      "confirmedAtUtc": "2026-09-25T16:23:00Z",
+      "participant": {
+        "id": "90000000-0000-4000-8000-000000000002",
+        "fullName": "Sofía Molina (Demo)",
+        "email": "atleta.historial@oak-demo.invalid",
+        "clubOrTeam": "Grupo Demo Montaña Madrid",
+        "documentNumber": null
+      }
+    },
+    {
+      "id": "70000000-0000-4000-8000-000000000003",
+      "registrationCode": "OAK-DEMO-2027-0003",
+      "userId": "20000000-0000-4000-8000-000000000001",
+      "eventId": "40000000-0000-4000-8000-000000000001",
+      "eventModalityId": "50000000-0000-4000-8000-000000000001",
+      "priceTierId": "60000000-0000-4000-8000-000000000001",
+      "status": "CONFIRMED",
+      "unitAmountCents": 2200,
+      "feeCents": 150,
+      "totalCents": 2350,
+      "currency": "EUR",
+      "createdAtUtc": "2026-11-10T11:15:00Z",
+      "updatedAtUtc": "2026-11-10T11:19:00Z",
+      "confirmedAtUtc": "2026-11-10T11:19:00Z",
+      "participant": {
+        "id": "90000000-0000-4000-8000-000000000003",
+        "fullName": "Sofía Molina (Demo)",
+        "email": "atleta.historial@oak-demo.invalid",
+        "clubOrTeam": "Grupo Demo Montaña Madrid",
+        "documentNumber": null
+      }
+    },
+    {
+      "id": "70000000-0000-4000-8000-000000000004",
+      "registrationCode": "OAK-DEMO-2027-0004",
+      "userId": "20000000-0000-4000-8000-000000000001",
+      "eventId": "40000000-0000-4000-8000-000000000008",
+      "eventModalityId": "50000000-0000-4000-8000-000000000010",
+      "priceTierId": "60000000-0000-4000-8000-000000000012",
+      "status": "CONFIRMED",
+      "unitAmountCents": 0,
+      "feeCents": 0,
+      "totalCents": 0,
+      "currency": "EUR",
+      "createdAtUtc": "2026-11-11T09:00:00Z",
+      "updatedAtUtc": "2026-11-11T09:01:00Z",
+      "confirmedAtUtc": "2026-11-11T09:01:00Z",
+      "participant": {
+        "id": "90000000-0000-4000-8000-000000000004",
+        "fullName": "Sofía Molina (Demo)",
+        "email": "atleta.historial@oak-demo.invalid",
+        "clubOrTeam": null,
+        "documentNumber": null
+      }
+    },
+    {
+      "id": "70000000-0000-4000-8000-000000000005",
+      "registrationCode": "OAK-DEMO-2027-0005",
+      "userId": "20000000-0000-4000-8000-000000000001",
+      "eventId": "40000000-0000-4000-8000-000000000007",
+      "eventModalityId": "50000000-0000-4000-8000-000000000008",
+      "priceTierId": "60000000-0000-4000-8000-000000000009",
+      "status": "PENDING_PAYMENT",
+      "unitAmountCents": 1400,
+      "feeCents": 100,
+      "totalCents": 1500,
+      "currency": "EUR",
+      "createdAtUtc": "2026-11-18T21:40:00Z",
+      "updatedAtUtc": "2026-11-18T21:42:00Z",
+      "confirmedAtUtc": null,
+      "participant": {
+        "id": "90000000-0000-4000-8000-000000000005",
+        "fullName": "Sofía Molina (Demo)",
+        "email": "atleta.historial@oak-demo.invalid",
+        "clubOrTeam": "Grupo Demo Montaña Madrid",
+        "documentNumber": null
+      }
+    },
+    {
+      "id": "70000000-0000-4000-8000-000000000006",
+      "registrationCode": "OAK-DEMO-2027-0006",
+      "userId": "20000000-0000-4000-8000-000000000001",
+      "eventId": "40000000-0000-4000-8000-000000000009",
+      "eventModalityId": "50000000-0000-4000-8000-000000000011",
+      "priceTierId": "60000000-0000-4000-8000-000000000013",
+      "status": "DRAFT",
+      "unitAmountCents": 1500,
+      "feeCents": 100,
+      "totalCents": 1600,
+      "currency": "EUR",
+      "createdAtUtc": "2026-11-17T19:00:00Z",
+      "updatedAtUtc": "2026-11-17T19:05:00Z",
+      "confirmedAtUtc": null,
+      "participant": {
+        "id": "90000000-0000-4000-8000-000000000006",
+        "fullName": "Sofía Molina (Demo)",
+        "email": "atleta.historial@oak-demo.invalid",
+        "clubOrTeam": null,
+        "documentNumber": null
+      }
+    },
+    {
+      "id": "70000000-0000-4000-8000-000000000007",
+      "registrationCode": "OAK-DEMO-2027-0007",
+      "userId": "20000000-0000-4000-8000-000000000001",
+      "eventId": "40000000-0000-4000-8000-000000000005",
+      "eventModalityId": "50000000-0000-4000-8000-000000000006",
+      "priceTierId": "60000000-0000-4000-8000-000000000007",
+      "status": "REFUNDED",
+      "unitAmountCents": 2500,
+      "feeCents": 150,
+      "totalCents": 2650,
+      "currency": "EUR",
+      "createdAtUtc": "2026-11-02T14:00:00Z",
+      "updatedAtUtc": "2026-11-15T10:30:00Z",
+      "confirmedAtUtc": "2026-11-02T14:04:00Z",
+      "participant": {
+        "id": "90000000-0000-4000-8000-000000000007",
+        "fullName": "Sofía Molina (Demo)",
+        "email": "atleta.historial@oak-demo.invalid",
+        "clubOrTeam": "Grupo Demo Montaña Madrid",
+        "documentNumber": null
+      }
+    },
+    {
+      "id": "70000000-0000-4000-8000-000000000008",
+      "registrationCode": "OAK-DEMO-2027-0008",
+      "userId": "20000000-0000-4000-8000-000000000001",
+      "eventId": "40000000-0000-4000-8000-000000000007",
+      "eventModalityId": "50000000-0000-4000-8000-000000000009",
+      "priceTierId": "60000000-0000-4000-8000-000000000011",
+      "status": "CANCELLED",
+      "unitAmountCents": 2300,
+      "feeCents": 150,
+      "totalCents": 2450,
+      "currency": "EUR",
+      "createdAtUtc": "2026-11-08T12:10:00Z",
+      "updatedAtUtc": "2026-11-08T12:25:00Z",
+      "confirmedAtUtc": null,
+      "participant": {
+        "id": "90000000-0000-4000-8000-000000000008",
+        "fullName": "Sofía Molina (Demo)",
+        "email": "atleta.historial@oak-demo.invalid",
+        "clubOrTeam": "Grupo Demo Montaña Madrid",
+        "documentNumber": null
+      }
+    },
+    {
+      "id": "70000000-0000-4000-8000-000000000009",
+      "registrationCode": "OAK-DEMO-2027-0009",
+      "userId": "20000000-0000-4000-8000-000000000001",
+      "eventId": "40000000-0000-4000-8000-000000000003",
+      "eventModalityId": "50000000-0000-4000-8000-000000000004",
+      "priceTierId": "60000000-0000-4000-8000-000000000005",
+      "status": "PENDING_PAYMENT",
+      "unitAmountCents": 2900,
+      "feeCents": 200,
+      "totalCents": 3100,
+      "currency": "EUR",
+      "createdAtUtc": "2026-11-18T21:50:00Z",
+      "updatedAtUtc": "2026-11-18T21:50:00Z",
+      "confirmedAtUtc": null,
+      "participant": {
+        "id": "90000000-0000-4000-8000-000000000009",
+        "fullName": "Sofía Molina (Demo)",
+        "email": "atleta.historial@oak-demo.invalid",
+        "clubOrTeam": "Grupo Demo Montaña Madrid",
+        "documentNumber": null
+      }
+    }
+  ],
+  "payments": [
+    {
+      "id": "80000000-0000-4000-8000-000000000001",
+      "registrationId": "70000000-0000-4000-8000-000000000001",
+      "provider": "stripe_test",
+      "mode": "test",
+      "status": "SUCCEEDED",
+      "amountCents": 2850,
+      "currency": "EUR",
+      "idempotencyKey": "reg:70000000-0000-4000-8000-000000000001:attempt:1",
+      "providerSessionRef": "checkout-session-demo-0001",
+      "providerIntentRef": "payment-intent-demo-0001",
+      "createdAtUtc": "2026-08-20T10:01:00Z",
+      "succeededAtUtc": "2026-08-20T10:04:00Z",
+      "refundedAtUtc": null
+    },
+    {
+      "id": "80000000-0000-4000-8000-000000000002",
+      "registrationId": "70000000-0000-4000-8000-000000000002",
+      "provider": "stripe_test",
+      "mode": "test",
+      "status": "SUCCEEDED",
+      "amountCents": 2150,
+      "currency": "EUR",
+      "idempotencyKey": "reg:70000000-0000-4000-8000-000000000002:attempt:1",
+      "providerSessionRef": "checkout-session-demo-0002",
+      "providerIntentRef": "payment-intent-demo-0002",
+      "createdAtUtc": "2026-09-25T16:21:00Z",
+      "succeededAtUtc": "2026-09-25T16:23:00Z",
+      "refundedAtUtc": null
+    },
+    {
+      "id": "80000000-0000-4000-8000-000000000003",
+      "registrationId": "70000000-0000-4000-8000-000000000003",
+      "provider": "stripe_test",
+      "mode": "test",
+      "status": "SUCCEEDED",
+      "amountCents": 2350,
+      "currency": "EUR",
+      "idempotencyKey": "reg:70000000-0000-4000-8000-000000000003:attempt:1",
+      "providerSessionRef": "checkout-session-demo-0003",
+      "providerIntentRef": "payment-intent-demo-0003",
+      "createdAtUtc": "2026-11-10T11:16:00Z",
+      "succeededAtUtc": "2026-11-10T11:19:00Z",
+      "refundedAtUtc": null
+    },
+    {
+      "id": "80000000-0000-4000-8000-000000000004",
+      "registrationId": "70000000-0000-4000-8000-000000000005",
+      "provider": "stripe_test",
+      "mode": "test",
+      "status": "REQUIRES_ACTION",
+      "amountCents": 1500,
+      "currency": "EUR",
+      "idempotencyKey": "reg:70000000-0000-4000-8000-000000000005:attempt:1",
+      "providerSessionRef": "checkout-session-demo-0004",
+      "providerIntentRef": "payment-intent-demo-0004",
+      "createdAtUtc": "2026-11-18T21:41:00Z",
+      "succeededAtUtc": null,
+      "refundedAtUtc": null
+    },
+    {
+      "id": "80000000-0000-4000-8000-000000000005",
+      "registrationId": "70000000-0000-4000-8000-000000000007",
+      "provider": "stripe_test",
+      "mode": "test",
+      "status": "REFUNDED",
+      "amountCents": 2650,
+      "currency": "EUR",
+      "idempotencyKey": "reg:70000000-0000-4000-8000-000000000007:attempt:1",
+      "providerSessionRef": "checkout-session-demo-0005",
+      "providerIntentRef": "payment-intent-demo-0005",
+      "createdAtUtc": "2026-11-02T14:01:00Z",
+      "succeededAtUtc": "2026-11-02T14:04:00Z",
+      "refundedAtUtc": "2026-11-15T10:30:00Z"
+    },
+    {
+      "id": "80000000-0000-4000-8000-000000000006",
+      "registrationId": "70000000-0000-4000-8000-000000000008",
+      "provider": "stripe_test",
+      "mode": "test",
+      "status": "FAILED",
+      "amountCents": 2450,
+      "currency": "EUR",
+      "idempotencyKey": "reg:70000000-0000-4000-8000-000000000008:attempt:1",
+      "providerSessionRef": "checkout-session-demo-0006",
+      "providerIntentRef": "payment-intent-demo-0006",
+      "createdAtUtc": "2026-11-08T12:12:00Z",
+      "succeededAtUtc": null,
+      "refundedAtUtc": null
+    },
+    {
+      "id": "80000000-0000-4000-8000-000000000007",
+      "registrationId": "70000000-0000-4000-8000-000000000009",
+      "provider": "stripe_test",
+      "mode": "test",
+      "status": "CREATED",
+      "amountCents": 3100,
+      "currency": "EUR",
+      "idempotencyKey": "reg:70000000-0000-4000-8000-000000000009:attempt:1",
+      "providerSessionRef": "checkout-session-demo-0007",
+      "providerIntentRef": null,
+      "createdAtUtc": "2026-11-18T21:50:30Z",
+      "succeededAtUtc": null,
+      "refundedAtUtc": null
+    }
+  ]
+}
