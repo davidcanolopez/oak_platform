@@ -1,0 +1,3 @@
+# Verified false positive in P0-009 synthetic fixture (not a secret or real PII):
+# data/fixtures/oak-seed.v1.json line 96 synthetic organizer-invited fixture label (entropy 3.57 >= 3.5).
+e27ba6fa6fdf640de0e09ec722e304be6527b92e:data/fixtures/oak-seed.v1.json:generic-api-key:96

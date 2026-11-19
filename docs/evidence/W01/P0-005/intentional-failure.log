@@ -1,0 +1,50 @@
+# P0-005 Controlled Intentional Failure Log (Local Equivalent of PR Gate Block)
+timestamp_utc: 2026-11-19T07:10:06Z
+injected_probe: src/shared/__ci_intentional_failure_probe__.ts (reverted immediately after capture)
+command: corepack pnpm run typecheck
+exit_code: 2
+
+--- stdout ---
+
+> oak-platform@0.1.0 typecheck C:\Users\David\.gemini\antigravity\worktrees\5694b646-a82e-460a-82fd-3b847981abc6\subagent-P0-005-CI-Baseline-Owner-devops-release-d487aaba
+> node scripts/ci/run-and-capture.mjs --out reports/static/tsc.log -- corepack pnpm exec tsc --noEmit
+
+src/shared/__ci_intentional_failure_probe__.ts(2,14): error TS2322: Type 'string' is not assignable to type 'number'.
+ ELIFECYCLE  Command failed with exit code 2.
+
+--- stderr ---
+
+
+--- reports/static/tsc.log ---
+[run-and-capture] started_at_utc=2026-11-19T07:10:08.761Z
+[run-and-capture] command=corepack pnpm exec tsc --noEmit
+src/shared/__ci_intentional_failure_probe__.ts(2,14): error TS2322: Type 'string' is not assignable to type 'number'.
+
+[run-and-capture] finished_at_utc=2026-11-19T07:10:23.895Z exit_code=2 signal=none
+
+# P0-005 Real GitHub PR Intentional Failure Verification (test/ci-intentional-failure -> master)
+timestamp_utc: 2026-11-20T19:20:23Z
+pr_number: 1
+pr_url: https://github.com/davidcanolopez/oak_platform/pull/1
+head_branch: test/ci-intentional-failure (deleted on remote and local after close without merge)
+head_sha: 246ad88f05eb87091d94afc3de26f5dc05291fad
+mergeStateStatus: BLOCKED
+github_actions_run_id: 44801103940
+github_actions_run_url: https://github.com/davidcanolopez/oak_platform/actions/runs/44801103940
+
+--- jobs & conclusions ---
+- Static Quality & Unit Tests: failure (job 136513173381; failed step: "Run TypeScript typecheck", exit code 2: src/shared/__ci_intentional_failure_probe__.ts(1,14): error TS2322: Type 'string' is not assignable to type 'number'.; step "Upload static and unit reports" with if: always() succeeded)
+- Production Build: failure (job 136513172848; failed step: "Build production bundle" on TS2322; step "Upload build reports" with if: always() succeeded)
+- SCA & Secret Scan (Gitleaks): failure (job 136513173480; step "Run SCA dependency audit" succeeded; step "Run secret scan" executed gitleaks v8.30.1 available=true but flagged pre-existing master commit e27ba6fa6fdf640de0e09ec722e304be6527b92e data/fixtures/oak-seed.v1.json:96 generic-api-key false positive on synthetic organizer-invited accountKey fixture label; step "Upload security reports" with if: always() succeeded)
+
+--- artifacts uploaded (if: always()) ---
+- reports-static-and-unit-44801103940-1 (id: 14661670746, 1142 bytes; contains static/prettier.log, static/eslint.json, static/tsc.log)
+- reports-build-44801103940-1 (id: 14660663178, 570 bytes; contains build/next-build.log)
+- reports-security-44801103940-1 (id: 14659892770, 1467 bytes; contains security/sca-audit.json, security/secret-scan.json, security/gitleaks.json)
+
+--- reports/static/tsc.log from artifact reports-static-and-unit-44801103940-1 ---
+[run-and-capture] started_at_utc=2026-11-20T19:20:17.687Z
+[run-and-capture] command=corepack pnpm exec tsc --noEmit
+src/shared/__ci_intentional_failure_probe__.ts(1,14): error TS2322: Type 'string' is not assignable to type 'number'.
+
+[run-and-capture] finished_at_utc=2026-11-20T19:20:20.362Z exit_code=2 signal=none

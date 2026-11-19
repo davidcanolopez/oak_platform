@@ -1,0 +1,43 @@
+# Comandos reproducibles ejecutados en P0-005 (sin PII ni secretos)
+
+## 1. Rebase sobre master actual y verificación de remoto/CLI
+- `git rebase 7ce3f5c931bc449dcebddfe8110a52fc1c154f4d` -> exit 0 (`Successfully rebased and updated refs/heads/feat/p0-005-ci-baseline`, 0 conflictos)
+- `git remote -v` -> `origin https://github.com/davidcanolopez/oak_platform.git (fetch/push)`
+- `gh auth status` -> exit 0 (`Logged in to github.com account davidcanolopez`, repo `PUBLIC`)
+
+## 2. Configuración y verificación de Branch Protection real en master
+- `gh api --method PUT repos/davidcanolopez/oak_platform/branches/master/protection` (`strict: true`, `contexts: ["Static Quality & Unit Tests", "Production Build", "SCA & Secret Scan (Gitleaks)"]`, `enforce_admins: true`, `dismiss_stale_reviews: true`, `require_code_owner_reviews: false`, `required_approving_review_count: 0`, `required_conversation_resolution: true`, `allow_force_pushes: false`, `allow_deletions: false`) -> exit 0
+- `gh api repos/davidcanolopez/oak_platform/branches/master/protection` -> exit 0 (verificados los campos anteriores activos)
+
+## 3. Verificación criptográfica de acciones y binario Gitleaks (red GitHub)
+- `git ls-remote --tags https://github.com/actions/checkout.git` (`v4.3.1`) -> `34e114876b0b11c390a56381ad16ebd13914f8d5` (commit API 200)
+- `git ls-remote --tags https://github.com/actions/setup-node.git` (`v4.4.0`) -> `49933ea5288caeca8642d1e84afbd3f7d6820020` (commit API 200)
+- `git ls-remote --tags https://github.com/actions/cache.git` (`v4.3.0`) -> `0057852bfaa89a56745cba8c7296529d2fc39830` (commit API 200)
+- `git ls-remote --tags https://github.com/actions/upload-artifact.git` (`v4.6.2`) -> `ea165f8d65b6e75b540449e92b4886f43607fa02` (commit API 200)
+- Verificación `gitleaks_8.30.1_linux_x64.tar.gz` frente a `gitleaks_8.30.1_checksums.txt` -> SHA-256 `551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb` (contenido: `LICENSE`, `README.md`, `gitleaks`)
+
+## 4. Demostración controlada de fallo intencional (local y PR real #1 en GitHub)
+- Local: sonda temporal en `src/shared/__ci_intentional_failure_probe__.ts` -> `corepack pnpm run typecheck` -> exit 2 (`TS2322`), sonda revertida al 100 %
+- PR #1 (`https://github.com/davidcanolopez/oak_platform/pull/1`, rama `test/ci-intentional-failure`, `headSha: 246ad88f05eb87091d94afc3de26f5dc05291fad`, Run `44801103940`):
+  - `Static Quality & Unit Tests` -> `failure` en `Run TypeScript typecheck` (`exit 2`, `TS2322`)
+  - `Production Build` -> `failure` en `Build production bundle` (`TS2322`)
+  - `SCA & Secret Scan (Gitleaks)` -> `failure` por falso positivo preexistente en `master` (`e27ba6fa6fdf640de0e09ec722e304be6527b92e:data/fixtures/oak-seed.v1.json:generic-api-key:96`), dando origen al `.gitleaksignore` puntual autorizado
+  - `gh pr view 1 --json mergeStateStatus` -> `BLOCKED`
+  - `gh api repos/davidcanolopez/oak_platform/actions/runs/44801103940/artifacts` -> 3 artefactos `reports-*` subidos (`if: always()`)
+  - `gh pr close 1 --delete-branch`, `git push origin --delete test/ci-intentional-failure` y `git branch -D test/ci-intentional-failure` -> rama eliminada en local y remoto
+
+## 5. Validación YAML/estructural y 9 comandos activos G0 tras la última edición
+- Validación Python de `.github/workflows/ci.yml` -> exit 0 (`CI_YAML_VALIDATION=PASS`, `jobs=['static-and-unit', 'build', 'security']`, `pinned_actions=12`, `floating_tags=0`)
+- `corepack pnpm install --frozen-lockfile` -> exit 0 (`Lockfile is up to date, resolution step is skipped`)
+- `corepack pnpm run format:check` -> exit 0 (`All matched files use Prettier code style!`, artefacto `reports/static/prettier.log`)
+- `corepack pnpm run lint` -> exit 0 (`0 errors, 0 warnings`, artefacto `reports/static/eslint.json`)
+- `corepack pnpm run typecheck` -> exit 0 (`tsc --noEmit`, artefacto `reports/static/tsc.log`)
+- `corepack pnpm run test:unit` -> exit 0 (`4 passed (4)`, `26 passed (26)`, artefacto `reports/unit/junit.xml`)
+- `corepack pnpm run test:coverage` -> exit 0 (`100% Stmts/Branch/Funcs/Lines` en `src/`, artefacto `reports/coverage/coverage-summary.json`)
+- `corepack pnpm run build` -> exit 0 (`Next.js 16.4.6 Turbopack`, artefacto `reports/build/next-build.log`)
+- `corepack pnpm run security:sca` -> exit 0 (`[SCA] PASS (high=0, critical=0, moderate=4, low=0)`, artefacto `reports/security/sca-audit.json`)
+- `corepack pnpm run security:secrets` -> exit 0 (`[SECRET_SCAN] PASS (files=145, findings=0, gitleaks=NOT_INSTALLED_IN_LOCAL_PATH)`, artefacto `reports/security/secret-scan.json`)
+
+## 6. Verificación remota en GitHub Actions sobre PR de `feat/p0-005-ci-baseline` -> `master`
+- Tras este commit candidato: `git push -u origin feat/p0-005-ci-baseline --force-with-lease` + `gh pr create --base master --head feat/p0-005-ci-baseline` (PR abierto sin fusionar en `PEER_REVIEW`).
+- Verificación de `3/3` jobs en `success`, descarga temporal de artefactos en `%TEMP%\oak_p005_ci_pr2` (eliminada después) confirmando `gitleaks.available === true`, `gitleaks.status === "PASS"`, `findingsCount === 0` y los 3 artefactos `reports-*` (valores exactos y Run IDs reportados en el handoff sobre este `candidate_sha`).
