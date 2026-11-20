@@ -1,7 +1,7 @@
 # Tablero de Tareas y Ruta Crítica — OAK
 
 **Task origen:** `P0-002` | **Última sincronización Fase 0:** `c0c00be41254bf6769c987616b035b2d2b156175` (merge `P0-010`) | **Total tareas:** `114` (`113` de `MASTER_EXECUTION_PLAN.md` §12 + `P0-011` añadida para requisito #14 de `QUALITY_GATES.md` §6 `G0`)  
-**Estado de Gates:** `G0 = BLOCKED` (`BL-01`: remoto GitHub ausente y `P0-005` en `BLOCKED`; `10/11` tareas Fase 0 en `ACEPTADA`) | **`D0 = PENDING USER VALIDATION`**
+**Estado de Gates:** `G0 = BLOCKED` (`BL-01`: remoto GitHub ausente y `P0-005` en `BLOCKED`; `10/11` tareas Fase 0 en `ACEPTADA`) | **`D0 = APPROVED` (`2026-11-20`, con `Favoritos` incluido en V1; Fase 1 sigue bloqueada hasta `G0 = PASS`)**
 
 ## 1. Reglas operativas y desviaciones declaradas respecto a `MASTER_EXECUTION_PLAN.md` §12
 
