@@ -1,0 +1,2432 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "schemaVersion": "1.0.0",
+  "tokenSet": "oak.canonical.v1",
+  "productLanguageDefault": "es-ES",
+  "contractReference": "docs/brand/BRAND_UX_CONTRACT.md",
+  "baselineReference": "docs/brand/G0_BRAND_UX_BASELINE.md",
+  "gateStatus": {
+    "D1": "PENDING_USER_VALIDATION",
+    "blockersAddressed": [
+      "D1-02 (canonical color, typography, spacing, radius, elevation, breakpoints and motion tokens)",
+      "D1-04 (partial: typography scale, weight constraints and local WOFF2 policy without external font CDN; binary files and license records remain pending D1)",
+      "D1-05 (candidate status.success, status.warning, status.danger, status.disabled and viz palettes pending user ratification at D1)"
+    ]
+  },
+  "constraints": {
+    "forbiddenBrandColors": ["#FFFFFF", "#000000"],
+    "forbiddenDeckVariables": ["--mist", "--forest-deep", "--deep"],
+    "forbiddenFontWeights": [650],
+    "allowedFontWeights": [400, 500, 600, 700, 800],
+    "minFontSizePx": 12,
+    "minTextContrastRatio": 4.5,
+    "minUiComponentContrastRatio": 3.0,
+    "minFocusRingWidthPx": 3,
+    "minFocusRingOffsetPx": 2,
+    "minTouchTargetPx": 48,
+    "externalFontCdnAllowed": false,
+    "forbiddenFontDomains": ["fonts.googleapis.com", "fonts.gstatic.com"]
+  },
+  "color": {
+    "primitive": {
+      "core": {
+        "oak.color.forest.950": {
+          "value": "#08291F",
+          "role": "Deep inverse surfaces and immersive sections",
+          "source": "BRAND_UX_CONTRACT.md §4.2",
+          "candidateForD1Approval": false
+        },
+        "oak.color.forest.700": {
+          "value": "#12372A",
+          "role": "Core brand color, navigation and strong text",
+          "source": "BRAND_UX_CONTRACT.md §4.2",
+          "candidateForD1Approval": false
+        },
+        "oak.color.ground.900": {
+          "value": "#17211B",
+          "role": "Primary text on light and bright surfaces",
+          "source": "BRAND_UX_CONTRACT.md §4.2",
+          "candidateForD1Approval": false
+        },
+        "oak.color.lime.400": {
+          "value": "#B7F34A",
+          "role": "Progress, discovery and positive forward action",
+          "source": "BRAND_UX_CONTRACT.md §4.2",
+          "candidateForD1Approval": false
+        },
+        "oak.color.orange.500": {
+          "value": "#FF6B35",
+          "role": "Primary action and next-challenge accent",
+          "source": "BRAND_UX_CONTRACT.md §4.2",
+          "candidateForD1Approval": false
+        },
+        "oak.color.sky.400": {
+          "value": "#28B7E9",
+          "role": "Discovery or informational accent",
+          "source": "BRAND_UX_CONTRACT.md §4.2",
+          "candidateForD1Approval": false
+        },
+        "oak.color.sand.300": {
+          "value": "#E3D4BB",
+          "role": "Default canvas",
+          "source": "BRAND_UX_CONTRACT.md §4.2",
+          "candidateForD1Approval": false
+        },
+        "oak.color.cream.100": {
+          "value": "#EADCC5",
+          "role": "Raised light surface and inverse text",
+          "source": "BRAND_UX_CONTRACT.md §4.2",
+          "candidateForD1Approval": false
+        },
+        "oak.color.muted.700": {
+          "value": "#4D6258",
+          "role": "Secondary text on approved light surfaces (4.4954:1 borderline exception on sand.300; 4.8515:1 on cream.100)",
+          "source": "BRAND_UX_CONTRACT.md §4.2",
+          "candidateForD1Approval": false
+        },
+        "oak.color.line": {
+          "value": "rgba(18, 55, 42, 0.18)",
+          "role": "Decorative light-surface dividers and hairlines only (not for functional UI control borders or focus rings)",
+          "source": "BRAND_UX_CONTRACT.md §4.2",
+          "decorativeOnly": true,
+          "compositedOnSand300": "#BDB8A1",
+          "compositedOnCream100": "#C3BEA9",
+          "candidateForD1Approval": false
+        }
+      },
+      "d1Candidate": {
+        "oak.color.emerald.800": {
+          "value": "#115E3B",
+          "role": "Candidate semantic success foreground and border on light",
+          "candidateForD1Approval": true
+        },
+        "oak.color.emerald.300": {
+          "value": "#6DE39C",
+          "role": "Candidate semantic success foreground and border on dark",
+          "candidateForD1Approval": true
+        },
+        "oak.color.emerald.100": {
+          "value": "#D4E8D4",
+          "role": "Candidate semantic success tinted surface on light",
+          "candidateForD1Approval": true
+        },
+        "oak.color.emerald.950": {
+          "value": "#0E3B28",
+          "role": "Candidate semantic success tinted surface on dark",
+          "candidateForD1Approval": true
+        },
+        "oak.color.amber.800": {
+          "value": "#734200",
+          "role": "Candidate semantic warning foreground and border on light",
+          "candidateForD1Approval": true
+        },
+        "oak.color.amber.300": {
+          "value": "#F5C44E",
+          "role": "Candidate semantic warning foreground and border on dark",
+          "candidateForD1Approval": true
+        },
+        "oak.color.amber.100": {
+          "value": "#F3E2B5",
+          "role": "Candidate semantic warning tinted surface on light",
+          "candidateForD1Approval": true
+        },
+        "oak.color.amber.950": {
+          "value": "#33250B",
+          "role": "Candidate semantic warning tinted surface on dark",
+          "candidateForD1Approval": true
+        },
+        "oak.color.crimson.800": {
+          "value": "#9E1C28",
+          "role": "Candidate semantic danger foreground and border on light",
+          "candidateForD1Approval": true
+        },
+        "oak.color.crimson.300": {
+          "value": "#FF8F8F",
+          "role": "Candidate semantic danger foreground and border on dark",
+          "candidateForD1Approval": true
+        },
+        "oak.color.crimson.100": {
+          "value": "#F5D7D3",
+          "role": "Candidate semantic danger tinted surface on light",
+          "candidateForD1Approval": true
+        },
+        "oak.color.crimson.950": {
+          "value": "#3B1519",
+          "role": "Candidate semantic danger tinted surface on dark",
+          "candidateForD1Approval": true
+        },
+        "oak.color.stone.700": {
+          "value": "#44544B",
+          "role": "Candidate semantic disabled foreground and dashed border on light",
+          "candidateForD1Approval": true
+        },
+        "oak.color.stone.600": {
+          "value": "#5D6C63",
+          "role": "Candidate UI control default border on light (>= 3.0:1)",
+          "candidateForD1Approval": true
+        },
+        "oak.color.stone.400": {
+          "value": "#7A8E82",
+          "role": "Candidate UI control default border on dark (>= 3.0:1)",
+          "candidateForD1Approval": true
+        },
+        "oak.color.stone.300": {
+          "value": "#9EB1A6",
+          "role": "Candidate semantic disabled foreground and dashed border on dark",
+          "candidateForD1Approval": true
+        },
+        "oak.color.stone.200": {
+          "value": "#D4C9B6",
+          "role": "Candidate semantic disabled surface on light",
+          "candidateForD1Approval": true
+        },
+        "oak.color.stone.850": {
+          "value": "#1A372D",
+          "role": "Candidate semantic disabled surface on dark",
+          "candidateForD1Approval": true
+        },
+        "oak.color.sienna.700": {
+          "value": "#9A340E",
+          "role": "Candidate data visualization series 2 on light",
+          "candidateForD1Approval": true
+        },
+        "oak.color.teal.700": {
+          "value": "#0B5D7C",
+          "role": "Candidate data visualization series 3 on light",
+          "candidateForD1Approval": true
+        },
+        "oak.color.plum.700": {
+          "value": "#5D4585",
+          "role": "Candidate data visualization series 4 on light",
+          "candidateForD1Approval": true
+        },
+        "oak.color.sage.700": {
+          "value": "#42574D",
+          "role": "Candidate data visualization axis labels and ticks on light",
+          "candidateForD1Approval": true
+        },
+        "oak.color.sage.300": {
+          "value": "#A8BBB0",
+          "role": "Candidate data visualization axis labels and ticks on dark",
+          "candidateForD1Approval": true
+        },
+        "oak.color.line.dark": {
+          "value": "rgba(234, 220, 197, 0.18)",
+          "role": "Candidate decorative divider on dark surfaces only",
+          "decorativeOnly": true,
+          "candidateForD1Approval": true
+        }
+      }
+    },
+    "semantic": {
+      "base": {
+        "surface.canvas": {
+          "primitive": "oak.color.sand.300",
+          "value": "#E3D4BB",
+          "role": "Default page background",
+          "source": "BRAND_UX_CONTRACT.md §4.3",
+          "candidateForD1Approval": false
+        },
+        "surface.raised": {
+          "primitive": "oak.color.cream.100",
+          "value": "#EADCC5",
+          "role": "Cards, sheets and form surfaces",
+          "source": "BRAND_UX_CONTRACT.md §4.3",
+          "candidateForD1Approval": false
+        },
+        "surface.brand": {
+          "primitive": "oak.color.forest.700",
+          "value": "#12372A",
+          "role": "Brand navigation or strong sections",
+          "source": "BRAND_UX_CONTRACT.md §4.3",
+          "candidateForD1Approval": false
+        },
+        "surface.inverse": {
+          "primitive": "oak.color.forest.950",
+          "value": "#08291F",
+          "role": "Immersive sections and inverse content",
+          "source": "BRAND_UX_CONTRACT.md §4.3",
+          "candidateForD1Approval": false
+        },
+        "text.primary": {
+          "primitive": "oak.color.ground.900",
+          "value": "#17211B",
+          "role": "Main content on light and bright surfaces",
+          "source": "BRAND_UX_CONTRACT.md §4.3",
+          "candidateForD1Approval": false
+        },
+        "text.secondary": {
+          "primitive": "oak.color.muted.700",
+          "value": "#4D6258",
+          "role": "Supporting content where approved contrast is retained (prefer surface.raised or non-dense copy on canvas)",
+          "source": "BRAND_UX_CONTRACT.md §4.3",
+          "candidateForD1Approval": false
+        },
+        "text.brand": {
+          "primitive": "oak.color.forest.700",
+          "value": "#12372A",
+          "role": "Brand headings on light surfaces",
+          "source": "BRAND_UX_CONTRACT.md §4.3",
+          "candidateForD1Approval": false
+        },
+        "text.inverse": {
+          "primitive": "oak.color.cream.100",
+          "value": "#EADCC5",
+          "role": "Content on forest surfaces",
+          "source": "BRAND_UX_CONTRACT.md §4.3",
+          "candidateForD1Approval": false
+        },
+        "action.primary.background": {
+          "primitive": "oak.color.orange.500",
+          "value": "#FF6B35",
+          "role": "Primary calls to action",
+          "source": "BRAND_UX_CONTRACT.md §4.3",
+          "candidateForD1Approval": false
+        },
+        "action.primary.foreground": {
+          "primitive": "oak.color.ground.900",
+          "value": "#17211B",
+          "role": "Text and icons on primary actions",
+          "source": "BRAND_UX_CONTRACT.md §4.3",
+          "candidateForD1Approval": false
+        },
+        "action.secondary.foreground": {
+          "primitive": "oak.color.forest.700",
+          "value": "#12372A",
+          "role": "Secondary action on a light surface",
+          "source": "BRAND_UX_CONTRACT.md §4.3",
+          "candidateForD1Approval": false
+        },
+        "progress.background": {
+          "primitive": "oak.color.lime.400",
+          "value": "#B7F34A",
+          "role": "Progress, completion and forward movement",
+          "source": "BRAND_UX_CONTRACT.md §4.3",
+          "candidateForD1Approval": false
+        },
+        "progress.foreground": {
+          "primitive": "oak.color.forest.700",
+          "value": "#12372A",
+          "role": "Text or icon on progress surfaces",
+          "source": "BRAND_UX_CONTRACT.md §4.3",
+          "candidateForD1Approval": false
+        },
+        "info.background": {
+          "primitive": "oak.color.sky.400",
+          "value": "#28B7E9",
+          "role": "Informational emphasis only",
+          "source": "BRAND_UX_CONTRACT.md §4.3",
+          "candidateForD1Approval": false
+        },
+        "info.foreground": {
+          "primitive": "oak.color.ground.900",
+          "value": "#17211B",
+          "role": "Text or icon on informational emphasis",
+          "source": "BRAND_UX_CONTRACT.md §4.3",
+          "candidateForD1Approval": false
+        },
+        "focus.on-light": {
+          "primitive": "oak.color.forest.700",
+          "value": "#12372A",
+          "role": "Focus ring on sand, cream, lime, orange or sky",
+          "source": "BRAND_UX_CONTRACT.md §4.3",
+          "candidateForD1Approval": false
+        },
+        "focus.on-dark": {
+          "primitive": "oak.color.lime.400",
+          "value": "#B7F34A",
+          "role": "Focus ring on forest surfaces",
+          "source": "BRAND_UX_CONTRACT.md §4.3",
+          "candidateForD1Approval": false
+        }
+      },
+      "borders": {
+        "border.divider.decorative": {
+          "primitive": "oak.color.line",
+          "value": "rgba(18, 55, 42, 0.18)",
+          "role": "Decorative hairline divider only; forbidden as sole boundary for UI controls or focus rings",
+          "decorativeOnly": true,
+          "minContrastRatio": null,
+          "candidateForD1Approval": false
+        },
+        "border.divider.onDark": {
+          "primitive": "oak.color.line.dark",
+          "value": "rgba(234, 220, 197, 0.18)",
+          "role": "Decorative hairline divider on dark surfaces only",
+          "decorativeOnly": true,
+          "minContrastRatio": null,
+          "candidateForD1Approval": true
+        },
+        "border.control.default": {
+          "primitive": "oak.color.stone.600",
+          "value": "#5D6C63",
+          "role": "Functional border for inputs, checkboxes, radios, chips and outline controls on sand.300 and cream.100",
+          "decorativeOnly": false,
+          "minContrastRatio": 3.0,
+          "wcagCriterion": "WCAG 2.2 SC 1.4.11",
+          "candidateForD1Approval": true
+        },
+        "border.control.strong": {
+          "primitive": "oak.color.forest.700",
+          "value": "#12372A",
+          "role": "Active, checked or high-emphasis control border on light surfaces",
+          "decorativeOnly": false,
+          "minContrastRatio": 3.0,
+          "wcagCriterion": "WCAG 2.2 SC 1.4.11",
+          "candidateForD1Approval": true
+        },
+        "border.control.onDark": {
+          "primitive": "oak.color.stone.400",
+          "value": "#7A8E82",
+          "role": "Functional border for controls on forest.700 and forest.950",
+          "decorativeOnly": false,
+          "minContrastRatio": 3.0,
+          "wcagCriterion": "WCAG 2.2 SC 1.4.11",
+          "candidateForD1Approval": true
+        },
+        "border.control.strong.onDark": {
+          "primitive": "oak.color.cream.100",
+          "value": "#EADCC5",
+          "role": "Active or high-emphasis control border on dark forest surfaces",
+          "decorativeOnly": false,
+          "minContrastRatio": 3.0,
+          "wcagCriterion": "WCAG 2.2 SC 1.4.11",
+          "candidateForD1Approval": true
+        }
+      },
+      "d1Candidates": {
+        "status.success.foreground.onLight": {
+          "primitive": "oak.color.emerald.800",
+          "value": "#115E3B",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Icono SVG de verificacion (check) + texto explicito en es-ES + region aria-live adecuada",
+          "assignedSurfaces": ["surface.canvas", "surface.raised", "status.success.surface.light"]
+        },
+        "status.success.surface.light": {
+          "primitive": "oak.color.emerald.100",
+          "value": "#D4E8D4",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Contenedor de alerta o badge positivo con borde solido e icono + texto explicito"
+        },
+        "status.success.border.onLight": {
+          "primitive": "oak.color.emerald.800",
+          "value": "#115E3B",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Borde funcional de estado positivo acompañado de icono y texto",
+          "assignedSurfaces": ["surface.canvas", "surface.raised", "status.success.surface.light"]
+        },
+        "status.success.foreground.onDark": {
+          "primitive": "oak.color.emerald.300",
+          "value": "#6DE39C",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Icono SVG de verificacion (check) + texto explicito sobre superficies oscuras",
+          "assignedSurfaces": ["surface.brand", "surface.inverse", "status.success.surface.dark"]
+        },
+        "status.success.surface.dark": {
+          "primitive": "oak.color.emerald.950",
+          "value": "#0E3B28",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Fondo oscuro de alerta o badge positivo con borde e icono + texto"
+        },
+        "status.success.border.onDark": {
+          "primitive": "oak.color.emerald.300",
+          "value": "#6DE39C",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Borde funcional de estado positivo sobre oscuro",
+          "assignedSurfaces": ["surface.brand", "surface.inverse", "status.success.surface.dark"]
+        },
+        "status.warning.foreground.onLight": {
+          "primitive": "oak.color.amber.800",
+          "value": "#734200",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Icono SVG de advertencia (triangulo) + texto explicito en es-ES; distinto de action.primary orange.500",
+          "assignedSurfaces": ["surface.canvas", "surface.raised", "status.warning.surface.light"]
+        },
+        "status.warning.surface.light": {
+          "primitive": "oak.color.amber.100",
+          "value": "#F3E2B5",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Contenedor de advertencia con borde e icono + texto"
+        },
+        "status.warning.border.onLight": {
+          "primitive": "oak.color.amber.800",
+          "value": "#734200",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Borde funcional de advertencia acompañado de icono y texto",
+          "assignedSurfaces": ["surface.canvas", "surface.raised", "status.warning.surface.light"]
+        },
+        "status.warning.foreground.onDark": {
+          "primitive": "oak.color.amber.300",
+          "value": "#F5C44E",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Icono SVG de advertencia + texto explicito sobre superficies oscuras",
+          "assignedSurfaces": ["surface.brand", "surface.inverse", "status.warning.surface.dark"]
+        },
+        "status.warning.surface.dark": {
+          "primitive": "oak.color.amber.950",
+          "value": "#33250B",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Fondo oscuro de advertencia con borde e icono + texto"
+        },
+        "status.warning.border.onDark": {
+          "primitive": "oak.color.amber.300",
+          "value": "#F5C44E",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Borde funcional de advertencia sobre oscuro",
+          "assignedSurfaces": ["surface.brand", "surface.inverse", "status.warning.surface.dark"]
+        },
+        "status.danger.foreground.onLight": {
+          "primitive": "oak.color.crimson.800",
+          "value": "#9E1C28",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Icono SVG de error + mensaje explicativo con accion de recuperacion en es-ES y aria-describedby",
+          "assignedSurfaces": ["surface.canvas", "surface.raised", "status.danger.surface.light"]
+        },
+        "status.danger.surface.light": {
+          "primitive": "oak.color.crimson.100",
+          "value": "#F5D7D3",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Contenedor de error con borde e icono + texto y accion correctiva"
+        },
+        "status.danger.border.onLight": {
+          "primitive": "oak.color.crimson.800",
+          "value": "#9E1C28",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Borde funcional de campo invalido o alerta critica acompañado de icono y texto",
+          "assignedSurfaces": ["surface.canvas", "surface.raised", "status.danger.surface.light"]
+        },
+        "status.danger.foreground.onDark": {
+          "primitive": "oak.color.crimson.300",
+          "value": "#FF8F8F",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Icono SVG de error + texto de recuperacion sobre superficies oscuras",
+          "assignedSurfaces": ["surface.brand", "surface.inverse", "status.danger.surface.dark"]
+        },
+        "status.danger.surface.dark": {
+          "primitive": "oak.color.crimson.950",
+          "value": "#3B1519",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Fondo oscuro de error con borde e icono + texto"
+        },
+        "status.danger.border.onDark": {
+          "primitive": "oak.color.crimson.300",
+          "value": "#FF8F8F",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Borde funcional de error sobre oscuro",
+          "assignedSurfaces": ["surface.brand", "surface.inverse", "status.danger.surface.dark"]
+        },
+        "status.disabled.foreground.onLight": {
+          "primitive": "oak.color.stone.700",
+          "value": "#44544B",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Atributo disabled o aria-disabled + borde discontinuo y superficie desaturada + etiqueta o icono explicativo (nunca solo opacidad)",
+          "assignedSurfaces": ["surface.canvas", "surface.raised", "status.disabled.surface.light"]
+        },
+        "status.disabled.surface.light": {
+          "primitive": "oak.color.stone.200",
+          "value": "#D4C9B6",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Superficie desaturada de control deshabilitado sin elevacion + disabled/aria-disabled"
+        },
+        "status.disabled.border.onLight": {
+          "primitive": "oak.color.stone.700",
+          "value": "#44544B",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Borde 1px dashed + disabled/aria-disabled",
+          "assignedSurfaces": ["surface.canvas", "surface.raised", "status.disabled.surface.light"]
+        },
+        "status.disabled.foreground.onDark": {
+          "primitive": "oak.color.stone.300",
+          "value": "#9EB1A6",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Atributo disabled o aria-disabled + relleno desaturado oscuro + texto o icono explicativo (nunca solo opacidad)",
+          "assignedSurfaces": ["surface.brand", "surface.inverse", "status.disabled.surface.dark"]
+        },
+        "status.disabled.surface.dark": {
+          "primitive": "oak.color.stone.850",
+          "value": "#1A372D",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Superficie desaturada oscura de control deshabilitado"
+        },
+        "status.disabled.border.onDark": {
+          "primitive": "oak.color.stone.300",
+          "value": "#9EB1A6",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Borde 1px dashed sobre oscuro + disabled/aria-disabled",
+          "assignedSurfaces": ["surface.brand", "surface.inverse", "status.disabled.surface.dark"]
+        },
+        "viz.series.1.onLight": {
+          "primitive": "oak.color.forest.700",
+          "value": "#12372A",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Marcador geometrico (circulo) y trazo continuo + etiqueta directa o leyenda textual",
+          "assignedSurfaces": ["surface.canvas", "surface.raised"]
+        },
+        "viz.series.2.onLight": {
+          "primitive": "oak.color.sienna.700",
+          "value": "#9A340E",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Marcador geometrico (cuadrado) y trazo discontinuo + etiqueta directa o leyenda textual",
+          "assignedSurfaces": ["surface.canvas", "surface.raised"]
+        },
+        "viz.series.3.onLight": {
+          "primitive": "oak.color.teal.700",
+          "value": "#0B5D7C",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Marcador geometrico (triangulo) y trazo punteado + etiqueta directa o leyenda textual",
+          "assignedSurfaces": ["surface.canvas", "surface.raised"]
+        },
+        "viz.series.4.onLight": {
+          "primitive": "oak.color.plum.700",
+          "value": "#5D4585",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Marcador geometrico (rombo) y patron rayado + etiqueta directa o leyenda textual",
+          "assignedSurfaces": ["surface.canvas", "surface.raised"]
+        },
+        "viz.axis.onLight": {
+          "primitive": "oak.color.sage.700",
+          "value": "#42574D",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Etiquetas numericas y unidades explicitas en ejes",
+          "assignedSurfaces": ["surface.canvas", "surface.raised"]
+        },
+        "viz.series.1.onDark": {
+          "primitive": "oak.color.lime.400",
+          "value": "#B7F34A",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Marcador geometrico (circulo) y trazo continuo + etiqueta directa",
+          "assignedSurfaces": ["surface.brand", "surface.inverse"]
+        },
+        "viz.series.2.onDark": {
+          "primitive": "oak.color.orange.500",
+          "value": "#FF6B35",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Marcador geometrico (cuadrado) y trazo discontinuo + etiqueta directa",
+          "assignedSurfaces": ["surface.brand", "surface.inverse"]
+        },
+        "viz.series.3.onDark": {
+          "primitive": "oak.color.sky.400",
+          "value": "#28B7E9",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Marcador geometrico (triangulo) y trazo punteado + etiqueta directa",
+          "assignedSurfaces": ["surface.brand", "surface.inverse"]
+        },
+        "viz.series.4.onDark": {
+          "primitive": "oak.color.cream.100",
+          "value": "#EADCC5",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Marcador geometrico (rombo) y patron rayado + etiqueta directa",
+          "assignedSurfaces": ["surface.brand", "surface.inverse"]
+        },
+        "viz.axis.onDark": {
+          "primitive": "oak.color.sage.300",
+          "value": "#A8BBB0",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Etiquetas numericas y unidades explicitas en ejes sobre oscuro",
+          "assignedSurfaces": ["surface.brand", "surface.inverse"]
+        },
+        "viz.tooltip.background": {
+          "primitive": "oak.color.forest.950",
+          "value": "#08291F",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Tooltip accesible con valor numerico, serie y unidad"
+        },
+        "viz.tooltip.foreground": {
+          "primitive": "oak.color.cream.100",
+          "value": "#EADCC5",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "nonColorSignifier": "Texto de tooltip con valor numerico y unidad",
+          "assignedSurfaces": ["viz.tooltip.background"]
+        },
+        "viz.grid.decorative.onLight": {
+          "primitive": "oak.color.line",
+          "value": "rgba(18, 55, 42, 0.18)",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "decorativeOnly": true,
+          "nonColorSignifier": "Rejilla de apoyo meramente decorativa; los valores dependen de ejes y etiquetas"
+        },
+        "viz.grid.decorative.onDark": {
+          "primitive": "oak.color.line.dark",
+          "value": "rgba(234, 220, 197, 0.18)",
+          "candidateForD1Approval": true,
+          "gateStatus": "PENDING_D1_APPROVAL",
+          "requiresTextAndIcon": true,
+          "decorativeOnly": true,
+          "nonColorSignifier": "Rejilla de apoyo meramente decorativa sobre oscuro"
+        }
+      }
+    }
+  },
+  "typography": {
+    "families": {
+      "display": {
+        "name": "Sora",
+        "cssStack": "\"Sora\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "role": "Page titles, section headings, campaign messages and significant metrics"
+      },
+      "interface": {
+        "name": "Inter",
+        "cssStack": "\"Inter\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "role": "Navigation, body copy, forms, tables, labels and operational data"
+      }
+    },
+    "deliveryPolicy": {
+      "strategy": "local-woff2-subsetted",
+      "externalCdnAllowed": false,
+      "forbiddenDomains": ["fonts.googleapis.com", "fonts.gstatic.com"],
+      "targetLcpBudgetMs": 2500,
+      "candidateForD1Approval": true,
+      "pendingInD1": "D1-04 font licensing evidence and local WOFF2 binaries"
+    },
+    "weights": {
+      "allowed": [400, 500, 600, 700, 800],
+      "forbidden": [650],
+      "names": {
+        "regular": 400,
+        "medium": 500,
+        "semibold": 600,
+        "bold": 700,
+        "extrabold": 800
+      }
+    },
+    "scale": {
+      "type.display": {
+        "family": "Sora",
+        "size": "clamp(48px, 5vw, 72px)",
+        "minSizePx": 48,
+        "maxSizePx": 72,
+        "lineHeight": 0.98,
+        "weight": 700,
+        "allowedWeights": [700],
+        "letterSpacing": "-0.04em",
+        "use": "Marketing and primary product hero only"
+      },
+      "type.heading.xl": {
+        "family": "Sora",
+        "size": "clamp(40px, 4vw, 48px)",
+        "minSizePx": 40,
+        "maxSizePx": 48,
+        "lineHeight": 1.05,
+        "weight": 700,
+        "allowedWeights": [700],
+        "letterSpacing": "-0.03em",
+        "use": "Page title (h1)"
+      },
+      "type.heading.lg": {
+        "family": "Sora",
+        "size": "32px",
+        "minSizePx": 32,
+        "maxSizePx": 32,
+        "lineHeight": 1.1,
+        "weight": 600,
+        "allowedWeights": [600],
+        "letterSpacing": "-0.025em",
+        "use": "Major section"
+      },
+      "type.heading.md": {
+        "family": "Sora",
+        "size": "24px",
+        "minSizePx": 24,
+        "maxSizePx": 24,
+        "lineHeight": 1.2,
+        "weight": 600,
+        "allowedWeights": [600],
+        "letterSpacing": "-0.02em",
+        "use": "Card or subsection heading"
+      },
+      "type.heading.sm": {
+        "family": "Sora",
+        "size": "20px",
+        "minSizePx": 20,
+        "maxSizePx": 20,
+        "lineHeight": 1.25,
+        "weight": 600,
+        "allowedWeights": [600],
+        "letterSpacing": "-0.015em",
+        "use": "Compact heading"
+      },
+      "type.body": {
+        "family": "Inter",
+        "size": "16px",
+        "minSizePx": 16,
+        "maxSizePx": 16,
+        "lineHeight": 1.5,
+        "weight": 400,
+        "allowedWeights": [400],
+        "letterSpacing": "0em",
+        "use": "Default copy and form values"
+      },
+      "type.body.small": {
+        "family": "Inter",
+        "size": "14px",
+        "minSizePx": 14,
+        "maxSizePx": 14,
+        "lineHeight": 1.45,
+        "weight": 400,
+        "allowedWeights": [400, 500],
+        "letterSpacing": "0em",
+        "use": "Supporting copy"
+      },
+      "type.label": {
+        "family": "Inter",
+        "size": "12px",
+        "minSizePx": 12,
+        "maxSizePx": 12,
+        "lineHeight": 1.25,
+        "weight": 600,
+        "allowedWeights": [600, 700],
+        "letterSpacing": "0.08em",
+        "use": "Labels and overlines (minimum allowed size)"
+      }
+    },
+    "caseRules": "Short uppercase allowed on labels/overlines with tracking >= 0.08em; sentence case mandatory on body text, form values and error messages."
+  },
+  "spacing": {
+    "candidateForD1Approval": true,
+    "baseUnitPx": 4,
+    "scale": {
+      "space.0": { "px": 0, "value": "0px" },
+      "space.1": { "px": 4, "value": "4px", "rem": "0.25rem" },
+      "space.2": { "px": 8, "value": "8px", "rem": "0.5rem" },
+      "space.3": { "px": 12, "value": "12px", "rem": "0.75rem" },
+      "space.4": { "px": 16, "value": "16px", "rem": "1rem" },
+      "space.5": { "px": 20, "value": "20px", "rem": "1.25rem" },
+      "space.6": { "px": 24, "value": "24px", "rem": "1.5rem" },
+      "space.8": { "px": 32, "value": "32px", "rem": "2rem" },
+      "space.10": { "px": 40, "value": "40px", "rem": "2.5rem" },
+      "space.12": { "px": 48, "value": "48px", "rem": "3rem" },
+      "space.16": { "px": 64, "value": "64px", "rem": "4rem" },
+      "space.20": { "px": 80, "value": "80px", "rem": "5rem" },
+      "space.24": { "px": 96, "value": "96px", "rem": "6rem" }
+    },
+    "layout": {
+      "containerMaxWidthPx": 1320,
+      "gutterMobilePx": 16,
+      "gutterTabletPx": 24,
+      "gutterDesktopPx": 24,
+      "pagePaddingXMobilePx": 16,
+      "pagePaddingXTabletPx": 32,
+      "pagePaddingXDesktopPx": 48
+    }
+  },
+  "radius": {
+    "candidateForD1Approval": true,
+    "scale": {
+      "radius.none": { "px": 0, "value": "0px" },
+      "radius.sm": { "px": 4, "value": "4px", "rem": "0.25rem" },
+      "radius.md": { "px": 8, "value": "8px", "rem": "0.5rem" },
+      "radius.lg": { "px": 16, "value": "16px", "rem": "1rem" },
+      "radius.xl": { "px": 24, "value": "24px", "rem": "1.5rem" },
+      "radius.full": { "px": 9999, "value": "9999px" }
+    }
+  },
+  "elevation": {
+    "candidateForD1Approval": true,
+    "scale": {
+      "elevation.none": { "value": "none", "use": "Flat elements on canvas" },
+      "elevation.sm": {
+        "value": "0 2px 8px rgba(18, 55, 42, 0.08)",
+        "use": "Cards and elevated panels"
+      },
+      "elevation.md": {
+        "value": "0 8px 24px rgba(18, 55, 42, 0.12)",
+        "use": "Sticky bars, popovers and dropdowns"
+      },
+      "elevation.lg": {
+        "value": "0 20px 48px rgba(8, 41, 31, 0.20)",
+        "use": "Dialogs, modals and mobile bottom sheets"
+      }
+    },
+    "zIndex": {
+      "base": 0,
+      "sticky": 20,
+      "overlay": 40,
+      "modal": 50,
+      "toast": 60
+    }
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "minPx": 320, "maxPx": 767, "columns": 4, "gutterPx": 16 },
+      "tablet": { "minPx": 768, "maxPx": 1199, "columns": 8, "gutterPx": 24 },
+      "desktop": {
+        "minPx": 1200,
+        "maxPx": null,
+        "designCanvasPx": 1440,
+        "columns": 12,
+        "gutterPx": 24
+      }
+    },
+    "canonicalThresholdsPx": [320, 768, 1200],
+    "designCanvasPx": 1440,
+    "referenceViewports": ["320x568", "390x844", "768x1024", "1200x800", "1440x900"],
+    "forbiddenDeckBreakpointsPx": [560, 650, 760, 900, 1000]
+  },
+  "accessibility": {
+    "focus": {
+      "ringWidthPx": 3,
+      "ringOffsetPx": 2,
+      "minContrastRatio": 3.0,
+      "onLightToken": "focus.on-light",
+      "onDarkToken": "focus.on-dark"
+    },
+    "touchTarget": {
+      "minWidthPx": 48,
+      "minHeightPx": 48,
+      "minAdjacentGapPx": 8
+    },
+    "reflow": {
+      "minViewportWidthPx": 320,
+      "maxZoomPercent": 200
+    }
+  },
+  "motion": {
+    "candidateForD1Approval": true,
+    "tokens": {
+      "motion.fast": {
+        "durationMs": 160,
+        "value": "160ms",
+        "use": "Hover, press and small state feedback"
+      },
+      "motion.standard": {
+        "durationMs": 240,
+        "value": "240ms",
+        "use": "Component transitions"
+      },
+      "motion.reveal": {
+        "durationMs": 480,
+        "value": "480ms",
+        "use": "Section or content reveal"
+      },
+      "motion.route.max": {
+        "durationMs": 1200,
+        "value": "1200ms",
+        "use": "Branded route/ring sequence"
+      },
+      "motion.ease.out": {
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "use": "Default entrance and state easing"
+      }
+    },
+    "reducedMotion": {
+      "mediaQuery": "(prefers-reduced-motion: reduce)",
+      "disablePatterns": [
+        "route-drawing",
+        "pulsing",
+        "parallax",
+        "smooth-scrolling",
+        "nonessential-transforms",
+        "skeleton-shimmer"
+      ],
+      "durationOverrideMs": 0,
+      "requiresJsMatchMediaCheck": true
+    }
+  },
+  "contrastAudit": {
+    "algorithm": "WCAG-2.2-sRGB-relative-luminance",
+    "srgbThreshold": 0.04045,
+    "anchorVectors": [
+      {
+        "id": "anchor-bw",
+        "foregroundHex": "#FFFFFF",
+        "backgroundHex": "#000000",
+        "expectedExact": 21.0,
+        "expectedRounded": 21.0,
+        "note": "Independent external WCAG 2.2 anchor (forbidden as OAK brand colors)"
+      },
+      {
+        "id": "anchor-ground-sand",
+        "foregroundHex": "#17211B",
+        "backgroundHex": "#E3D4BB",
+        "expectedExact": 11.3413,
+        "expectedRounded": 11.34,
+        "note": "OAK primary text on canvas"
+      },
+      {
+        "id": "anchor-orange-sand",
+        "foregroundHex": "#FF6B35",
+        "backgroundHex": "#E3D4BB",
+        "expectedExact": 1.9444,
+        "expectedRounded": 1.94,
+        "note": "Prohibited Orange/Sand anchor"
+      }
+    ],
+    "approvedBasePairs": [
+      {
+        "id": "base-01-ground-sand",
+        "foregroundToken": "text.primary",
+        "foregroundHex": "#17211B",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 11.3413,
+        "roundedRatio": 11.34,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "BRAND_UX_CONTRACT.md §4.4 primary canvas copy"
+      },
+      {
+        "id": "base-02-forest-sand",
+        "foregroundToken": "text.brand",
+        "foregroundHex": "#12372A",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 8.9692,
+        "roundedRatio": 8.97,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "BRAND_UX_CONTRACT.md §4.4 brand headings and secondary actions"
+      },
+      {
+        "id": "base-03-muted-sand",
+        "foregroundToken": "text.secondary",
+        "foregroundHex": "#4D6258",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "text_legacy_borderline_exception",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 4.4954,
+        "roundedRatio": 4.5,
+        "passesExact": false,
+        "legacyBorderlineException": true,
+        "candidateForD1Approval": false,
+        "note": "Borderline §4.4 legacy exception: 4.4954:1 unrounded (4.50:1 rounded). Restricted to non-dense secondary text on sand.300; D1-02/D1-05 recommendation: darken to #4C6157 (4.5648:1) or #4B6056 (4.6355:1) or restrict text.secondary on surface.canvas and keep on surface.raised (4.8515:1)."
+      },
+      {
+        "id": "base-04-cream-forest",
+        "foregroundToken": "text.inverse",
+        "foregroundHex": "#EADCC5",
+        "backgroundToken": "surface.brand",
+        "backgroundHex": "#12372A",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 9.6797,
+        "roundedRatio": 9.68,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "BRAND_UX_CONTRACT.md §4.4 inverse text on brand surface"
+      },
+      {
+        "id": "base-05-cream-deep",
+        "foregroundToken": "text.inverse",
+        "foregroundHex": "#EADCC5",
+        "backgroundToken": "surface.inverse",
+        "backgroundHex": "#08291F",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 11.5358,
+        "roundedRatio": 11.54,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "BRAND_UX_CONTRACT.md §4.4 inverse text on deep forest surface"
+      },
+      {
+        "id": "base-06-forest-lime",
+        "foregroundToken": "progress.foreground",
+        "foregroundHex": "#12372A",
+        "backgroundToken": "progress.background",
+        "backgroundHex": "#B7F34A",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 9.923,
+        "roundedRatio": 9.92,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "BRAND_UX_CONTRACT.md §4.4 text on progress surface"
+      },
+      {
+        "id": "base-07-ground-lime",
+        "foregroundToken": "text.primary",
+        "foregroundHex": "#17211B",
+        "backgroundToken": "progress.background",
+        "backgroundHex": "#B7F34A",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 12.5473,
+        "roundedRatio": 12.55,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "BRAND_UX_CONTRACT.md §4.4 ground text on lime"
+      },
+      {
+        "id": "base-08-forest-orange",
+        "foregroundToken": "text.brand",
+        "foregroundHex": "#12372A",
+        "backgroundToken": "action.primary.background",
+        "backgroundHex": "#FF6B35",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 4.6128,
+        "roundedRatio": 4.61,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "BRAND_UX_CONTRACT.md §4.4 allowed for normal text; ground.900 preferred"
+      },
+      {
+        "id": "base-09-ground-orange",
+        "foregroundToken": "action.primary.foreground",
+        "foregroundHex": "#17211B",
+        "backgroundToken": "action.primary.background",
+        "backgroundHex": "#FF6B35",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.8328,
+        "roundedRatio": 5.83,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "BRAND_UX_CONTRACT.md §4.4 preferred primary CTA pair"
+      },
+      {
+        "id": "base-10-ground-sky",
+        "foregroundToken": "info.foreground",
+        "foregroundHex": "#17211B",
+        "backgroundToken": "info.background",
+        "backgroundHex": "#28B7E9",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 7.1194,
+        "roundedRatio": 7.12,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "BRAND_UX_CONTRACT.md §4.4 informational emphasis pair"
+      },
+      {
+        "id": "base-11-forest-sky",
+        "foregroundToken": "text.brand",
+        "foregroundHex": "#12372A",
+        "backgroundToken": "info.background",
+        "backgroundHex": "#28B7E9",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.6304,
+        "roundedRatio": 5.63,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "BRAND_UX_CONTRACT.md §4.4 forest on sky"
+      },
+      {
+        "id": "base-12-lime-deep",
+        "foregroundToken": "focus.on-dark",
+        "foregroundHex": "#B7F34A",
+        "backgroundToken": "surface.inverse",
+        "backgroundHex": "#08291F",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 11.8257,
+        "roundedRatio": 11.83,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "BRAND_UX_CONTRACT.md §4.4 lime on deep forest"
+      },
+      {
+        "id": "base-13-orange-deep",
+        "foregroundToken": "action.primary.background",
+        "foregroundHex": "#FF6B35",
+        "backgroundToken": "surface.inverse",
+        "backgroundHex": "#08291F",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.4973,
+        "roundedRatio": 5.5,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "BRAND_UX_CONTRACT.md §4.4 orange accent on deep forest"
+      },
+      {
+        "id": "base-14-sky-deep",
+        "foregroundToken": "info.background",
+        "foregroundHex": "#28B7E9",
+        "backgroundToken": "surface.inverse",
+        "backgroundHex": "#08291F",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 6.71,
+        "roundedRatio": 6.71,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "BRAND_UX_CONTRACT.md §4.4 sky accent on deep forest"
+      },
+      {
+        "id": "base-15-ground-cream",
+        "foregroundToken": "text.primary",
+        "foregroundHex": "#17211B",
+        "backgroundToken": "surface.raised",
+        "backgroundHex": "#EADCC5",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 12.2397,
+        "roundedRatio": 12.24,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "Implicit §4.3 primary text on raised surface"
+      },
+      {
+        "id": "base-16-forest-cream",
+        "foregroundToken": "text.brand",
+        "foregroundHex": "#12372A",
+        "backgroundToken": "surface.raised",
+        "backgroundHex": "#EADCC5",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 9.6797,
+        "roundedRatio": 9.68,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "Implicit §4.3 brand heading and secondary action on raised surface"
+      },
+      {
+        "id": "base-17-muted-cream",
+        "foregroundToken": "text.secondary",
+        "foregroundHex": "#4D6258",
+        "backgroundToken": "surface.raised",
+        "backgroundHex": "#EADCC5",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 4.8515,
+        "roundedRatio": 4.85,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "Implicit §4.3 secondary text on raised surface (passes >= 4.5:1 exact)"
+      },
+      {
+        "id": "base-18-lime-forest",
+        "foregroundToken": "focus.on-dark",
+        "foregroundHex": "#B7F34A",
+        "backgroundToken": "surface.brand",
+        "backgroundHex": "#12372A",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 9.923,
+        "roundedRatio": 9.92,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "Implicit §4.3 lime on brand forest"
+      },
+      {
+        "id": "base-19-orange-forest",
+        "foregroundToken": "action.primary.background",
+        "foregroundHex": "#FF6B35",
+        "backgroundToken": "surface.brand",
+        "backgroundHex": "#12372A",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 4.6128,
+        "roundedRatio": 4.61,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "Implicit §4.3 orange on brand forest"
+      },
+      {
+        "id": "base-20-sky-forest",
+        "foregroundToken": "info.background",
+        "foregroundHex": "#28B7E9",
+        "backgroundToken": "surface.brand",
+        "backgroundHex": "#12372A",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.6304,
+        "roundedRatio": 5.63,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": false,
+        "note": "Implicit §4.3 sky on brand forest"
+      }
+    ],
+    "candidateD1Pairs": [
+      {
+        "id": "d1-success-fg-sand",
+        "foregroundToken": "status.success.foreground.onLight",
+        "foregroundHex": "#115E3B",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.3574,
+        "roundedRatio": 5.36,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-success-fg-cream",
+        "foregroundToken": "status.success.foreground.onLight",
+        "foregroundHex": "#115E3B",
+        "backgroundToken": "surface.raised",
+        "backgroundHex": "#EADCC5",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.7818,
+        "roundedRatio": 5.78,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-success-fg-tint",
+        "foregroundToken": "status.success.foreground.onLight",
+        "foregroundHex": "#115E3B",
+        "backgroundToken": "status.success.surface.light",
+        "backgroundHex": "#D4E8D4",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 6.0611,
+        "roundedRatio": 6.06,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-success-fg-forest",
+        "foregroundToken": "status.success.foreground.onDark",
+        "foregroundHex": "#6DE39C",
+        "backgroundToken": "surface.brand",
+        "backgroundHex": "#12372A",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 8.17,
+        "roundedRatio": 8.17,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-success-fg-deep",
+        "foregroundToken": "status.success.foreground.onDark",
+        "foregroundHex": "#6DE39C",
+        "backgroundToken": "surface.inverse",
+        "backgroundHex": "#08291F",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 9.7366,
+        "roundedRatio": 9.74,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-success-fg-darktint",
+        "foregroundToken": "status.success.foreground.onDark",
+        "foregroundHex": "#6DE39C",
+        "backgroundToken": "status.success.surface.dark",
+        "backgroundHex": "#0E3B28",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 7.8321,
+        "roundedRatio": 7.83,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-warning-fg-sand",
+        "foregroundToken": "status.warning.foreground.onLight",
+        "foregroundHex": "#734200",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.7415,
+        "roundedRatio": 5.74,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-warning-fg-cream",
+        "foregroundToken": "status.warning.foreground.onLight",
+        "foregroundHex": "#734200",
+        "backgroundToken": "surface.raised",
+        "backgroundHex": "#EADCC5",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 6.1963,
+        "roundedRatio": 6.2,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-warning-fg-tint",
+        "foregroundToken": "status.warning.foreground.onLight",
+        "foregroundHex": "#734200",
+        "backgroundToken": "status.warning.surface.light",
+        "backgroundHex": "#F3E2B5",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 6.5212,
+        "roundedRatio": 6.52,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-warning-fg-forest",
+        "foregroundToken": "status.warning.foreground.onDark",
+        "foregroundHex": "#F5C44E",
+        "backgroundToken": "surface.brand",
+        "backgroundHex": "#12372A",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 8.0271,
+        "roundedRatio": 8.03,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-warning-fg-deep",
+        "foregroundToken": "status.warning.foreground.onDark",
+        "foregroundHex": "#F5C44E",
+        "backgroundToken": "surface.inverse",
+        "backgroundHex": "#08291F",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 9.5663,
+        "roundedRatio": 9.57,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-warning-fg-darktint",
+        "foregroundToken": "status.warning.foreground.onDark",
+        "foregroundHex": "#F5C44E",
+        "backgroundToken": "status.warning.surface.dark",
+        "backgroundHex": "#33250B",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 9.1393,
+        "roundedRatio": 9.14,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-danger-fg-sand",
+        "foregroundToken": "status.danger.foreground.onLight",
+        "foregroundHex": "#9E1C28",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.4332,
+        "roundedRatio": 5.43,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-danger-fg-cream",
+        "foregroundToken": "status.danger.foreground.onLight",
+        "foregroundHex": "#9E1C28",
+        "backgroundToken": "surface.raised",
+        "backgroundHex": "#EADCC5",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.8637,
+        "roundedRatio": 5.86,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-danger-fg-tint",
+        "foregroundToken": "status.danger.foreground.onLight",
+        "foregroundHex": "#9E1C28",
+        "backgroundToken": "status.danger.surface.light",
+        "backgroundHex": "#F5D7D3",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.8642,
+        "roundedRatio": 5.86,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-danger-fg-forest",
+        "foregroundToken": "status.danger.foreground.onDark",
+        "foregroundHex": "#FF8F8F",
+        "backgroundToken": "surface.brand",
+        "backgroundHex": "#12372A",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.965,
+        "roundedRatio": 5.97,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-danger-fg-deep",
+        "foregroundToken": "status.danger.foreground.onDark",
+        "foregroundHex": "#FF8F8F",
+        "backgroundToken": "surface.inverse",
+        "backgroundHex": "#08291F",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 7.1088,
+        "roundedRatio": 7.11,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-danger-fg-darktint",
+        "foregroundToken": "status.danger.foreground.onDark",
+        "foregroundHex": "#FF8F8F",
+        "backgroundToken": "status.danger.surface.dark",
+        "backgroundHex": "#3B1519",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 7.3265,
+        "roundedRatio": 7.33,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-disabled-fg-sand",
+        "foregroundToken": "status.disabled.foreground.onLight",
+        "foregroundHex": "#44544B",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.506,
+        "roundedRatio": 5.51,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-disabled-fg-cream",
+        "foregroundToken": "status.disabled.foreground.onLight",
+        "foregroundHex": "#44544B",
+        "backgroundToken": "surface.raised",
+        "backgroundHex": "#EADCC5",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.9422,
+        "roundedRatio": 5.94,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-disabled-fg-tint",
+        "foregroundToken": "status.disabled.foreground.onLight",
+        "foregroundHex": "#44544B",
+        "backgroundToken": "status.disabled.surface.light",
+        "backgroundHex": "#D4C9B6",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 4.9052,
+        "roundedRatio": 4.91,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-disabled-fg-forest",
+        "foregroundToken": "status.disabled.foreground.onDark",
+        "foregroundHex": "#9EB1A6",
+        "backgroundToken": "surface.brand",
+        "backgroundHex": "#12372A",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.788,
+        "roundedRatio": 5.79,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-disabled-fg-deep",
+        "foregroundToken": "status.disabled.foreground.onDark",
+        "foregroundHex": "#9EB1A6",
+        "backgroundToken": "surface.inverse",
+        "backgroundHex": "#08291F",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 6.8978,
+        "roundedRatio": 6.9,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-disabled-fg-darktint",
+        "foregroundToken": "status.disabled.foreground.onDark",
+        "foregroundHex": "#9EB1A6",
+        "backgroundToken": "status.disabled.surface.dark",
+        "backgroundHex": "#1A372D",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.7074,
+        "roundedRatio": 5.71,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-s1-sand",
+        "foregroundToken": "viz.series.1.onLight",
+        "foregroundHex": "#12372A",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 8.9692,
+        "roundedRatio": 8.97,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-s1-cream",
+        "foregroundToken": "viz.series.1.onLight",
+        "foregroundHex": "#12372A",
+        "backgroundToken": "surface.raised",
+        "backgroundHex": "#EADCC5",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 9.6797,
+        "roundedRatio": 9.68,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-s2-sand",
+        "foregroundToken": "viz.series.2.onLight",
+        "foregroundHex": "#9A340E",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.0151,
+        "roundedRatio": 5.02,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-s2-cream",
+        "foregroundToken": "viz.series.2.onLight",
+        "foregroundHex": "#9A340E",
+        "backgroundToken": "surface.raised",
+        "backgroundHex": "#EADCC5",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.4124,
+        "roundedRatio": 5.41,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-s3-sand",
+        "foregroundToken": "viz.series.3.onLight",
+        "foregroundHex": "#0B5D7C",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.016,
+        "roundedRatio": 5.02,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-s3-cream",
+        "foregroundToken": "viz.series.3.onLight",
+        "foregroundHex": "#0B5D7C",
+        "backgroundToken": "surface.raised",
+        "backgroundHex": "#EADCC5",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.4134,
+        "roundedRatio": 5.41,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-s4-sand",
+        "foregroundToken": "viz.series.4.onLight",
+        "foregroundHex": "#5D4585",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.4234,
+        "roundedRatio": 5.42,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-s4-cream",
+        "foregroundToken": "viz.series.4.onLight",
+        "foregroundHex": "#5D4585",
+        "backgroundToken": "surface.raised",
+        "backgroundHex": "#EADCC5",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.853,
+        "roundedRatio": 5.85,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-axis-sand",
+        "foregroundToken": "viz.axis.onLight",
+        "foregroundHex": "#42574D",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.3296,
+        "roundedRatio": 5.33,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-axis-cream",
+        "foregroundToken": "viz.axis.onLight",
+        "foregroundHex": "#42574D",
+        "backgroundToken": "surface.raised",
+        "backgroundHex": "#EADCC5",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.7518,
+        "roundedRatio": 5.75,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-s1-forest",
+        "foregroundToken": "viz.series.1.onDark",
+        "foregroundHex": "#B7F34A",
+        "backgroundToken": "surface.brand",
+        "backgroundHex": "#12372A",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 9.923,
+        "roundedRatio": 9.92,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-s1-deep",
+        "foregroundToken": "viz.series.1.onDark",
+        "foregroundHex": "#B7F34A",
+        "backgroundToken": "surface.inverse",
+        "backgroundHex": "#08291F",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 11.8257,
+        "roundedRatio": 11.83,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-s2-forest",
+        "foregroundToken": "viz.series.2.onDark",
+        "foregroundHex": "#FF6B35",
+        "backgroundToken": "surface.brand",
+        "backgroundHex": "#12372A",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 4.6128,
+        "roundedRatio": 4.61,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-s2-deep",
+        "foregroundToken": "viz.series.2.onDark",
+        "foregroundHex": "#FF6B35",
+        "backgroundToken": "surface.inverse",
+        "backgroundHex": "#08291F",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.4973,
+        "roundedRatio": 5.5,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-s3-forest",
+        "foregroundToken": "viz.series.3.onDark",
+        "foregroundHex": "#28B7E9",
+        "backgroundToken": "surface.brand",
+        "backgroundHex": "#12372A",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 5.6304,
+        "roundedRatio": 5.63,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-s3-deep",
+        "foregroundToken": "viz.series.3.onDark",
+        "foregroundHex": "#28B7E9",
+        "backgroundToken": "surface.inverse",
+        "backgroundHex": "#08291F",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 6.71,
+        "roundedRatio": 6.71,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-s4-forest",
+        "foregroundToken": "viz.series.4.onDark",
+        "foregroundHex": "#EADCC5",
+        "backgroundToken": "surface.brand",
+        "backgroundHex": "#12372A",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 9.6797,
+        "roundedRatio": 9.68,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-s4-deep",
+        "foregroundToken": "viz.series.4.onDark",
+        "foregroundHex": "#EADCC5",
+        "backgroundToken": "surface.inverse",
+        "backgroundHex": "#08291F",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 11.5358,
+        "roundedRatio": 11.54,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-axis-forest",
+        "foregroundToken": "viz.axis.onDark",
+        "foregroundHex": "#A8BBB0",
+        "backgroundToken": "surface.brand",
+        "backgroundHex": "#12372A",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 6.4772,
+        "roundedRatio": 6.48,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-axis-deep",
+        "foregroundToken": "viz.axis.onDark",
+        "foregroundHex": "#A8BBB0",
+        "backgroundToken": "surface.inverse",
+        "backgroundHex": "#08291F",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 7.7192,
+        "roundedRatio": 7.72,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "d1-viz-tooltip",
+        "foregroundToken": "viz.tooltip.foreground",
+        "foregroundHex": "#EADCC5",
+        "backgroundToken": "viz.tooltip.background",
+        "backgroundHex": "#08291F",
+        "category": "text",
+        "minRequiredRatio": 4.5,
+        "exactRatio": 11.5358,
+        "roundedRatio": 11.54,
+        "passesExact": true,
+        "legacyBorderlineException": false,
+        "candidateForD1Approval": true
+      }
+    ],
+    "uiComponentAndFocusPairs": [
+      {
+        "id": "ui-border-default-sand",
+        "foregroundToken": "border.control.default",
+        "foregroundHex": "#5D6C63",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 3.7991,
+        "roundedRatio": 3.8,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-border-default-cream",
+        "foregroundToken": "border.control.default",
+        "foregroundHex": "#5D6C63",
+        "backgroundToken": "surface.raised",
+        "backgroundHex": "#EADCC5",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 4.1001,
+        "roundedRatio": 4.1,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-border-strong-sand",
+        "foregroundToken": "border.control.strong",
+        "foregroundHex": "#12372A",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 8.9692,
+        "roundedRatio": 8.97,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-border-strong-cream",
+        "foregroundToken": "border.control.strong",
+        "foregroundHex": "#12372A",
+        "backgroundToken": "surface.raised",
+        "backgroundHex": "#EADCC5",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 9.6797,
+        "roundedRatio": 9.68,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-border-dark-forest",
+        "foregroundToken": "border.control.onDark",
+        "foregroundHex": "#7A8E82",
+        "backgroundToken": "surface.brand",
+        "backgroundHex": "#12372A",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 3.7487,
+        "roundedRatio": 3.75,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-border-dark-deep",
+        "foregroundToken": "border.control.onDark",
+        "foregroundHex": "#7A8E82",
+        "backgroundToken": "surface.inverse",
+        "backgroundHex": "#08291F",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 4.4675,
+        "roundedRatio": 4.47,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-border-strong-forest",
+        "foregroundToken": "border.control.strong.onDark",
+        "foregroundHex": "#EADCC5",
+        "backgroundToken": "surface.brand",
+        "backgroundHex": "#12372A",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 9.6797,
+        "roundedRatio": 9.68,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-border-strong-deep",
+        "foregroundToken": "border.control.strong.onDark",
+        "foregroundHex": "#EADCC5",
+        "backgroundToken": "surface.inverse",
+        "backgroundHex": "#08291F",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 11.5358,
+        "roundedRatio": 11.54,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "focus-light-sand",
+        "foregroundToken": "focus.on-light",
+        "foregroundHex": "#12372A",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "focus_ring",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 8.9692,
+        "roundedRatio": 8.97,
+        "passesExact": true,
+        "candidateForD1Approval": false
+      },
+      {
+        "id": "focus-light-cream",
+        "foregroundToken": "focus.on-light",
+        "foregroundHex": "#12372A",
+        "backgroundToken": "surface.raised",
+        "backgroundHex": "#EADCC5",
+        "category": "focus_ring",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 9.6797,
+        "roundedRatio": 9.68,
+        "passesExact": true,
+        "candidateForD1Approval": false
+      },
+      {
+        "id": "focus-light-lime",
+        "foregroundToken": "focus.on-light",
+        "foregroundHex": "#12372A",
+        "backgroundToken": "progress.background",
+        "backgroundHex": "#B7F34A",
+        "category": "focus_ring",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 9.923,
+        "roundedRatio": 9.92,
+        "passesExact": true,
+        "candidateForD1Approval": false
+      },
+      {
+        "id": "focus-light-orange",
+        "foregroundToken": "focus.on-light",
+        "foregroundHex": "#12372A",
+        "backgroundToken": "action.primary.background",
+        "backgroundHex": "#FF6B35",
+        "category": "focus_ring",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 4.6128,
+        "roundedRatio": 4.61,
+        "passesExact": true,
+        "candidateForD1Approval": false
+      },
+      {
+        "id": "focus-light-sky",
+        "foregroundToken": "focus.on-light",
+        "foregroundHex": "#12372A",
+        "backgroundToken": "info.background",
+        "backgroundHex": "#28B7E9",
+        "category": "focus_ring",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 5.6304,
+        "roundedRatio": 5.63,
+        "passesExact": true,
+        "candidateForD1Approval": false
+      },
+      {
+        "id": "focus-dark-forest",
+        "foregroundToken": "focus.on-dark",
+        "foregroundHex": "#B7F34A",
+        "backgroundToken": "surface.brand",
+        "backgroundHex": "#12372A",
+        "category": "focus_ring",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 9.923,
+        "roundedRatio": 9.92,
+        "passesExact": true,
+        "candidateForD1Approval": false
+      },
+      {
+        "id": "focus-dark-deep",
+        "foregroundToken": "focus.on-dark",
+        "foregroundHex": "#B7F34A",
+        "backgroundToken": "surface.inverse",
+        "backgroundHex": "#08291F",
+        "category": "focus_ring",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 11.8257,
+        "roundedRatio": 11.83,
+        "passesExact": true,
+        "candidateForD1Approval": false
+      },
+      {
+        "id": "ui-status-success-border-sand",
+        "foregroundToken": "status.success.border.onLight",
+        "foregroundHex": "#115E3B",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 5.3574,
+        "roundedRatio": 5.36,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-status-success-border-tint",
+        "foregroundToken": "status.success.border.onLight",
+        "foregroundHex": "#115E3B",
+        "backgroundToken": "status.success.surface.light",
+        "backgroundHex": "#D4E8D4",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 6.0611,
+        "roundedRatio": 6.06,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-status-success-border-darktint",
+        "foregroundToken": "status.success.border.onDark",
+        "foregroundHex": "#6DE39C",
+        "backgroundToken": "status.success.surface.dark",
+        "backgroundHex": "#0E3B28",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 7.8321,
+        "roundedRatio": 7.83,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-status-warning-border-sand",
+        "foregroundToken": "status.warning.border.onLight",
+        "foregroundHex": "#734200",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 5.7415,
+        "roundedRatio": 5.74,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-status-warning-border-tint",
+        "foregroundToken": "status.warning.border.onLight",
+        "foregroundHex": "#734200",
+        "backgroundToken": "status.warning.surface.light",
+        "backgroundHex": "#F3E2B5",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 6.5212,
+        "roundedRatio": 6.52,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-status-warning-border-darktint",
+        "foregroundToken": "status.warning.border.onDark",
+        "foregroundHex": "#F5C44E",
+        "backgroundToken": "status.warning.surface.dark",
+        "backgroundHex": "#33250B",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 9.1393,
+        "roundedRatio": 9.14,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-status-danger-border-sand",
+        "foregroundToken": "status.danger.border.onLight",
+        "foregroundHex": "#9E1C28",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 5.4332,
+        "roundedRatio": 5.43,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-status-danger-border-tint",
+        "foregroundToken": "status.danger.border.onLight",
+        "foregroundHex": "#9E1C28",
+        "backgroundToken": "status.danger.surface.light",
+        "backgroundHex": "#F5D7D3",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 5.8642,
+        "roundedRatio": 5.86,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-status-danger-border-darktint",
+        "foregroundToken": "status.danger.border.onDark",
+        "foregroundHex": "#FF8F8F",
+        "backgroundToken": "status.danger.surface.dark",
+        "backgroundHex": "#3B1519",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 7.3265,
+        "roundedRatio": 7.33,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-status-disabled-border-sand",
+        "foregroundToken": "status.disabled.border.onLight",
+        "foregroundHex": "#44544B",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 5.506,
+        "roundedRatio": 5.51,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-status-disabled-border-tint",
+        "foregroundToken": "status.disabled.border.onLight",
+        "foregroundHex": "#44544B",
+        "backgroundToken": "status.disabled.surface.light",
+        "backgroundHex": "#D4C9B6",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 4.9052,
+        "roundedRatio": 4.91,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      },
+      {
+        "id": "ui-status-disabled-border-darktint",
+        "foregroundToken": "status.disabled.border.onDark",
+        "foregroundHex": "#9EB1A6",
+        "backgroundToken": "status.disabled.surface.dark",
+        "backgroundHex": "#1A372D",
+        "category": "ui_border",
+        "minRequiredRatio": 3.0,
+        "exactRatio": 5.7074,
+        "roundedRatio": 5.71,
+        "passesExact": true,
+        "candidateForD1Approval": true
+      }
+    ],
+    "decorativeNonTextDividers": [
+      {
+        "id": "dec-line-sand",
+        "token": "oak.color.line",
+        "rgba": "rgba(18, 55, 42, 0.18)",
+        "composited8BitHex": "#BDB8A1",
+        "backgroundToken": "surface.canvas",
+        "backgroundHex": "#E3D4BB",
+        "exactRatio8BitComposite": 1.367,
+        "exactRatioFloatBlend": 1.3687,
+        "roundedRatio": 1.37,
+        "decorativeOnly": true,
+        "forbiddenForUiBordersOrFocusOrText": true,
+        "note": "1.3670:1 on sand.300; valid only for decorative hairline dividers, never for inputs, checkboxes or focus indicators."
+      },
+      {
+        "id": "dec-line-cream",
+        "token": "oak.color.line",
+        "rgba": "rgba(18, 55, 42, 0.18)",
+        "composited8BitHex": "#C3BEA9",
+        "backgroundToken": "surface.raised",
+        "backgroundHex": "#EADCC5",
+        "exactRatio8BitComposite": 1.3804,
+        "exactRatioFloatBlend": 1.3768,
+        "roundedRatio": 1.38,
+        "decorativeOnly": true,
+        "forbiddenForUiBordersOrFocusOrText": true,
+        "note": "1.3804:1 on cream.100; valid only for decorative hairline dividers."
+      }
+    ],
+    "prohibitedPairs": [
+      {
+        "id": "prohibited-orange-sand",
+        "label": "Orange/Sand",
+        "foregroundToken": "oak.color.orange.500",
+        "foregroundHex": "#FF6B35",
+        "backgroundToken": "oak.color.sand.300",
+        "backgroundHex": "#E3D4BB",
+        "exactRatio": 1.9444,
+        "roundedRatio": 1.94,
+        "source": "BRAND_UX_CONTRACT.md §4.5",
+        "rule": "Prohibited for text and meaningful icons"
+      },
+      {
+        "id": "prohibited-sky-sand",
+        "label": "Sky/Sand",
+        "foregroundToken": "oak.color.sky.400",
+        "foregroundHex": "#28B7E9",
+        "backgroundToken": "oak.color.sand.300",
+        "backgroundHex": "#E3D4BB",
+        "exactRatio": 1.593,
+        "roundedRatio": 1.59,
+        "source": "BRAND_UX_CONTRACT.md §4.5",
+        "rule": "Prohibited for text and meaningful icons"
+      },
+      {
+        "id": "prohibited-cream-orange",
+        "label": "Cream/Orange",
+        "foregroundToken": "oak.color.cream.100",
+        "foregroundHex": "#EADCC5",
+        "backgroundToken": "oak.color.orange.500",
+        "backgroundHex": "#FF6B35",
+        "exactRatio": 2.0984,
+        "roundedRatio": 2.1,
+        "source": "BRAND_UX_CONTRACT.md §4.5",
+        "rule": "Prohibited for text and meaningful icons"
+      },
+      {
+        "id": "prohibited-lime-sand",
+        "label": "Lime/Sand",
+        "foregroundToken": "oak.color.lime.400",
+        "foregroundHex": "#B7F34A",
+        "backgroundToken": "oak.color.sand.300",
+        "backgroundHex": "#E3D4BB",
+        "exactRatio": 1.1063,
+        "roundedRatio": 1.11,
+        "source": "BRAND_UX_CONTRACT.md §4.5",
+        "rule": "Prohibited for text and meaningful icons"
+      },
+      {
+        "id": "prohibited-lime-cream",
+        "label": "Lime/Cream",
+        "foregroundToken": "oak.color.lime.400",
+        "foregroundHex": "#B7F34A",
+        "backgroundToken": "oak.color.cream.100",
+        "backgroundHex": "#EADCC5",
+        "exactRatio": 1.0251,
+        "roundedRatio": 1.03,
+        "source": "BRAND_UX_CONTRACT.md §4.5",
+        "rule": "Prohibited for text and meaningful icons"
+      },
+      {
+        "id": "prohibited-orange-cream",
+        "label": "Orange/Cream",
+        "foregroundToken": "oak.color.orange.500",
+        "foregroundHex": "#FF6B35",
+        "backgroundToken": "oak.color.cream.100",
+        "backgroundHex": "#EADCC5",
+        "exactRatio": 2.0984,
+        "roundedRatio": 2.1,
+        "source": "P1-005 surface.raised audit",
+        "rule": "Prohibited for text and meaningful icons on surface.raised"
+      },
+      {
+        "id": "prohibited-sky-cream",
+        "label": "Sky/Cream",
+        "foregroundToken": "oak.color.sky.400",
+        "foregroundHex": "#28B7E9",
+        "backgroundToken": "oak.color.cream.100",
+        "backgroundHex": "#EADCC5",
+        "exactRatio": 1.7192,
+        "roundedRatio": 1.72,
+        "source": "P1-005 surface.raised audit",
+        "rule": "Prohibited for text and meaningful icons on surface.raised"
+      }
+    ]
+  }
+}
