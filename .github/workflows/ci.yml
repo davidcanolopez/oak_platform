@@ -1,0 +1,213 @@
+name: CI Baseline
+
+"on":
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  COREPACK_ENABLE_DOWNLOAD_PROMPT: "0"
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  static-and-unit:
+    name: Static Quality & Unit Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js from .nvmrc
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Enable Corepack and verify pinned runtime
+        id: pnpm-store
+        run: |
+          set -euo pipefail
+          expected_node="$(tr -d '[:space:]' < .nvmrc)"
+          actual_node="$(node -p 'process.versions.node')"
+          if [ "${actual_node}" != "${expected_node}" ]; then
+            echo "Node mismatch: expected ${expected_node}, got ${actual_node}" >&2
+            exit 1
+          fi
+          corepack enable
+          corepack pnpm --version
+          echo "store_path=$(corepack pnpm store path --silent)" >> "${GITHUB_OUTPUT}"
+
+      - name: Cache pnpm store
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: ${{ steps.pnpm-store.outputs.store_path }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies (frozen lockfile)
+        run: corepack pnpm install --frozen-lockfile
+
+      - name: Check formatting
+        run: corepack pnpm run format:check
+
+      - name: Run ESLint (zero warnings)
+        run: corepack pnpm run lint
+
+      - name: Run TypeScript typecheck
+        run: corepack pnpm run typecheck
+
+      - name: Run unit tests
+        run: corepack pnpm run test:unit
+
+      - name: Check unit coverage thresholds
+        run: corepack pnpm run test:coverage
+
+      - name: Upload static and unit reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: reports-static-and-unit-${{ github.run_id }}-${{ github.run_attempt }}
+          path: reports/**
+          retention-days: 30
+          if-no-files-found: warn
+
+  build:
+    name: Production Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js from .nvmrc
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Enable Corepack and verify pinned runtime
+        id: pnpm-store
+        run: |
+          set -euo pipefail
+          expected_node="$(tr -d '[:space:]' < .nvmrc)"
+          actual_node="$(node -p 'process.versions.node')"
+          if [ "${actual_node}" != "${expected_node}" ]; then
+            echo "Node mismatch: expected ${expected_node}, got ${actual_node}" >&2
+            exit 1
+          fi
+          corepack enable
+          corepack pnpm --version
+          echo "store_path=$(corepack pnpm store path --silent)" >> "${GITHUB_OUTPUT}"
+
+      - name: Cache pnpm store
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: ${{ steps.pnpm-store.outputs.store_path }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies (frozen lockfile)
+        run: corepack pnpm install --frozen-lockfile
+
+      - name: Build production bundle
+        run: corepack pnpm run build
+
+      - name: Upload build reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: reports-build-${{ github.run_id }}-${{ github.run_attempt }}
+          path: reports/**
+          retention-days: 30
+          if-no-files-found: warn
+
+  security:
+    name: SCA & Secret Scan (Gitleaks)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout full history for secret scanning
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Node.js from .nvmrc
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Enable Corepack and verify pinned runtime
+        id: pnpm-store
+        run: |
+          set -euo pipefail
+          expected_node="$(tr -d '[:space:]' < .nvmrc)"
+          actual_node="$(node -p 'process.versions.node')"
+          if [ "${actual_node}" != "${expected_node}" ]; then
+            echo "Node mismatch: expected ${expected_node}, got ${actual_node}" >&2
+            exit 1
+          fi
+          corepack enable
+          corepack pnpm --version
+          echo "store_path=$(corepack pnpm store path --silent)" >> "${GITHUB_OUTPUT}"
+
+      - name: Cache pnpm store
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: ${{ steps.pnpm-store.outputs.store_path }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies (frozen lockfile)
+        run: corepack pnpm install --frozen-lockfile
+
+      - name: Install pinned Gitleaks binary (v8.30.1)
+        run: |
+          set -euo pipefail
+          GITLEAKS_VERSION="8.30.1"
+          GITLEAKS_SHA256="551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb"
+          ARCHIVE="gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          TMP_DIR="$(mktemp -d)"
+          BIN_DIR="${HOME}/.local/bin"
+          mkdir -p "${BIN_DIR}"
+          curl -fsSL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/${ARCHIVE}" -o "${TMP_DIR}/${ARCHIVE}"
+          echo "${GITLEAKS_SHA256}  ${TMP_DIR}/${ARCHIVE}" | sha256sum -c -
+          tar -xzf "${TMP_DIR}/${ARCHIVE}" -C "${BIN_DIR}" gitleaks
+          chmod 755 "${BIN_DIR}/gitleaks"
+          rm -rf "${TMP_DIR}"
+          echo "${BIN_DIR}" >> "${GITHUB_PATH}"
+          "${BIN_DIR}/gitleaks" version
+
+      - name: Run SCA dependency audit
+        run: corepack pnpm run security:sca
+
+      - name: Run secret scan (secretlint, OAK rules, and mandatory Gitleaks)
+        run: |
+          set -euo pipefail
+          corepack pnpm run security:secrets
+          node --input-type=module -e 'import fs from "node:fs"; const r = JSON.parse(fs.readFileSync("reports/security/secret-scan.json", "utf8")); if (!r.gitleaks?.available || r.gitleaks?.status !== "PASS") { console.error("Mandatory CI Gitleaks check missing or failed", r.gitleaks); process.exit(1); }'
+
+      - name: Upload security reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: reports-security-${{ github.run_id }}-${{ github.run_attempt }}
+          path: reports/**
+          retention-days: 30
+          if-no-files-found: warn
