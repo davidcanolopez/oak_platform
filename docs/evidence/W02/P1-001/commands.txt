@@ -1,0 +1,102 @@
+# Comandos reproducibles ejecutados — P1-001 (sin PII ni secretos)
+
+## 1. Aislamiento de rama, copia de paquete base y materialización de alcance V1
+- `Remove-Item -LiteralPath 'docs\agentic\packets\P1-005.md' -Force` (retirado archivo untracked ajeno al paquete en el worktree aislado) -> `exit 0`
+- `git checkout -b feat/p1-001-v1-scope` (desde `master @ 7082984e639f62653f1b46af53d1399b3d04ced0`) -> `exit 0`
+- `Copy-Item -LiteralPath 'c:\Users\David\Documents\TFM_Antigravity\docs\agentic\packets\P1-001.md' -Destination 'docs\agentic\packets\P1-001.md' -Force` -> `exit 0`
+- `git rev-parse HEAD` -> `7082984e639f62653f1b46af53d1399b3d04ced0` (base SHA verificada)
+- Extracción exacta de §1 de `p1-001-af-spec.md` (`analista-funcional`) a `docs/product/V1_SCOPE_AND_EXCLUSIONS.md` y base §3 a `docs/evidence/W02/P1-001/summary.md` (UTF-8, EOL `LF`, con marcadores de SHA/PR sustituidos para handoff) -> `exit 0`
+- `corepack pnpm exec prettier --write docs/product/V1_SCOPE_AND_EXCLUSIONS.md` -> `exit 0` (`597ms`, tablas GFM alineadas)
+
+## 2. Controles documentales, no contaminación y SHA-256 de `sites/**` (tras la última edición)
+Comando reproducible (Python 3, lectura UTF-8):
+```powershell
+@'
+import hashlib, re
+from pathlib import Path
+
+req_text = Path("docs/agentic/REQUIREMENTS_BASELINE.md").read_text(encoding="utf-8")
+v1_text = Path("docs/product/V1_SCOPE_AND_EXCLUSIONS.md").read_text(encoding="utf-8")
+
+expected_acs = sorted(set(re.findall(r"\bAC-J\d{2}-\d{2}\b", req_text)))
+expected_nfrs = sorted(set(re.findall(r"\bNFR-\d{2}\b", req_text)))
+found_acs = sorted(set(re.findall(r"\bAC-J\d{2}-\d{2}\b", v1_text)))
+found_nfrs = sorted(set(re.findall(r"\bNFR-\d{2}\b", v1_text)))
+
+assert len(expected_acs) == 44 and expected_acs == found_acs
+assert len(expected_nfrs) == 9 and expected_nfrs == found_nfrs
+
+banned = [
+    "david cano",
+    "trail del robledal",
+    "pedales de guadarrama",
+    "10k madrid rio",
+    "sierra norte trail",
+    "oak.run",
+    "explorer",
+    "pathfinder",
+]
+v1_lines = v1_text.splitlines()
+s53_start = next(i for i, l in enumerate(v1_lines) if l.startswith("### 5.3 "))
+s6_start = next(i for i, l in enumerate(v1_lines) if l.startswith("## 6. "))
+outside_53 = "\n".join(v1_lines[:s53_start] + v1_lines[s6_start:]).lower()
+inside_53 = "\n".join(v1_lines[s53_start:s6_start]).lower()
+
+assert not any(t in outside_53 for t in banned)
+assert all(t in inside_53 for t in banned)
+
+email_re = re.compile(r"(?<![/\w.-])[A-Za-z0-9._%+-]+@(?!\d+\.\d+)[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b")
+allowed = [
+    "docs/product/V1_SCOPE_AND_EXCLUSIONS.md",
+    "docs/agentic/packets/P1-001.md",
+    "docs/evidence/W02/P1-001/summary.md",
+    "docs/evidence/W02/P1-001/commands.txt",
+    "docs/evidence/W02/P1-001/approvals.md",
+]
+for f in allowed:
+    raw = Path(f).read_bytes()
+    assert b"\r\n" not in raw, f"CRLF in {f}"
+    txt = raw.decode("utf-8")
+    assert all(m.lower().endswith(".invalid") for m in email_re.findall(txt))
+
+manifest_lines = Path("docs/evidence/W01/P0-001/sha256-sites.txt").read_text(encoding="utf-8").splitlines()
+matches = 0
+for line in manifest_lines:
+    if not line.startswith("MATCH"):
+        continue
+    _, exp_hash, exp_size, rel_path = line.split()
+    data = Path(rel_path).read_bytes()
+    assert hashlib.sha256(data).hexdigest().lower() == exp_hash.lower()
+    assert len(data) == int(exp_size)
+    matches += 1
+assert matches == 19
+print(f"PASS AC={len(found_acs)}/44 NFR={len(found_nfrs)}/9 banned_outside_5_3=0 banned_in_5_3=8/8 non_invalid_emails=0 sites_sha256={matches}/19 crlf=0")
+'@ | python -
+```
+Salida esperada y verificada (`exit 0`):
+```text
+PASS AC=44/44 NFR=9/9 banned_outside_5_3=0 banned_in_5_3=8/8 non_invalid_emails=0 sites_sha256=19/19 crlf=0
+```
+
+## 3. Los 9 checks locales base (equivalentes G1) tras la última edición (`exit 0`, `0` warnings, `0` skips)
+- `corepack pnpm install --frozen-lockfile` -> `exit 0` (`+1074 packages`, `Lockfile is up to date`, `pnpm v10.34.9`)
+- `corepack pnpm run format:check` -> `exit 0` (`reports/static/prettier.log`: `All matched files use Prettier code style!`)
+- `corepack pnpm run lint` -> `exit 0` (`reports/static/eslint.json`: `18` archivos, `0` errors, `0` warnings)
+- `corepack pnpm run typecheck` -> `exit 0` (`reports/static/tsc.log`: `tsc --noEmit` `0` errors)
+- `corepack pnpm run test:unit` -> `exit 0` (`reports/unit/junit.xml`: `4` files passed, `26/26` tests passed, `0` failed, `0` skipped)
+- `corepack pnpm run test:coverage` -> `exit 0` (`reports/coverage/coverage-summary.json`: `src/` `100 %` lines `37/37`, stmts `38/38`, funcs `9/9`, branches `23/23`)
+- `corepack pnpm run build` -> `exit 0` (`reports/build/next-build.log`: Next.js `16.4.6` Turbopack, rutas `/`, `/_not-found`, `/api/health`)
+- `corepack pnpm run security:sca` -> `exit 0` (`reports/security/sca-audit.json`: `1301` deps, `high=0, critical=0, moderate=4, low=0`)
+- `corepack pnpm run security:secrets` -> `exit 0` (`reports/security/secret-scan.json`: `files=150`, `secretlintFindingsCount=0`, `oakFindingsCount=0`, `gitleaks=NOT_INSTALLED_IN_LOCAL_PATH`)
+
+## 4. Control de alcance, commit limpio, push y PR hacia `master` (sin fusionar)
+- `git status --short` (previo al stage) -> únicamente los `5` `allowed_paths` (`0` cambios fuera de alcance)
+- `git add docs/product/V1_SCOPE_AND_EXCLUSIONS.md docs/agentic/packets/P1-001.md docs/evidence/W02/P1-001/summary.md docs/evidence/W02/P1-001/commands.txt docs/evidence/W02/P1-001/approvals.md` -> `exit 0`
+- `git diff --cached --name-only` -> exactamente los `5` `allowed_paths` de `P1-001`
+- `git commit -m "docs(P1-001): freeze V1 scope, exclusions, metrics and D0 assumptions"` -> `exit 0`
+- `git status --short` (post-commit) -> salida vacía (`exit 0`)
+- `git rev-parse HEAD` -> SHA completo del `candidate_sha` reportado en handoff
+- `git push -u origin feat/p1-001-v1-scope` -> `exit 0`
+- `$env:PATH = "C:\Program Files\GitHub CLI;$env:PATH"`
+- `gh pr create --base master --head feat/p1-001-v1-scope --title "docs(P1-001): freeze V1 scope, exclusions, metrics and D0 assumptions" --body "..."` -> URL y número de PR reportados en handoff (sin fusionar)
+- `gh pr checks --watch` -> `3/3` checks requeridos en `PASS` (`Static Quality & Unit Tests`, `Production Build`, `SCA & Secret Scan (Gitleaks)`) y Run ID reportados en handoff
