@@ -1,7 +1,7 @@
 # Tablero de Tareas y Ruta Crítica — OAK
 
-**Task origen:** `P0-002` | **Última sincronización Fase 0:** `19e7ebb7b76b983e720e1de156ba4c84a062e2ef` (merge `P0-005` vía PR `#2`) | **Total tareas:** `114` (`113` de `MASTER_EXECUTION_PLAN.md` §12 + `P0-011` añadida para requisito #14 de `QUALITY_GATES.md` §6 `G0`)  
-**Estado de Gates:** `G0 = INVALIDATED` (reapertura formal en curso tras `P0-005 ACEPTADA` en `b63794b` / merge `19e7ebb` y run `44809813044` en `master`) | **`D0 = APPROVED` (`2026-11-20`, con `Favoritos` incluido en V1; Fase 1 espera cierre `G0`)**
+**Task origen:** `P0-002` | **Última sincronización Fase 0:** `eed35e4dba9a214d88cbe0666649ba3eac29f19c` (merge `P0-010` Ronda 2 vía PR `#4`, CI run `44814396195` `PASS`) | **Total tareas:** `114` (`113` de `MASTER_EXECUTION_PLAN.md` §12 + `P0-011` añadida para requisito #14 de `QUALITY_GATES.md` §6 `G0`)  
+**Estado de Gates:** `G0 = PASS` (`14/14` requisitos y `11/11` tareas de Fase 0 en `ACEPTADA`; nota de cuenta GitHub única en `docs/ops/CI_CD.md` §5) | **`D0 = APPROVED` (`2026-11-20`, con `Favoritos` incluido en V1; Fase 1 habilitada)** | **`D1 = PENDING USER VALIDATION`**
 
 ## 1. Reglas operativas y desviaciones declaradas respecto a `MASTER_EXECUTION_PLAN.md` §12
 
@@ -24,8 +24,8 @@ Cadena de dependencias más larga (54 nodos hacia `P8-011`):
 - **Ola 1 (`ACEPTADA`):** `P0-002` (`bd3cf59b9f228dffa9c8be66eb4e624723e995b9`), `P0-003` (`1a041b8288c6900fdc285d5e1a4da1cc91d556a9`), `P0-006` (`133fd75e42e24858b9ad60a1f9d5351f01bbcb3c`), `P0-007` (`224a30aac6d366525c2ef2167f67a6c17b01cf9d`)
 - **Ola 2 (`ACEPTADA`):** `P0-004` (`0ead1fafcdc9dc0f692c62f47af4a5713f827e5a`), `P0-008` (`84a96301a11b239646d33e148ab3fc66b2aa0a18`), `P0-011` (`470ed338a9836667228e0affac58e430474422`)
 - **Ola 3 (`ACEPTADA`):** `P0-009` (`c7e7295a0979ac06ba259613069bb5c89121738b`, merge `013314a`), `P0-005` (`b63794bd002363d4ca511eeb84cc2e602489ec07`, PR `#2` / merge `19e7ebb`, CI `push` run `44809813044` `PASS`)
-- **Ola 4 (`INVALIDATED` -> reapertura `P0-010` Ronda 2):** evaluación previa en `69cfd195cdbf2afd2cc16daf483e62f841332cc3` invalidada por incorporación de remoto GitHub, Branch Protection en `master`, workflow `.github/workflows/ci.yml` y `.gitleaksignore` (`QUALITY_GATES.md` §8); lista para re-auditoría integral `G0`.
-- **Backlog menor `P3` no bloqueante registrado en Fase 0:** `P0-010` (`P3-01` campos `name`/`format` en `gate-manifest.json artifacts[]`, `P3-02` numeración editorial `AC-05` en `delivery_report` de `P0-010.md`). *(Resuelto en `b63794b`: `P0-005` `summary.md` L14/L22.)*
+- **Ola 4 (`ACEPTADA` — `G0 = PASS`):** `P0-010` (`cf658044854126689841190788dfcc83e671cf68`, PR `#4` / merge `eed35e4`, CI `push` run `44814396195` `PASS`, `PEER_REVIEW PASS` `auditor-no-funcional`, `14/14` requisitos `G0 = PASS`).
+- **Backlog menor `P3` no bloqueante registrado en Fase 0:** `0` defectos `P0/P1/P2/P3` abiertos (`P3-01` y `P3-02` de Ronda 1 cerrados en `cf658044`; `P0-005` `summary.md` resuelto en `b63794b`). Queda registrada la acción operativa de elevar `required_approving_review_count >= 1` y `require_code_owner_reviews: true` en GitHub al incorporar un segundo colaborador humano (`docs/ops/CI_CD.md` §5).
 
 ## 3. Inventario completo de tareas
 
@@ -43,7 +43,7 @@ Cadena de dependencias más larga (54 nodos hacia `P8-011`):
 | `P0-008` | `ACEPTADA` (`84a9630`) | `Ola 2` | `orquestador-oak` (SUP) | `qa-e2e` | P0-002, P0-006, P0-007 | Publicar DoR, DoD, plantilla de evidencia y protocolo de excepciones | G0 |
 | `P0-009` | `ACEPTADA` (`c7e7295`) | `Ola 3` | `backend-datos` (BE) | `arquitecto-seguridad, qa-e2e` | P0-003, P0-004, P0-006 | Definir dataset sintético y cuentas demo sin PII real | G0 |
 | `P0-011` | `ACEPTADA` (`470ed33`) | `Ola 2` | `ux-brand` (BRUX (adición Fase 0 req. #14)) | `auditor-no-funcional` | P0-001 | Formalizar baseline de referencias de marca y criterios UX accesibles para G0 (Req. #14) | G0 |
-| `P0-010` | `INVALIDATED` (reapertura `G0` Ronda 2) | `Ola 4` | `release-guardian` (RG) | `auditor-no-funcional` | P0-001, P0-002, P0-003, P0-004, P0-005, P0-006, P0-007, P0-008, P0-009, P0-011 | Auditar y decidir G0 | G0 |
+| `P0-010` | `ACEPTADA` (`cf65804` / PR `#4` `eed35e4`; `G0 = PASS`) | `Ola 4` | `release-guardian` (RG) | `auditor-no-funcional` | P0-001, P0-002, P0-003, P0-004, P0-005, P0-006, P0-007, P0-008, P0-009, P0-011 | Auditar y decidir G0 | G0 |
 
 ### Fase 1. Contrato de producto, marca y arquitectura
 
