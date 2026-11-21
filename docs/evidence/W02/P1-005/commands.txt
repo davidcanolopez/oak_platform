@@ -1,0 +1,26 @@
+# Comandos reproducibles ejecutados en P1-005 (sin PII ni secretos)
+
+## 1. Preparación de rama aislada y verificación inicial
+- `git checkout -b feat/p1-005-canonical-tokens` (desde `master @ 7082984e639f62653f1b46af53d1399b3d04ced0`) -> exit 0
+- `Remove-Item -Force docs/agentic/packets/P1-001.md` (retirado archivo untracked ajeno en worktree aislado) -> exit 0
+- `Copy-Item -Force "C:\Users\David\Documents\TFM_Antigravity\docs\agentic\packets\P1-005.md" "docs/agentic/packets/P1-005.md"` -> exit 0
+- `corepack pnpm install --frozen-lockfile` -> exit 0 (`+1074 packages`, `pnpm@10.34.9`, Node `v24.16.0`)
+
+## 2. Los 9 checks locales base (equivalentes G1) e inmutabilidad `sites/**` tras la última edición (todos exit 0)
+- `corepack pnpm install --frozen-lockfile` -> exit 0 (`Lockfile is up to date, resolution step is skipped`, `pnpm@10.34.9`)
+- `corepack pnpm run format:check` -> exit 0 (`All matched files use Prettier code style!`, `reports/static/prettier.log`)
+- `corepack pnpm exec prettier --check --ignore-path .gitignore docs/brand/tokens.oak.v1.json docs/brand/CANONICAL_TOKENS_AND_CONTRAST.md docs/brand/CONTRAST_MATRIX.md tests/unit/brand-tokens.test.ts` -> exit 0 (`All matched files use Prettier code style!`)
+- `corepack pnpm run lint` -> exit 0 (`19` files, `0` errors, `0` warnings; `tests/unit/brand-tokens.test.ts` `0` errors / `0` warnings con `security`, `@microsoft/sdl` y `jsx-a11y`, `reports/static/eslint.json`)
+- `corepack pnpm run typecheck` -> exit 0 (`tsc --noEmit` `0` errors, `reports/static/tsc.log`)
+- `corepack pnpm run test:unit` -> exit 0 (`5` test files passed, `32/32` tests passed, `0` failed, `0` skipped; `tests/unit/brand-tokens.test.ts` `6/6 PASS`, `reports/unit/junit.xml`)
+- `corepack pnpm run test:coverage` -> exit 0 (`5` files, `32/32` passed; `src/` `100 %` Stmts `38/38`, `100 %` Branch `23/23`, `100 %` Funcs `9/9`, `100 %` Lines `37/37`, `reports/coverage/coverage-summary.json`)
+- `corepack pnpm run build` -> exit 0 (`Next.js 16.4.6 (Turbopack)`, rutas `/`, `/_not-found`, `/api/health`, `reports/build/next-build.log`)
+- `corepack pnpm run security:sca` -> exit 0 (`[SCA] PASS (high=0, critical=0, moderate=4, low=0)`, `1301` deps, `reports/security/sca-audit.json`)
+- `corepack pnpm run security:secrets` -> exit 0 (`[SECRET_SCAN] PASS (files=153, findings=0, gitleaks=NOT_INSTALLED_IN_LOCAL_PATH)`, `reports/security/secret-scan.json`)
+- Verificación SHA-256 contra `docs/evidence/W01/P0-001/sha256-sites.txt` -> exit 0 (`sites/** SHA-256 verification: 19/19 MATCH`)
+- Verificación EOL `LF`, ausencia de datos mock prohibidos y alcance exclusivo `allowed_paths` (`git status --short` vacío tras commit, `git diff --name-only 7082984e639f62653f1b46af53d1399b3d04ced0..HEAD`) -> exit 0
+
+## 3. Publicación de rama y verificación en PR CI hacia `master` (sin fusionar)
+- `git push -u origin feat/p1-005-canonical-tokens` -> exit 0
+- `gh pr create --base master --head feat/p1-005-canonical-tokens ...` -> URL/número de PR y estado `3/3` checks en GitHub Actions (`Static Quality & Unit Tests`, `Production Build`, `SCA & Secret Scan (Gitleaks)`) confirmados en verde e informados en el handoff.
+
