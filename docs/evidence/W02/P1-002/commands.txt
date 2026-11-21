@@ -1,0 +1,122 @@
+# Comandos reproducibles ejecutados — P1-002 (sin PII ni secretos)
+
+## 1. Aislamiento de rama, limpieza de worktree y materialización documental
+- `Remove-Item -LiteralPath 'docs\agentic\packets\P1-004.md' -Force` (retirada copia untracked ajena en el worktree aislado) -> `exit 0`
+- `git checkout -b feat/p1-002-personas-data-catalog 1a22dacb468d141d0e0707540be2d02abda743df` -> `exit 0`
+- `git rev-parse HEAD` -> `1a22dacb468d141d0e0707540be2d02abda743df` (base SHA verificada)
+- Materialización íntegra de `docs/product/PERSONAS_AND_DATA_CATALOG.md` desde el borrador de `analista-funcional` (UTF-8 sin BOM, EOL `LF`), redacción de `docs/evidence/W02/P1-002/{summary.md,approvals.md,commands.txt}` y actualización de `docs/agentic/packets/P1-002.md` (`status: "PEER_REVIEW"`, §§12–13) -> `exit 0`
+- `corepack pnpm exec prettier --write --ignore-path .gitignore docs/product/PERSONAS_AND_DATA_CATALOG.md` -> `exit 0`
+- `corepack pnpm exec prettier --check --ignore-path .gitignore docs/product/PERSONAS_AND_DATA_CATALOG.md` -> `exit 0` (`All matched files use Prettier code style!`)
+
+## 2. Controles documentales, no contaminación y SHA-256 de `sites/**` (tras la última edición)
+Comando reproducible (Python 3, lectura UTF-8):
+```powershell
+@'
+import hashlib, re, unicodedata
+from pathlib import Path
+
+def norm(text: str) -> str:
+    return "".join(
+        ch for ch in unicodedata.normalize("NFD", text)
+        if unicodedata.category(ch) != "Mn"
+    ).lower()
+
+req_text = Path("docs/agentic/REQUIREMENTS_BASELINE.md").read_text(encoding="utf-8")
+doc_text = Path("docs/product/PERSONAS_AND_DATA_CATALOG.md").read_text(encoding="utf-8")
+
+expected_acs = sorted(set(re.findall(r"\bAC-J\d{2}-\d{2}\b", req_text)))
+expected_nfrs = sorted(set(re.findall(r"\bNFR-\d{2}\b", req_text)))
+found_acs = sorted(set(re.findall(r"\bAC-J\d{2}-\d{2}\b", doc_text)))
+found_nfrs = sorted(set(re.findall(r"\bNFR-\d{2}\b", doc_text)))
+
+assert len(expected_acs) == 44 and expected_acs == found_acs
+assert len(expected_nfrs) == 9 and expected_nfrs == found_nfrs
+
+entities = [
+    "User", "AthleteProfile", "ConsentRecord", "Organization", "OrganizationMembership",
+    "Event", "EventModality", "PriceTier", "EventMedia", "Favourite",
+    "Registration", "RegistrationParticipant", "Payment", "PaymentWebhookEvent",
+    "CommunicationLog", "AuditLog"
+]
+assert all(re.search(rf"\b{re.escape(e)}\b", doc_text) for e in entities)
+
+classes = [
+    "N1 Pública", "N2 Interna", "N3 Confidencial", "N4 PII", "N5 Financiera/Pago", "N6 Secreto"
+]
+assert all(c in doc_text for c in classes)
+
+d1_09_count = doc_text.count("blocked_by_D1_09")
+hipotesis_count = doc_text.count("HIPOTESIS_DE_PRODUCTO")
+assert d1_09_count > 0 and hipotesis_count > 0
+
+schema_text = Path("data/fixtures/schema.ts").read_text(encoding="utf-8")
+m = re.search(r"BANNED_DECK_TERMS\s*=\s*\[(.*?)\]\s*as const", schema_text, re.S)
+banned = re.findall(r'"([^"]+)"', m.group(1))
+assert len(banned) == 8
+
+email_re = re.compile(r"(?<![/\w.-])[A-Za-z0-9._%+-]+@(?!\d+\.\d+)[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b")
+allowed = [
+    "docs/product/PERSONAS_AND_DATA_CATALOG.md",
+    "docs/agentic/packets/P1-002.md",
+    "docs/evidence/W02/P1-002/summary.md",
+    "docs/evidence/W02/P1-002/commands.txt",
+    "docs/evidence/W02/P1-002/approvals.md",
+]
+for f in allowed:
+    raw = Path(f).read_bytes()
+    assert b"\r\n" not in raw, f"CRLF in {f}"
+    assert not raw.startswith(b"\xef\xbb\xbf"), f"BOM in {f}"
+    txt = raw.decode("utf-8")
+    assert all(mail.lower().endswith(".invalid") for mail in email_re.findall(txt)), f"Non-.invalid email in {f}"
+    norm_txt = norm(txt)
+    assert not any(term in norm_txt for term in banned), f"Banned term in {f}"
+
+packet_txt = Path("docs/agentic/packets/P1-002.md").read_text(encoding="utf-8")
+assert 'status: "PEER_REVIEW"' in packet_txt
+assert "COMPLETAR_" not in packet_txt
+summary_txt = Path("docs/evidence/W02/P1-002/summary.md").read_text(encoding="utf-8")
+assert "COMPLETAR_" not in summary_txt and "PENDIENTE_MATERIALIZACION" not in summary_txt
+
+manifest_lines = Path("docs/evidence/W01/P0-001/sha256-sites.txt").read_text(encoding="utf-8").splitlines()
+matches = 0
+for line in manifest_lines:
+    if not line.startswith("MATCH"):
+        continue
+    _, exp_hash, exp_size, rel_path = line.split()
+    data = Path(rel_path).read_bytes()
+    assert hashlib.sha256(data).hexdigest().lower() == exp_hash.lower()
+    assert len(data) == int(exp_size)
+    matches += 1
+assert matches == 19
+
+print(f"PASS entities=16/16 classes=6/6 AC={len(found_acs)}/44 NFR={len(found_nfrs)}/9 d1_09={d1_09_count} hipotesis={hipotesis_count} non_invalid_emails=0 banned_terms=0 sites_sha256={matches}/19 crlf=0")
+'@ | python -
+```
+Salida verificada (`exit 0`):
+```text
+PASS entities=16/16 classes=6/6 AC=44/44 NFR=9/9 d1_09=7 hipotesis=9 non_invalid_emails=0 banned_terms=0 sites_sha256=19/19 crlf=0
+```
+
+## 3. Los 9 checks locales base (equivalentes G1) tras la última edición documental (`exit 0`, `0` warnings, `0` skips)
+- `corepack pnpm install --frozen-lockfile` -> `exit 0` (`Lockfile is up to date, resolution step is skipped` / `+1074 packages`, `pnpm v10.34.9`, `pnpm-lock.yaml`)
+- `corepack pnpm run format:check` -> `exit 0` (`reports/static/prettier.log`: `All matched files use Prettier code style!`) + `corepack pnpm exec prettier --check --ignore-path .gitignore docs/product/PERSONAS_AND_DATA_CATALOG.md` -> `exit 0`
+- `corepack pnpm run lint` -> `exit 0` (`reports/static/eslint.json`: `19` archivos, `0` errors, `0` warnings)
+- `corepack pnpm run typecheck` -> `exit 0` (`reports/static/tsc.log`: `tsc --noEmit` `0` errors)
+- `corepack pnpm run test:unit` -> `exit 0` (`reports/unit/junit.xml`: `5` test files passed, `32/32` tests passed, `0` failed, `0` skipped)
+- `corepack pnpm run test:coverage` -> `exit 0` (`reports/coverage/coverage-summary.json`: `src/` `100 %` lines `37/37`, stmts `38/38`, funcs `9/9`, branches `23/23`)
+- `corepack pnpm run build` -> `exit 0` (`reports/build/next-build.log`: Next.js `16.4.6` Turbopack, rutas `/`, `/_not-found`, `/api/health`)
+- `corepack pnpm run security:sca` -> `exit 0` (`reports/security/sca-audit.json`: `1301` deps, `high=0, critical=0, moderate=4, low=0`)
+- `corepack pnpm run security:secrets` -> `exit 0` (`reports/security/secret-scan.json`: `files=163`, `secretlintFindingsCount=0`, `oakFindingsCount=0`, `gitleaks=NOT_INSTALLED_IN_LOCAL_PATH`)
+
+## 4. Control de alcance, commit limpio, push y PR hacia `master` (sin fusionar)
+- `git status --short` (previo al stage) -> únicamente los `5` `allowed_paths` (`0` cambios fuera de alcance)
+- `git add docs/product/PERSONAS_AND_DATA_CATALOG.md docs/agentic/packets/P1-002.md docs/evidence/W02/P1-002/summary.md docs/evidence/W02/P1-002/commands.txt docs/evidence/W02/P1-002/approvals.md` -> `exit 0`
+- `git diff --cached --name-only` -> exactamente los `5` `allowed_paths` de `P1-002`
+- `git commit -m "docs(P1-002): define V1 personas, edge cases and logical data catalog"` -> `exit 0`
+- `git status --short` (post-commit) -> salida vacía (`exit 0`)
+- `git diff --name-only origin/master..HEAD` -> exclusivamente los `5` `allowed_paths` (`exit 0`)
+- `git rev-parse HEAD` -> SHA completo del `candidate_sha` reportado en handoff
+- `git push -u origin feat/p1-002-personas-data-catalog` -> `exit 0`
+- `$env:PATH = "C:\Program Files\GitHub CLI;$env:PATH"`
+- `gh pr create --base master --head feat/p1-002-personas-data-catalog --title "docs(P1-002): define V1 personas, edge cases and logical data catalog" --body "..."` -> URL y número de PR reportados en handoff (sin fusionar)
+- `gh pr checks --watch` -> `3/3` checks requeridos en `PASS` (`Static Quality & Unit Tests`, `Production Build`, `SCA & Secret Scan (Gitleaks)`) y Run ID reportados en handoff
