@@ -283,8 +283,8 @@ Toda redirección posterior a `/entrar` o `/registro` se valida **en servidor** 
    - Rutas de bucle o endpoints técnicos (`/entrar`, `/registro`, `/recuperar-acceso`, `/api/**`).
    - Parámetros query que contengan PII o credenciales (`email`, `dni`, `phone`, `token`).
 4. **Ejemplo conforme de preservación de filtros + Favoritos (`AC-J02-04`):**
-   - Ruta origen: `/explorar?disciplina=trail&municipio=buitrago-del-lozoya&nivel=MEDIO` tras pulsar `Guardar reto` sobre el evento `20000000-0000-4000-8000-000000000001` (`trail-puentes-viejas-lozoya`).
-   - Redirección a login: `/entrar?returnTo=%2Fexplorar%3Fdisciplina%3Dtrail%26municipio%3Dbuitrago-del-lozoya%26nivel%3DMEDIO%26intent%3Dfav%26eventId%3D20000000-0000-4000-8000-000000000001`.
+   - Ruta origen: `/explorar?disciplina=trail&municipio=buitrago-del-lozoya&nivel=MEDIO` tras pulsar `Guardar reto` sobre el evento `40000000-0000-4000-8000-000000000001` (`trail-puentes-viejas-lozoya`).
+   - Redirección a login: `/entrar?returnTo=%2Fexplorar%3Fdisciplina%3Dtrail%26municipio%3Dbuitrago-del-lozoya%26nivel%3DMEDIO%26intent%3Dfav%26eventId%3D40000000-0000-4000-8000-000000000001`.
    - Tras iniciar sesión, se aplica de forma idempotente el guardado en `Favourite` y el usuario aterriza en `/explorar?disciplina=trail&municipio=buitrago-del-lozoya&nivel=MEDIO` con confirmación accesible visible (`Reto guardado en Favoritos`) y los tres filtros intactos.
 
 ---
