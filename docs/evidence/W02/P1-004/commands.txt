@@ -1,0 +1,122 @@
+# Comandos reproducibles ejecutados — P1-004 (sin PII ni secretos)
+
+## 1. Aislamiento de rama, limpieza de copias ajenas y redacción de IA/nomenclatura
+- `git checkout -b feat/p1-004-ia-nomenclature db0bfd9499cb32817e1b7a19fb2a76859a520f38` -> `exit 0`
+- `Remove-Item -LiteralPath 'docs\agentic\packets\P1-002.md','docs\agentic\packets\P1-005.md' -Force` (retiradas copias untracked ajenas únicamente dentro del worktree aislado) -> `exit 0`
+- `git rev-parse HEAD` -> `db0bfd9499cb32817e1b7a19fb2a76859a520f38` (base SHA verificada)
+- Redacción de `docs/brand/INFORMATION_ARCHITECTURE_AND_ROUTES.md` (UTF-8 sin BOM, EOL `LF`) y evidencias `docs/evidence/W02/P1-004/{summary.md,approvals.md,commands.txt}` -> `exit 0`
+- `corepack pnpm exec prettier --write --ignore-path .gitignore docs/brand/INFORMATION_ARCHITECTURE_AND_ROUTES.md docs/evidence/W02/P1-004/summary.md docs/evidence/W02/P1-004/approvals.md` -> `exit 0`
+- `corepack pnpm exec prettier --check --ignore-path .gitignore docs/brand/INFORMATION_ARCHITECTURE_AND_ROUTES.md docs/evidence/W02/P1-004/summary.md docs/evidence/W02/P1-004/approvals.md` -> `exit 0` (`All matched files use Prettier code style!`)
+
+## 2. Verificación automatizada read-only de rutas, exclusiones `D0`, `PENDING_D1_APPROVAL`, términos prohibidos y `sites/**`
+1) Verificación Node/TSX con `assertNoBannedMockData()` (`data/fixtures/schema.ts`) sobre los 5 `allowed_paths`:
+```powershell
+@'
+import fs from "node:fs";
+import { assertNoBannedMockData } from "./data/fixtures/schema.ts";
+
+for (const p of [
+  "docs/brand/INFORMATION_ARCHITECTURE_AND_ROUTES.md",
+  "docs/agentic/packets/P1-004.md",
+  "docs/evidence/W02/P1-004/summary.md",
+  "docs/evidence/W02/P1-004/commands.txt",
+  "docs/evidence/W02/P1-004/approvals.md",
+]) {
+  assertNoBannedMockData(fs.readFileSync(p, "utf8"));
+}
+console.log("PASS assertNoBannedMockData=0_findings_across_5_allowed_paths");
+'@ | corepack pnpm exec tsx -
+```
+Salida esperada y verificada (`exit 0`):
+```text
+PASS assertNoBannedMockData=0_findings_across_5_allowed_paths
+```
+
+2) Verificación Python read-only (rutas completas, `Favoritos` `AC-J02-04`, retirada de mapa/dorsal, `PENDING_D1_APPROVAL` para `D1-06`..`D1-11`, `0` encabezados mixtos activos, `0` glifos Unicode nav, `0` emails fuera de `.invalid`, `0` CRLF/BOM y `19/19 MATCH` SHA-256 en `sites/**`):
+```powershell
+@'
+import hashlib, re
+from pathlib import Path
+
+allowed = [
+    "docs/brand/INFORMATION_ARCHITECTURE_AND_ROUTES.md",
+    "docs/agentic/packets/P1-004.md",
+    "docs/evidence/W02/P1-004/summary.md",
+    "docs/evidence/W02/P1-004/commands.txt",
+    "docs/evidence/W02/P1-004/approvals.md",
+]
+email_re = re.compile(r"(?<![/\w.-])[A-Za-z0-9._%+-]+@(?!\d+\.\d+)[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b")
+
+for f in allowed:
+    raw = Path(f).read_bytes()
+    assert not raw.startswith(b"\xef\xbb\xbf"), f"BOM in {f}"
+    assert b"\r\n" not in raw, f"CRLF in {f}"
+    txt = raw.decode("utf-8")
+    for m in email_re.findall(txt):
+        assert m.lower().endswith(".invalid"), f"Non-.invalid email in {f}: {m}"
+
+ia_text = Path("docs/brand/INFORMATION_ARCHITECTURE_AND_ROUTES.md").read_text(encoding="utf-8")
+required_routes = [
+    "`/`", "`/explorar`", "`/retos/:eventSlug`",
+    "`/entrar`", "`/registro`", "`/recuperar-acceso`", "`/pro/invitacion`",
+    "`/inscripciones/:eventId/modalidad`", "`/inscripciones/:eventId/datos`",
+    "`/inscripciones/:eventId/revision`", "`/inscripciones/:eventId/pago`",
+    "`/inscripciones/:eventId/resultado`",
+    "`/mis-retos`", "`/mis-retos/favoritos`", "`/trayectoria`", "`/perfil`",
+    "`/pro`", "`/pro/eventos`", "`/pro/eventos/nuevo`", "`/pro/eventos/:eventId`",
+    "`/pro/eventos/:eventId/participantes`", "`/pro/eventos/:eventId/comunicaciones`",
+    "`/pro/eventos/:eventId/analitica`", "`/soporte`"
+]
+assert all(r in ia_text for r in required_routes)
+assert "Favoritos" in ia_text and "AC-J02-04" in ia_text
+assert "PENDING_D1_APPROVAL" in ia_text
+assert all(d1 in ia_text for d1 in ["D1-06", "D1-07", "D1-08", "D1-09", "D1-10", "D1-11"])
+
+headings = [line for line in ia_text.splitlines() if line.lstrip().startswith("#")]
+mixed_terms = ["decision page", "conversion flow", "athlete home", "b2b workspace", "north star", "core journey"]
+assert not any(mt in h.lower() for h in headings for mt in mixed_terms)
+
+for g in ["\u2302", "\u2315", "\u25c9", "\u25ce", "\u2699", "\u2661", "\u25eb", "\u2301", "\u2192", "\u2190", "\u2197"]:
+    assert g not in ia_text
+
+manifest_lines = Path("docs/evidence/W01/P0-001/sha256-sites.txt").read_text(encoding="utf-8").splitlines()
+matches = 0
+for line in manifest_lines:
+    if not line.startswith("MATCH"):
+        continue
+    _, exp_hash, exp_size, rel_path = line.split()
+    data = Path(rel_path).read_bytes()
+    assert hashlib.sha256(data).hexdigest().lower() == exp_hash.lower()
+    assert len(data) == int(exp_size)
+    matches += 1
+assert matches == 19
+print(f"PASS routes=24/24 headings={len(headings)} mixed_headings=0 unicode_glyphs=0 non_invalid_emails=0 sites_sha256={matches}/19 crlf=0 bom=0")
+'@ | python -
+```
+Salida esperada y verificada (`exit 0`):
+```text
+PASS routes=24/24 headings=34 mixed_headings=0 unicode_glyphs=0 non_invalid_emails=0 sites_sha256=19/19 crlf=0 bom=0
+```
+
+## 3. Los 9 checks locales base tras la última edición (`exit 0`, `0` warnings, `0` skips)
+- `corepack pnpm install --frozen-lockfile` -> `exit 0` (`+1074 packages`, `Lockfile is up to date`, `pnpm v10.34.9`)
+- `corepack pnpm run format:check` -> `exit 0` (`reports/static/prettier.log`: `All matched files use Prettier code style!`)
+- `corepack pnpm run lint` -> `exit 0` (`reports/static/eslint.json`: `18` archivos, `0` errors, `0` warnings)
+- `corepack pnpm run typecheck` -> `exit 0` (`reports/static/tsc.log`: `tsc --noEmit` `0` errors)
+- `corepack pnpm run test:unit` -> `exit 0` (`reports/unit/junit.xml`: `4` files passed, `26/26` tests passed, `0` failed, `0` skipped)
+- `corepack pnpm run test:coverage` -> `exit 0` (`reports/coverage/coverage-summary.json`: `src/` `100 %` lines `37/37`, stmts `38/38`, funcs `9/9`, branches `23/23`)
+- `corepack pnpm run build` -> `exit 0` (`reports/build/next-build.log`: Next.js `16.4.6` Turbopack, rutas `/`, `/_not-found`, `/api/health`)
+- `corepack pnpm run security:sca` -> `exit 0` (`reports/security/sca-audit.json`: `high=0, critical=0, moderate=4, low=0`)
+- `corepack pnpm run security:secrets` -> `exit 0` (`reports/security/secret-scan.json`: `files=155`, `secretlintFindingsCount=0`, `oakFindingsCount=0`, `gitleaks=NOT_INSTALLED_IN_LOCAL_PATH`)
+
+## 4. Control de alcance, commit limpio, push y PR hacia `master` (sin fusionar)
+- `git status --short` (previo al stage) -> únicamente los `5` `allowed_paths` (`0` cambios fuera de alcance)
+- `git add docs/brand/INFORMATION_ARCHITECTURE_AND_ROUTES.md docs/agentic/packets/P1-004.md docs/evidence/W02/P1-004/summary.md docs/evidence/W02/P1-004/commands.txt docs/evidence/W02/P1-004/approvals.md` -> `exit 0`
+- `git diff --cached --name-only` -> exactamente los `5` `allowed_paths` de `P1-004`
+- `git commit -m "docs(P1-004): unify V1 information architecture, routes and es-ES nomenclature"` -> `exit 0`
+- `git status --short` (post-commit) -> salida vacía (`exit 0`)
+- `git rev-parse HEAD` -> SHA completo del `candidate_sha` reportado en handoff
+- `git push -u origin feat/p1-004-ia-nomenclature` -> `exit 0`
+- `$env:PATH = "C:\Program Files\GitHub CLI;$env:PATH"`
+- `gh pr create --base master --head feat/p1-004-ia-nomenclature --title "docs(P1-004): unify V1 information architecture, routes and es-ES nomenclature" --body "..."` -> URL y número de PR reportados en handoff (sin fusionar)
+- `gh pr checks --watch` -> `3/3` checks requeridos en `PASS` (`Static Quality & Unit Tests`, `Production Build`, `SCA & Secret Scan (Gitleaks)`) y Run ID reportados en handoff
