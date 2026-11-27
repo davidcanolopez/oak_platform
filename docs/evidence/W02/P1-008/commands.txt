@@ -1,12 +1,10 @@
 # Comandos reproducibles ejecutados — P1-008 (sin PII ni secretos)
 
-## 1. Aislamiento de rama, limpieza de worktree y materialización documental
-- `git checkout -b feat/p1-008-domain-model-invariants` (desde `master @ 07915003f52af1607353d9b629cdefbfeba118f3`) -> `exit 0`
-- `Remove-Item -LiteralPath 'docs\agentic\packets\P1-006.md' -Force` (retirada copia untracked ajena únicamente dentro del worktree aislado) -> `exit 0`
-- `git rev-parse HEAD` -> `07915003f52af1607353d9b629cdefbfeba118f3` (base SHA verificada)
-- Redacción de `docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md` (UTF-8 sin BOM, EOL `LF`), evidencias `docs/evidence/W02/P1-008/{summary.md,approvals.md,commands.txt}` y actualización de `docs/agentic/packets/P1-008.md` (`status: "PEER_REVIEW"`, §§12–13) -> `exit 0`
-- `corepack pnpm exec prettier --write --ignore-path .gitignore docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md docs/evidence/W02/P1-008/summary.md docs/evidence/W02/P1-008/approvals.md` -> `exit 0`
-- `corepack pnpm exec prettier --check --ignore-path .gitignore docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md docs/evidence/W02/P1-008/summary.md docs/evidence/W02/P1-008/approvals.md` -> `exit 0` (`All matched files use Prettier code style!`)
+## 1. Sincronización con `origin/master`, correcciones ronda 2 (`REV-01`, `REV-02`, `P3`) y formato
+- `git fetch origin master && git merge origin/master --no-edit` (`origin/master @ b94307ea0f251fd8696f66941dd87aa16272dd7a`, incluye `P1-006`) -> `exit 0`
+- Correcciones aplicadas en `docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md` (`v1.1`), `docs/agentic/packets/P1-008.md` y `docs/evidence/W02/P1-008/{summary.md,approvals.md,commands.txt}` (UTF-8 sin BOM, EOL `LF`) -> `exit 0`
+- `corepack pnpm exec prettier --write --ignore-path .gitignore docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md docs/agentic/packets/P1-008.md docs/evidence/W02/P1-008/summary.md docs/evidence/W02/P1-008/approvals.md` -> `exit 0`
+- `corepack pnpm exec prettier --check --ignore-path .gitignore docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md docs/agentic/packets/P1-008.md docs/evidence/W02/P1-008/summary.md docs/evidence/W02/P1-008/approvals.md` -> `exit 0` (`All matched files use Prettier code style!`)
 
 ## 2. Controles documentales read-only, `assertNoBannedMockData()` y SHA-256 de `sites/**` (tras la última edición)
 Comando reproducible (Python 3 + `tsx` `assertNoBannedMockData()` sobre los `5` `allowed_paths`):
@@ -21,12 +19,12 @@ def norm(text: str) -> str:
         if unicodedata.category(ch) != "Mn"
     ).lower()
 
-req_text = Path("docs/agentic/REQUIREMENTS_BASELINE.md").read_text(encoding="utf-8")
+fac_text = Path("docs/product/FUNCTIONAL_ACCEPTANCE_CRITERIA.md").read_text(encoding="utf-8")
 cat_text = Path("docs/product/PERSONAS_AND_DATA_CATALOG.md").read_text(encoding="utf-8")
 tm_text = Path("docs/security/THREAT_MODEL.md").read_text(encoding="utf-8")
 doc_text = Path("docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md").read_text(encoding="utf-8")
 
-expected_acs = sorted(set(re.findall(r"\bAC-J\d{2}-\d{2}\b", req_text)))
+expected_acs = sorted(set(re.findall(r"\bAC-J\d{2}-\d{2}\b", fac_text)))
 expected_cls = sorted(set(re.findall(r"\bCL-\d{2}\b", cat_text)))
 expected_nts = sorted(set(re.findall(r"\bNT-\d{2}\b", tm_text)))
 
@@ -54,10 +52,22 @@ modules = [
 ]
 assert all(m in doc_text for m in modules)
 
-assert "blocked_by_D1_09" in doc_text
-assert "PENDING USER VALIDATION" in doc_text
-assert 'exactamente `"/"`' in doc_text
-assert "0` inscripciones `CONFIRMED` Y `0` reservas activas `PENDING_PAYMENT`" in doc_text
+for marker in [
+    "blocked_by_D1_09",
+    "PENDING USER VALIDATION",
+    'exactamente `"/"`',
+    "0` inscripciones `CONFIRMED` Y `0` reservas activas `PENDING_PAYMENT`",
+    "ADR-001` §2.3",
+    "integer sort_order",
+    "SYSTEM_COMPENSATION",
+    "FK (event_id, organization_id) REFERENCES Event(id, organization_id)",
+    "club_or_team = NULL",
+    "LATE_SETTLEMENT_CONFLICT",
+    "recordLateSettlementPayment",
+    "reinviteRevokedMember",
+    "cancelExpiredDraftOnRestart",
+]:
+    assert marker in doc_text, f"Missing marker: {marker}"
 
 mermaid_blocks = re.findall(r"```mermaid\n(.*?)```", doc_text, re.S)
 assert len(mermaid_blocks) == 6
@@ -112,25 +122,24 @@ PASS assertNoBannedMockData 5/5
 ```
 
 ## 3. Los 9 checks locales base (equivalentes G1) tras la última edición documental (`exit 0`, `0` warnings, `0` skips)
-- `corepack pnpm install --frozen-lockfile` -> `exit 0` (`Lockfile is up to date`, `+1074 packages`, `pnpm v10.34.9`)
-- `corepack pnpm run format:check` -> `exit 0` (`reports/static/prettier.log`: `All matched files use Prettier code style!`) + `corepack pnpm exec prettier --check --ignore-path .gitignore docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md docs/evidence/W02/P1-008/summary.md docs/evidence/W02/P1-008/approvals.md` -> `exit 0`
+- `corepack pnpm install --frozen-lockfile` -> `exit 0` (`Lockfile is up to date`, `Already up to date`, `pnpm v10.34.9`)
+- `corepack pnpm run format:check` -> `exit 0` (`reports/static/prettier.log`: `All matched files use Prettier code style!`) + `corepack pnpm exec prettier --check --ignore-path .gitignore docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md docs/agentic/packets/P1-008.md docs/evidence/W02/P1-008/summary.md docs/evidence/W02/P1-008/approvals.md` -> `exit 0`
 - `corepack pnpm run lint` -> `exit 0` (`reports/static/eslint.json`: `19` archivos, `0` errors, `0` warnings)
 - `corepack pnpm run typecheck` -> `exit 0` (`reports/static/tsc.log`: `tsc --noEmit` `0` errors)
 - `corepack pnpm run test:unit` -> `exit 0` (`reports/unit/junit.xml`: `5` test files passed, `32/32` tests passed, `0` failed, `0` skipped)
 - `corepack pnpm run test:coverage` -> `exit 0` (`reports/coverage/coverage-summary.json`: `src/` `100 %` lines `37/37`, stmts `38/38`, funcs `9/9`, branches `23/23`)
 - `corepack pnpm run build` -> `exit 0` (`reports/build/next-build.log`: Next.js `16.4.6` Turbopack, rutas `/`, `/_not-found`, `/api/health`)
 - `corepack pnpm run security:sca` -> `exit 0` (`reports/security/sca-audit.json`: `1301` deps, `high=0, critical=0, moderate=4, low=0`)
-- `corepack pnpm run security:secrets` -> `exit 0` (`reports/security/secret-scan.json`: `files=178`, `secretlintFindingsCount=0`, `oakFindingsCount=0`, `gitleaks=NOT_INSTALLED_IN_LOCAL_PATH`)
+- `corepack pnpm run security:secrets` -> `exit 0` (`reports/security/secret-scan.json`: `files=183`, `secretlintFindingsCount=0`, `oakFindingsCount=0`, `gitleaks=NOT_INSTALLED_IN_LOCAL_PATH`)
 
-## 4. Control de alcance, commit limpio, push y PR hacia `master` (sin fusionar)
+## 4. Control de alcance, commit limpio, push a PR `#12` y comprobación CI posterior (sin fusionar)
 - `git status --short` (previo al stage) -> únicamente los `5` `allowed_paths` (`0` cambios fuera de alcance)
 - `git add docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md docs/agentic/packets/P1-008.md docs/evidence/W02/P1-008/summary.md docs/evidence/W02/P1-008/commands.txt docs/evidence/W02/P1-008/approvals.md` -> `exit 0`
 - `git diff --cached --name-only` -> exclusivamente los `5` `allowed_paths` de `P1-008`
-- `git commit -m "docs(P1-008): define V1 domain model, state machines and formal invariants"` -> `exit 0`
-- `git status --short` (post-commit) -> salida vacía (`exit 0`)
-- `git diff --name-only origin/master..HEAD` -> exclusivamente los `5` `allowed_paths` (`exit 0`)
-- `git rev-parse HEAD` -> SHA completo del `candidate_sha` reportado en handoff
-- `git push -u origin feat/p1-008-domain-model-invariants` -> `exit 0`
+- `git commit -m "docs(P1-008): resolve P1/P2/P3 peer-review findings on domain model"` -> ejecutado tras todas las comprobaciones locales en verde
+- `git status --short` (post-commit) -> salida vacía
+- `git diff --name-only origin/master..HEAD` -> exclusivamente los `5` `allowed_paths` frente a `origin/master @ b94307ea0f251fd8696f66941dd87aa16272dd7a`
+- `git rev-parse HEAD` -> SHA completo informado en handoff
+- `git push origin feat/p1-008-domain-model-invariants` -> actualiza PR `#12` (sin fusionar)
 - `$env:PATH = "C:\Program Files\GitHub CLI;$env:PATH"`
-- `gh pr create --base master --head feat/p1-008-domain-model-invariants --title "docs(P1-008): define V1 domain model, state machines and formal invariants" --body "..."` -> URL y número de PR reportados en handoff (sin fusionar)
-- `gh pr checks --watch` -> `3/3` checks requeridos en `PASS` (`Static Quality & Unit Tests`, `Production Build`, `SCA & Secret Scan (Gitleaks)`) y Run ID reportados en handoff
+- `gh pr checks 12 --watch` -> ejecutado **tras el push** del commit de ronda 2 para verificar el nuevo estado real de CI (`Static Quality & Unit Tests`, `Production Build`, `SCA & Secret Scan (Gitleaks)`, `GitGuardian Security Checks`) e informarlo con su Run ID en el mensaje de entrega.
