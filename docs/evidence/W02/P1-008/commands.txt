@@ -1,0 +1,145 @@
+# Comandos reproducibles ejecutados — P1-008 (sin PII ni secretos)
+
+## 1. Sincronización con `origin/master`, correcciones ronda 2 (`REV-01`, `REV-02`, `P3`) y formato
+- `git fetch origin master && git merge origin/master --no-edit` (`origin/master @ b94307ea0f251fd8696f66941dd87aa16272dd7a`, incluye `P1-006`) -> `exit 0`
+- Correcciones aplicadas en `docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md` (`v1.1`), `docs/agentic/packets/P1-008.md` y `docs/evidence/W02/P1-008/{summary.md,approvals.md,commands.txt}` (UTF-8 sin BOM, EOL `LF`) -> `exit 0`
+- `corepack pnpm exec prettier --write --ignore-path .gitignore docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md docs/agentic/packets/P1-008.md docs/evidence/W02/P1-008/summary.md docs/evidence/W02/P1-008/approvals.md` -> `exit 0`
+- `corepack pnpm exec prettier --check --ignore-path .gitignore docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md docs/agentic/packets/P1-008.md docs/evidence/W02/P1-008/summary.md docs/evidence/W02/P1-008/approvals.md` -> `exit 0` (`All matched files use Prettier code style!`)
+
+## 2. Controles documentales read-only, `assertNoBannedMockData()` y SHA-256 de `sites/**` (tras la última edición)
+Comando reproducible (Python 3 + `tsx` `assertNoBannedMockData()` sobre los `5` `allowed_paths`):
+```powershell
+@'
+import hashlib, re, unicodedata
+from pathlib import Path
+
+def norm(text: str) -> str:
+    return "".join(
+        ch for ch in unicodedata.normalize("NFD", text)
+        if unicodedata.category(ch) != "Mn"
+    ).lower()
+
+fac_text = Path("docs/product/FUNCTIONAL_ACCEPTANCE_CRITERIA.md").read_text(encoding="utf-8")
+cat_text = Path("docs/product/PERSONAS_AND_DATA_CATALOG.md").read_text(encoding="utf-8")
+tm_text = Path("docs/security/THREAT_MODEL.md").read_text(encoding="utf-8")
+doc_text = Path("docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md").read_text(encoding="utf-8")
+
+expected_acs = sorted(set(re.findall(r"\bAC-J\d{2}-\d{2}\b", fac_text)))
+expected_cls = sorted(set(re.findall(r"\bCL-\d{2}\b", cat_text)))
+expected_nts = sorted(set(re.findall(r"\bNT-\d{2}\b", tm_text)))
+
+found_acs = sorted(set(re.findall(r"\bAC-J\d{2}-\d{2}\b", doc_text)))
+found_cls = sorted(set(re.findall(r"\bCL-\d{2}\b", doc_text)))
+found_nts = sorted(set(re.findall(r"\bNT-\d{2}\b", doc_text)))
+found_invs = sorted(set(re.findall(r"\bINV-\d{2}\b", doc_text)))
+
+assert len(expected_acs) == 44 and expected_acs == found_acs
+assert len(expected_cls) == 28 and expected_cls == found_cls
+assert len(expected_nts) == 17 and expected_nts == found_nts
+assert found_invs == [f"INV-{i:02d}" for i in range(1, 13)]
+
+entities = [
+    "User", "AthleteProfile", "ConsentRecord", "Organization", "OrganizationMembership",
+    "Event", "EventPrivateOps", "EventModality", "PriceTier", "EventMedia", "Favourite",
+    "Registration", "RegistrationParticipant", "Payment", "PaymentWebhookEvent",
+    "CommunicationLog", "AuditLog"
+]
+assert all(re.search(rf"\b{re.escape(e)}\b", doc_text) for e in entities)
+
+modules = [
+    "audit-observability", "identity", "communications", "athlete", "organization",
+    "catalog", "registration", "payments", "journey", "organizer-ops"
+]
+assert all(m in doc_text for m in modules)
+
+for marker in [
+    "blocked_by_D1_09",
+    "PENDING USER VALIDATION",
+    'exactamente `"/"`',
+    "0` inscripciones `CONFIRMED` Y `0` reservas activas `PENDING_PAYMENT`",
+    "ADR-001` §2.3",
+    "integer sort_order",
+    "SYSTEM_COMPENSATION",
+    "FK (event_id, organization_id) REFERENCES Event(id, organization_id)",
+    "club_or_team = NULL",
+    "LATE_SETTLEMENT_CONFLICT",
+    "recordLateSettlementPayment",
+    "reinviteRevokedMember",
+    "cancelExpiredDraftOnRestart",
+]:
+    assert marker in doc_text, f"Missing marker: {marker}"
+
+mermaid_blocks = re.findall(r"```mermaid\n(.*?)```", doc_text, re.S)
+assert len(mermaid_blocks) == 6
+assert not any(re.search(r"<[a-zA-Z/][^>]*>", b) for b in mermaid_blocks)
+
+schema_text = Path("data/fixtures/schema.ts").read_text(encoding="utf-8")
+m = re.search(r"BANNED_DECK_TERMS\s*=\s*\[(.*?)\]\s*as const", schema_text, re.S)
+banned = re.findall(r'"([^"]+)"', m.group(1))
+assert len(banned) == 8
+
+email_re = re.compile(r"(?<![/\w.-])[A-Za-z0-9._%+-]+@(?!\d+\.\d+)[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b")
+allowed = [
+    "docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md",
+    "docs/agentic/packets/P1-008.md",
+    "docs/evidence/W02/P1-008/summary.md",
+    "docs/evidence/W02/P1-008/commands.txt",
+    "docs/evidence/W02/P1-008/approvals.md",
+]
+for f in allowed:
+    raw = Path(f).read_bytes()
+    assert b"\r\n" not in raw, f"CRLF in {f}"
+    assert not raw.startswith(b"\xef\xbb\xbf"), f"BOM in {f}"
+    txt = raw.decode("utf-8")
+    assert all(mail.lower().endswith(".invalid") for mail in email_re.findall(txt)), f"Non-.invalid email in {f}"
+    assert not any(term in norm(txt) for term in banned), f"Banned term in {f}"
+
+pkt = Path("docs/agentic/packets/P1-008.md").read_text(encoding="utf-8")
+assert 'status: "PEER_REVIEW"' in pkt and "COMPLETAR_" not in pkt
+
+manifest_lines = Path("docs/evidence/W01/P0-001/sha256-sites.txt").read_text(encoding="utf-8").splitlines()
+matches = 0
+for line in manifest_lines:
+    if not line.startswith("MATCH"):
+        continue
+    _, exp_hash, exp_size, rel_path = line.split()
+    data = Path(rel_path).read_bytes()
+    assert hashlib.sha256(data).hexdigest().lower() == exp_hash.lower()
+    assert len(data) == int(exp_size)
+    matches += 1
+assert matches == 19
+
+print(f"PASS entities=16+1 modules=10/10 machines=4/4 inv=12/12 ac={len(found_acs)}/44 cl={len(found_cls)}/28 nt={len(found_nts)}/17 mermaid={len(mermaid_blocks)} html=0 non_invalid_emails=0 banned_terms=0 sites_sha256={matches}/19 crlf=0 bom=0")
+'@ | python -
+```
+```powershell
+corepack pnpm exec tsx -e "import fs from 'node:fs'; import { assertNoBannedMockData } from './data/fixtures/schema.ts'; const files = ['docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md','docs/agentic/packets/P1-008.md','docs/evidence/W02/P1-008/summary.md','docs/evidence/W02/P1-008/commands.txt','docs/evidence/W02/P1-008/approvals.md']; for (const f of files) { assertNoBannedMockData(fs.readFileSync(f, 'utf8')); } console.log('PASS assertNoBannedMockData 5/5');"
+```
+Salidas verificadas (`exit 0`):
+```text
+PASS entities=16+1 modules=10/10 machines=4/4 inv=12/12 ac=44/44 cl=28/28 nt=17/17 mermaid=6 html=0 non_invalid_emails=0 banned_terms=0 sites_sha256=19/19 crlf=0 bom=0
+PASS assertNoBannedMockData 5/5
+```
+
+## 3. Los 9 checks locales base (equivalentes G1) tras la última edición documental (`exit 0`, `0` warnings, `0` skips)
+- `corepack pnpm install --frozen-lockfile` -> `exit 0` (`Lockfile is up to date`, `Already up to date`, `pnpm v10.34.9`)
+- `corepack pnpm run format:check` -> `exit 0` (`reports/static/prettier.log`: `All matched files use Prettier code style!`) + `corepack pnpm exec prettier --check --ignore-path .gitignore docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md docs/agentic/packets/P1-008.md docs/evidence/W02/P1-008/summary.md docs/evidence/W02/P1-008/approvals.md` -> `exit 0`
+- `corepack pnpm run lint` -> `exit 0` (`reports/static/eslint.json`: `19` archivos, `0` errors, `0` warnings)
+- `corepack pnpm run typecheck` -> `exit 0` (`reports/static/tsc.log`: `tsc --noEmit` `0` errors)
+- `corepack pnpm run test:unit` -> `exit 0` (`reports/unit/junit.xml`: `5` test files passed, `32/32` tests passed, `0` failed, `0` skipped)
+- `corepack pnpm run test:coverage` -> `exit 0` (`reports/coverage/coverage-summary.json`: `src/` `100 %` lines `37/37`, stmts `38/38`, funcs `9/9`, branches `23/23`)
+- `corepack pnpm run build` -> `exit 0` (`reports/build/next-build.log`: Next.js `16.4.6` Turbopack, rutas `/`, `/_not-found`, `/api/health`)
+- `corepack pnpm run security:sca` -> `exit 0` (`reports/security/sca-audit.json`: `1301` deps, `high=0, critical=0, moderate=4, low=0`)
+- `corepack pnpm run security:secrets` -> `exit 0` (`reports/security/secret-scan.json`: `files=183`, `secretlintFindingsCount=0`, `oakFindingsCount=0`, `gitleaks=NOT_INSTALLED_IN_LOCAL_PATH`)
+
+## 4. Control de alcance, commit limpio, push a PR `#12` y comprobación CI posterior (sin fusionar)
+- `git status --short` (previo al stage) -> únicamente los `5` `allowed_paths` (`0` cambios fuera de alcance)
+- `git add docs/architecture/DOMAIN_MODEL_AND_INVARIANTS.md docs/agentic/packets/P1-008.md docs/evidence/W02/P1-008/summary.md docs/evidence/W02/P1-008/commands.txt docs/evidence/W02/P1-008/approvals.md` -> `exit 0`
+- `git diff --cached --name-only` -> exclusivamente los `5` `allowed_paths` de `P1-008`
+- `git commit -m "docs(P1-008): resolve P1/P2/P3 peer-review findings on domain model"` -> ejecutado tras todas las comprobaciones locales en verde
+- `git status --short` (post-commit) -> salida vacía
+- `git diff --name-only origin/master..HEAD` -> exclusivamente los `5` `allowed_paths` frente a `origin/master @ b94307ea0f251fd8696f66941dd87aa16272dd7a`
+- `git rev-parse HEAD` -> SHA completo informado en handoff
+- `git push origin feat/p1-008-domain-model-invariants` -> actualiza PR `#12` (sin fusionar)
+- `$env:PATH = "C:\Program Files\GitHub CLI;$env:PATH"`
+- `gh pr checks 12 --watch` -> ejecutado **tras el push** del commit de ronda 2 para verificar el nuevo estado real de CI (`Static Quality & Unit Tests`, `Production Build`, `SCA & Secret Scan (Gitleaks)`, `GitGuardian Security Checks`) e informarlo con su Run ID en el mensaje de entrega.
