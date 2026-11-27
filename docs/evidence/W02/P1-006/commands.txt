@@ -1,0 +1,112 @@
+# Comandos reproducibles ejecutados pre-commit — P1-006 (sin PII ni secretos)
+
+## 1. Aislamiento de rama, limpieza de copia ajena, sincronización con `origin/master` y formato Markdown
+- `git checkout -b feat/p1-006-component-inventory 3551da0201e3c9f42a6c5717058f999229516545` -> `exit 0`
+- `Remove-Item -LiteralPath 'docs\agentic\packets\P1-003.md' -Force` (retirada copia untracked ajena únicamente dentro del worktree aislado) -> `exit 0`
+- `git fetch origin master && git merge origin/master --no-edit` -> `exit 0` (fast-forward `3551da0..0791500` a `origin/master @ 07915003f52af1607353d9b629cdefbfeba118f3`, que ya incluye `P1-003`)
+- `git rev-parse HEAD` -> `07915003f52af1607353d9b629cdefbfeba118f3` (base común sincronizada previa al commit de `P1-006`)
+- `corepack pnpm exec prettier --write --ignore-path .gitignore docs/brand/COMPONENT_AND_STATE_INVENTORY.md docs/evidence/W02/P1-006/summary.md docs/evidence/W02/P1-006/approvals.md` -> `exit 0`
+- `corepack pnpm exec prettier --check --ignore-path .gitignore docs/brand/COMPONENT_AND_STATE_INVENTORY.md docs/evidence/W02/P1-006/summary.md docs/evidence/W02/P1-006/approvals.md docs/agentic/packets/P1-006.md` -> `exit 0` (`All matched files use Prettier code style!`)
+
+## 2. Verificación Node/TSX read-only tras última edición y sync (tokens `tokens.oak.v1.json`, `oak.color.line` solo decorativo, `16` familias, `9+9+9` estados, `D1`, `D1-09`, `BANNED_DECK_TERMS`, Unicode, emails, LF/BOM y `sites/**`)
+```powershell
+@'
+import fs from "node:fs";
+import crypto from "node:crypto";
+import { assertNoBannedMockData } from "./data/fixtures/schema.ts";
+
+const allowed = [
+  "docs/brand/COMPONENT_AND_STATE_INVENTORY.md",
+  "docs/agentic/packets/P1-006.md",
+  "docs/evidence/W02/P1-006/summary.md",
+  "docs/evidence/W02/P1-006/commands.txt",
+  "docs/evidence/W02/P1-006/approvals.md",
+];
+
+const emailRe = /(?<![/\w.-])[A-Za-z0-9._%+-]+@(?!\d+\.\d+)[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g;
+const bannedGlyphs = ["\u2302", "\u2315", "\u25c9", "\u25ce", "\u2699", "\u2661", "\u25eb", "\u2301", "\u2190", "\u2192", "\u2197", "\u2713", "\u2715"];
+
+for (const file of allowed) {
+  const raw = fs.readFileSync(file);
+  if (raw[0] === 0xef && raw[1] === 0xbb && raw[2] === 0xbf) throw new Error("BOM in " + file);
+  if (raw.includes(Buffer.from("\r\n"))) throw new Error("CRLF in " + file);
+  const txt = raw.toString("utf8");
+  assertNoBannedMockData(txt);
+  for (const m of txt.match(emailRe) ?? []) {
+    if (!m.toLowerCase().endsWith(".invalid")) throw new Error("Non-.invalid email in " + file + ": " + m);
+  }
+}
+
+for (const docFile of allowed.filter((p) => !p.startsWith("docs/agentic/packets/"))) {
+  const docTxt = fs.readFileSync(docFile, "utf8");
+  for (const g of bannedGlyphs) {
+    if (docTxt.includes(g)) throw new Error("Prohibited Unicode glyph in " + docFile + ": " + g.codePointAt(0)?.toString(16));
+  }
+}
+
+const p1006 = fs.readFileSync("docs/agentic/packets/P1-006.md", "utf8");
+if (p1006.includes("COMPLETAR_")) throw new Error("Remaining COMPLETAR_ placeholder in P1-006.md");
+
+const tokens = JSON.parse(fs.readFileSync("docs/brand/tokens.oak.v1.json", "utf8"));
+const inv = fs.readFileSync("docs/brand/COMPONENT_AND_STATE_INVENTORY.md", "utf8");
+const validKeys = new Set([
+  ...Object.keys(tokens.color.primitive.core),
+  ...Object.keys(tokens.color.primitive.d1Candidate),
+  ...Object.keys(tokens.color.semantic.base),
+  ...Object.keys(tokens.color.semantic.borders),
+  ...Object.keys(tokens.color.semantic.d1Candidates),
+  ...Object.keys(tokens.typography.scale),
+  ...Object.keys(tokens.spacing.scale),
+  ...Object.keys(tokens.radius.scale),
+  ...Object.keys(tokens.elevation.scale),
+  ...Object.keys(tokens.motion.tokens),
+]);
+const tokenRe = /`((?:oak\.color|surface|text|action|progress|info|focus|border|status|viz|type|space|radius|elevation|motion)\.[A-Za-z0-9_.-]+)`/g;
+for (const m of inv.matchAll(tokenRe)) {
+  const k = m[1];
+  if (k.includes("{") || k.includes("*") || k.endsWith(".scale") || k.startsWith("spacing.") || k.startsWith("typography.") || k.startsWith("elevation.zIndex") || k.startsWith("motion.reducedMotion") || k.startsWith("accessibility.")) continue;
+  if (!validKeys.has(k)) throw new Error("Unknown token key: " + k);
+}
+
+for (let i = 1; i <= 16; i++) {
+  const f = "F-" + String(i).padStart(2, "0");
+  if (!inv.includes(f)) throw new Error("Missing family " + f);
+}
+for (const s of ["Default", "Hover", "Focus visible", "Active / pressed", "Selected / current", "Disabled", "Loading", "Error", "Success", "empty", "filled", "optional / required", "invalid` pre-envío seguro", "invalid` post-envío", "read-only", "loading / verification pending", "initial loading", "delayed loading", "empty result", "filtered empty result", "partial data", "stale data", "recoverable error", "non-recoverable / permission error", "offline / retry", "PENDING_D1_APPROVAL", "D1-05", "D1-10", "D1-11", "blocked_by_D1_09"]) {
+  if (!inv.includes(s)) throw new Error("Missing required state/marker: " + s);
+}
+
+const manifest = fs.readFileSync("docs/evidence/W01/P0-001/sha256-sites.txt", "utf8").split(/\r?\n/);
+let matches = 0;
+for (const line of manifest) {
+  if (!line.startsWith("MATCH")) continue;
+  const [, expHash, expSize, relPath] = line.trim().split(/\s+/);
+  const data = fs.readFileSync(relPath);
+  const digest = crypto.createHash("sha256").update(data).digest("hex").toUpperCase();
+  if (digest !== expHash.toUpperCase() || data.length !== Number(expSize)) throw new Error("SHA mismatch: " + relPath);
+  matches++;
+}
+if (matches !== 19) throw new Error("Expected 19 sites matches, got " + matches);
+console.log("PASS tokens_valid=true families=16 states=9+9+9 d1_markers=true blocked_by_D1_09=true banned_mock=0 non_invalid_emails=0 unicode_glyphs=0 crlf=0 bom=0 sites_sha256=" + matches + "/19");
+'@ | corepack pnpm exec tsx -
+```
+Salida observada (`exit 0`):
+```text
+PASS tokens_valid=true families=16 states=9+9+9 d1_markers=true blocked_by_D1_09=true banned_mock=0 non_invalid_emails=0 unicode_glyphs=0 crlf=0 bom=0 sites_sha256=19/19
+```
+
+## 3. Los `9` checks locales base ejecutados tras sincronización con `origin/master @ 07915003f52af1607353d9b629cdefbfeba118f3` (`exit 0`, `0` warnings, `0` skips)
+- `corepack pnpm install --frozen-lockfile` -> `exit 0` (`Lockfile is up to date`, `Already up to date`, `pnpm v10.34.9`)
+- `corepack pnpm run format:check` -> `exit 0` (`reports/static/prettier.log`: `All matched files use Prettier code style!`)
+- `corepack pnpm exec prettier --check --ignore-path .gitignore docs/brand/COMPONENT_AND_STATE_INVENTORY.md docs/evidence/W02/P1-006/summary.md docs/evidence/W02/P1-006/approvals.md docs/agentic/packets/P1-006.md` -> `exit 0` (`All matched files use Prettier code style!`)
+- `corepack pnpm run lint` -> `exit 0` (`reports/static/eslint.json`: `19` archivos, `0` errors, `0` warnings)
+- `corepack pnpm run typecheck` -> `exit 0` (`reports/static/tsc.log`: `tsc --noEmit` `0` errores)
+- `corepack pnpm run test:unit` -> `exit 0` (`reports/unit/junit.xml`: `5` archivos, `32/32` tests passed, `0` failed, `0` skipped)
+- `corepack pnpm run test:coverage` -> `exit 0` (`reports/coverage/coverage-summary.json`: `100 %` `src/` — `37/37` lines, `38/38` statements, `9/9` functions, `23/23` branches)
+- `corepack pnpm run build` -> `exit 0` (`reports/build/next-build.log`: Next.js `16.4.6` Turbopack, rutas `/`, `/_not-found`, `/api/health`)
+- `corepack pnpm run security:sca` -> `exit 0` (`reports/security/sca-audit.json`: `high=0, critical=0, moderate=4, low=0`)
+- `corepack pnpm run security:secrets` -> `exit 0` (`reports/security/secret-scan.json`: `files=178, findings=0, gitleaks=NOT_INSTALLED_IN_LOCAL_PATH`)
+
+## 4. Control de alcance pre-commit y acciones posteriores en PR (`PENDIENTE DE EJECUCIÓN EN PR`)
+- `git status --short` (previo al stage) -> únicamente los `5` `allowed_paths` (`docs/agentic/packets/P1-006.md`, `docs/brand/COMPONENT_AND_STATE_INVENTORY.md`, `docs/evidence/W02/P1-006/`) con `0` cambios fuera de alcance (`exit 0`)
+- Commit, `git push -u origin feat/p1-006-component-inventory`, apertura de PR hacia `master` (sin fusionar) y verificación CI en GitHub (`gh pr checks --watch`): **CI en PR: PENDIENTE DE EJECUCIÓN EN PR** (el SHA exacto de commit, URL/número de PR y Run ID real de los `3/3` checks en GitHub Actions se informan en el handoff tras completar el push y esperar el CI).
